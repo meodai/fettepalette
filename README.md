@@ -1,3 +1,5 @@
+<img width="100" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette logo"/>
+
 # FettePalette
 
 Color palette generation function using curves within the HSV color model
