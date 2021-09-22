@@ -37,12 +37,13 @@
     }
 
     .tp-dfwv {
-    width: 320px !important;
+      width: 320px !important;
     }
 
     article {
       padding: 0 2rem 1rem;
-      background: #212121;
+      background: #fff;
+      color: #202124;
       position: absolute;
       top: 0;
       right: 0;
@@ -57,10 +58,20 @@
       max-width: 24rem;
     }
 
+    h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-top: 1em;
+    }
+    a {
+      font-size: 1em;
+      margin-top: .4em;
+      font-weight: 700;
+    }
+
     h2 {
       margin: 0 0 1rem;
-      color: #fff;
-      font-weight: 900;
+      font-weight: 200;
     }
     h2:first-child {
       margin-top: 0;
@@ -124,7 +135,6 @@
 
     [data-list] {
       margin: 2rem 0;
-      color: #fff;
       display: flex;
     }
     [data-list] h3 {
@@ -145,12 +155,19 @@
     [data-list] > div {
       flex: 0 0 33.333%;
     }
+    p {
+      margin-top: 1em;
+      max-width: 20rem;
+      line-height: 1.4;
+      font-weight: 300;
+    }
   </style>
 </head>
 
 <body>
   <article>
     <h1>FettePalette</h1>
+    <p>Color palette generation using curves within the HSV color model</p>
     <aside>
       <h2>HSL Slice Preview</h2>
       <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
@@ -169,6 +186,8 @@
     </aside>
     <aside data-list>
     </aside>
+    <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
+  
   </article>
 
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.3/dist/tweakpane.min.js"></script>
@@ -177,8 +196,7 @@
   <script type="module">
     import generateRandomColorRamp ,{ hsv2hsl, random, pointOnCurve } from './index.js';
 
-    console.clear()
-    console.log(generateRandomColorRamp);
+    console.clear();
 
     const shuffleArray = array => {
       let arr = [...array];
@@ -305,7 +323,7 @@
         $pal.style.setProperty(`--col-${i}`, `hsl(${allColors[i][0]},${allColors[i][1] * 100}%,${allColors[i][2] * 100}%)`);
       }
 
-      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).map(c => `hsl(${c[0]},${c[1] * 100}%,${c[2] * 100}%)`).join(',')})`)
+      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b[2] - a[2]).map(c => `hsl(${c[0]},${c[1] * 100}%,${c[2] * 100}%)`).join(',')})`)
     }
 
     function bam() {
