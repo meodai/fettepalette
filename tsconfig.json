@@ -5,7 +5,9 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es2015",
-    "outDir": "dist"
+    "outDir": "dist",
+    "declaration": true,
+    "emitDeclarationOnly": true,
   },
   "include": [
     "src/**/*"

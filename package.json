@@ -7,7 +7,7 @@
   "browser": "dist/index.iife.js",
   "type": "module",
   "scripts": {
-    "build": "npm run build:esm && npm run build:browser && npm run build:node",
+    "build": "tsc --build && npm run build:esm && npm run build:browser && npm run build:node",
     "build:esm": "esbuild src/index.ts --outfile=dist/index.esm.js --format=esm --bundle --target=es2020 --minify",
     "build:browser": "esbuild src/index.ts --outfile=dist/index.iife.js --bundle --target=es6 --format=iife --global-name=fettePalette --minify",
     "build:node": "esbuild src/index.ts --outfile=dist/index.js --platform=node --target=node14 --minify",
