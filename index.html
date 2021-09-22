@@ -1,0 +1,455 @@
+<!doctype html>
+
+<html lang=en>
+
+<head>
+  <meta charset=utf-8>
+  <title>Fette Palette</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <style>
+    :root {
+      font-family: "Inter", sans-serif;
+      background: #212121;
+
+      --tp-base-background-color: hsla(230, 5%, 90%, 1.00);
+      --tp-base-shadow-color: hsla(0, 0%, 0%, 0.10);
+      --tp-button-background-color: hsla(230, 7%, 75%, 1.00);
+      --tp-button-background-color-active: hsla(230, 7%, 60%, 1.00);
+      --tp-button-background-color-focus: hsla(230, 7%, 65%, 1.00);
+      --tp-button-background-color-hover: hsla(230, 7%, 70%, 1.00);
+      --tp-button-foreground-color: hsla(230, 10%, 30%, 1.00);
+      --tp-container-background-color: hsla(230, 15%, 30%, 0.20);
+      --tp-container-background-color-active: hsla(230, 15%, 30%, 0.32);
+      --tp-container-background-color-focus: hsla(230, 15%, 30%, 0.28);
+      --tp-container-background-color-hover: hsla(230, 15%, 30%, 0.24);
+      --tp-container-foreground-color: hsla(230, 10%, 30%, 1.00);
+      --tp-groove-foreground-color: hsla(230, 15%, 30%, 0.10);
+      --tp-input-background-color: hsla(230, 15%, 30%, 0.10);
+      --tp-input-background-color-active: hsla(230, 15%, 30%, 0.22);
+      --tp-input-background-color-focus: hsla(230, 15%, 30%, 0.18);
+      --tp-input-background-color-hover: hsla(230, 15%, 30%, 0.14);
+      --tp-input-foreground-color: hsla(230, 10%, 30%, 1.00);
+      --tp-label-foreground-color: hsla(230, 10%, 30%, 0.70);
+      --tp-monitor-background-color: hsla(230, 15%, 30%, 0.10);
+      --tp-monitor-foreground-color: hsla(230, 10%, 30%, 0.50);
+    }
+
+    .tp-dfwv {
+    width: 320px !important;
+    }
+
+    article {
+      padding: 0 2rem 1rem;
+      background: #212121;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    article > aside {
+      margin-top: 2rem;
+      max-width: 24rem;
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      color: #fff;
+      font-weight: 900;
+    }
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    [data-colors] {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    [data-colors] i {
+      flex: 1 0 calc(var(--w, 0.11) * 100%);
+      width: calc(var(--w, 0.11) * 100%);
+      padding-top: calc(var(--w, 0.11) * 100%);
+      background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
+    }
+
+    [data-palette] {
+      position: relative;
+      background: var(--col-0);
+      padding-top: 100%;
+      margin: 0;
+    }
+    [data-palette] b {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--col-1);
+    }
+    [data-palette] i {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      right: 0;
+    }
+    [data-palette] i:first-child {
+      background: var(--col-2);
+    }
+    [data-palette] i:last-child {
+      bottom: 0;
+      background: var(--col-3);
+    }
+
+    figure {
+      margin: 0;
+      padding: 0;
+    }
+
+    [data-figure] {
+      background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)), linear-gradient(to left, hsl(var(--deg, 0deg), 100%, 50%), hsl(var(--deg, 0deg), 0%, 100%));
+    }
+
+    [data-ramp] {
+      margin-top: 1rem;
+      height: 4rem;
+    }
+
+    [data-list] {
+      margin: 2rem 0;
+      color: #fff;
+      display: flex;
+    }
+    [data-list] h3 {
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
+      display: none;
+    }
+    [data-list] li {
+      font-family: monospace;
+      font-size: 0.8rem;
+      margin-top: 0.5em;
+    }
+    [data-list] li::before {
+      user-slectable: none;
+      content: "⬤";
+      color: var(--col);
+    }
+    [data-list] > div {
+      flex: 0 0 33.333%;
+    }
+  </style>
+</head>
+
+<body>
+  <article>
+    <h1>FettePalette</h1>
+    <aside>
+      <h2>HSL Slice Preview</h2>
+      <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
+    </aside>
+    <aside>
+      <h2>Full Palette</h2>
+      <div data-colors></div>
+    </aside>
+  
+    <aside>
+      <h2>Example Use: <strong>4 random colors form palette</strong> (click to re-generate) </h2>
+      <div data-palette>
+        <b><i></i><i></i></b>
+      </div>
+      <div data-ramp></div>
+    </aside>
+    <aside data-list>
+    </aside>
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.3/dist/tweakpane.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
+
+  <script type="module">
+    import generateRandomColorRamp ,{ hsv2hsl, random, pointOnCurve } from './index.js';
+
+    console.clear()
+    console.log(generateRandomColorRamp);
+
+    const shuffleArray = array => {
+      let arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    const pane = new Tweakpane.Pane({
+      title: 'FettePalette Parameters',
+      expanded: true,
+    });
+
+    const PARAMS = {
+      colors: 9,
+      centerHue: 0,
+      hueCycle: 0.3,
+      offsetTint: 0.01,
+      offsetShade: 0.01,
+      curveAccent: 0,
+      tintShadeHueShift: 0.01,
+      colorMode: 'hsl',
+      curveMethod: 'lamé', //arc, pow
+      offsetCurveModTint: 0.03,
+      offsetCurveModShade: 0.03,
+      minSaturation: 0,
+      minLight: 0,
+      maxSaturation: 1,
+      maxLight: 1,
+    };
+    pane.addInput(
+      PARAMS, 'colors',
+      { min: 3, max: 35, step: 1 }
+    );
+    pane.addInput(
+      PARAMS, 'centerHue',
+      { min: 0, max: 360, step: 0.1 }
+    );
+
+    pane.addInput(
+      PARAMS, 'hueCycle',
+      { min: 0, max: 1.5, step: 0.001 }
+    );
+    pane.addInput(PARAMS, 'curveMethod', {
+      options: {
+        lamé: 'lamé',
+        arc: 'arc',
+        pow: 'pow',
+        powY: 'powY',
+        powX: 'powX',
+      },
+    });
+    pane.addInput(
+      PARAMS, 'curveAccent',
+      { min: -0.095, max: 1, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'offsetTint',
+      { min: 0, max: 0.4, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'offsetShade',
+      { min: 0, max: 0.4, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'offsetCurveModTint',
+      { min: 0, max: 0.4, step: 0.0001 }
+    );
+    pane.addInput(
+      PARAMS, 'offsetCurveModShade',
+      { min: 0, max: 0.4, step: 0.0001 }
+    );
+    pane.addInput(
+      PARAMS, 'tintShadeHueShift',
+      { min: 0, max: 1, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'minSaturation',
+      { min: 0, max: 1, step: 0.001 }
+    );
+    pane.addInput( 
+      PARAMS, 'minLight',
+      { min: 0, max: 1, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'maxSaturation',
+      { min: 0, max: 1, step: 0.001 }
+    );
+    pane.addInput(
+      PARAMS, 'maxLight',
+      { min: 0, max: 1, step: 0.001 }
+    );
+
+    const $pal = document.querySelector('[data-palette]');
+    const $picker = document.querySelector('[data-figure]');
+    const $ramp = document.querySelector('[data-ramp]');
+    let colors = [];
+
+    const palette = (colors, method) => {
+      let allColors = [];
+
+      const lightColors = shuffleArray(colors.light);
+      const mediumColors = shuffleArray(colors.base);
+      const darkColors = shuffleArray(colors.dark);
+
+      switch (method) {
+        case 'random':
+          allColors = shuffleArray(colors.all);
+          break;
+        case 'l2md':
+          allColors = [lightColors[0], mediumColors[0], darkColors[0], lightColors[1]];
+          break;
+        case 'lmd2':
+          allColors = [darkColors[0], mediumColors[0], lightColors[0], darkColors[1]];
+          break;
+        case 'lm2d':
+          allColors = [mediumColors[1], mediumColors[0], lightColors[0], darkColors[1]];
+          break;
+      }
+
+      for (let i = 0; i < 4; i++) {
+        $pal.style.setProperty(`--col-${i}`, `hsl(${allColors[i][0]},${allColors[i][1] * 100}%,${allColors[i][2] * 100}%)`);
+      }
+
+      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).map(c => `hsl(${c[0]},${c[1] * 100}%,${c[2] * 100}%)`).join(',')})`)
+    }
+
+    function bam() {
+      colors = generateRandomColorRamp(
+        PARAMS.colors,
+        PARAMS.centerHue,
+        PARAMS.hueCycle,
+        PARAMS.offsetTint,
+        PARAMS.offsetShade,
+        PARAMS.curveAccent,
+        PARAMS.tintShadeHueShift,
+        PARAMS.curveMethod,
+        PARAMS.offsetCurveModTint,
+        PARAMS.offsetCurveModShade,
+        [PARAMS.minSaturation, PARAMS.minLight],
+        [PARAMS.maxSaturation, PARAMS.maxLight]
+      );
+
+
+      points(
+        PARAMS.colors,
+        PARAMS.offsetTint,
+        PARAMS.offsetShade,
+        PARAMS.curveAccent,
+        colors.base,
+        PARAMS.curveMethod,
+        PARAMS.offsetCurveModTint,
+        PARAMS.offsetCurveModShade,
+        [PARAMS.minSaturation, PARAMS.minLight],
+        [PARAMS.maxSaturation, PARAMS.maxLight]
+      );
+
+      $picker.style.setProperty(`--deg`, `${colors.all[Math.floor(colors.all.length * .5)][0]}deg`);
+
+      document.querySelector('[data-colors]').innerHTML = colors.all.reduce((r, c) => {
+        return `${r}<i style="--w: ${1 / PARAMS.colors}; --h: ${c[0]}; --s: ${c[1] * 100}; --l: ${c[2] * 100}"></i>`
+      }, '');
+
+      palette(colors, 'random');
+      list(colors)
+    }
+
+    function points(
+      colorsInt, 
+      offsetTint, 
+      offsetShade, 
+      curveAccent, 
+      colorsArr, 
+      curveMethod, 
+      offsetCurveModTint, 
+      offsetCurveModShade, 
+      minSaturationLight, 
+      maxSaturationLight,
+    ) {
+      $picker.innerHTML = '';
+      const limit = Math.PI / 2;
+      const part = limit / (colorsInt + 1);
+
+      for (let i = 1; i < (colorsInt + 1); i++) {
+        const [x, y] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent, minSaturationLight, maxSaturationLight);
+        const hsl = hsv2hsl(0, x, y);
+        const newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+
+        newElement.setAttribute('cx', x * 100);
+        newElement.setAttribute('cy', 100 - y * 100);
+
+        newElement.setAttribute('r', '3');
+
+        newElement.style.fill = `hsl(${colorsArr[i - 1][0]}deg, ${hsl[1] * 100}%,${hsl[2] * 100}%)`;
+        newElement.style.stroke = '#212121';
+        newElement.style.strokeWidth = '.5px';
+
+        const [xl, yl] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent + offsetCurveModTint, minSaturationLight, maxSaturationLight);
+
+        const newElementLight = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+
+        newElementLight.setAttribute('cx', (xl - offsetTint) * 100);
+        newElementLight.setAttribute('cy', 100 - (yl + offsetTint) * 100);
+
+        newElementLight.setAttribute('r', '1');
+
+        newElementLight.style.fill = `#fff`;
+        newElementLight.style.strokeWidth = '0px';
+
+        const newElementDark = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+
+        const [xd, yd] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent - offsetCurveModShade, minSaturationLight, maxSaturationLight);
+
+        newElementDark.setAttribute('cx', (xd - offsetShade) * 100);
+        newElementDark.setAttribute('cy', 100 - (yd - offsetShade) * 100);
+
+        newElementDark.setAttribute('r', '1');
+
+        newElementDark.style.fill = `#000`;
+        newElementDark.style.strokeWidth = '0px';
+
+        $picker.appendChild(newElement);
+        $picker.appendChild(newElementLight);
+        $picker.appendChild(newElementDark);
+      }
+
+    }
+
+    function list(colors) {
+      document.querySelector('[data-list]').innerHTML = `
+        <div>
+        <h3>Light Colors</h3>
+        <ol>
+          ${colors.light.map(e => {
+              const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+              return `<li style="--col:${hex}">
+              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+            </li>`}).join('')}
+        </ol>
+        </div>
+        <div>
+        <h3>Base Colors</h3>
+        <ol>
+          ${colors.base.map(e => {
+                const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+                return `<li style="--col:${hex}">
+              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+            </li>`}).join('')}
+        </ol>
+        </div>
+        <div>
+        <h3>Dark Colors</h3>
+        <ol>
+          ${colors.dark.map(e => {
+            const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+            return `<li style="--col:${hex}">
+              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+            </li>`}).join('')}
+        </ol>
+        </div>
+      `
+    }
+
+    $pal.addEventListener('click', () => palette(colors, 'random'));
+
+    pane.on('change', bam);
+
+    bam();
+  </script>
+</body>
+
+</html>
