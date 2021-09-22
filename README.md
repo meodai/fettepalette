@@ -1,4 +1,4 @@
-# fettepalette
+# FettePalette
 
 Color palette generation function using curves within the HSV color model
 
