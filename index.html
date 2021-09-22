@@ -178,7 +178,7 @@
     </aside>
   
     <aside>
-      <h2>Example Use: <strong>4 random colors form palette</strong> (click to re-generate) </h2>
+      <h2>Example Use: <strong>4 random colors form palette</strong> (click & hold to re-generate) </h2>
       <div data-palette>
         <b><i></i><i></i></b>
       </div>
@@ -462,7 +462,9 @@
       `
     }
 
-    $pal.addEventListener('click', () => palette(colors, 'random'));
+    let timer;
+    $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
+    $pal.addEventListener('pointerup', () => clearInterval(timer));
 
     pane.on('change', bam);
 
