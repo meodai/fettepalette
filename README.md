@@ -1,6 +1,8 @@
 # fettepalette
 
 Color palette generator using curves within the HSV color model
+Based on: https://medium.com/@greggunn/how-to-make-your-own-color-palettes-712959fbf021
+Demo: https://meodai.github.io/fettepalette/
 
 ## Installation
 
