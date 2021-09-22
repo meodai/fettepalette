@@ -103,7 +103,7 @@ export const pointOnCurve = (
 
 // arc || lamé: https://observablehq.com/@daformat/draw-squircle-shapes-with-svg-javascript
   
-export default function generateRandomColorRamp (
+export default function generateRandomColorRamp  (
   total:number,
   centerHue:number           = 0,
   hueCycle:number            = 0.3,
