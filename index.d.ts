@@ -1,6 +1,20 @@
 export declare type curveMethod = 'lamé' | 'arc' | 'pow' | 'powY' | 'powX';
 declare type vector2 = [number, number];
 declare type hsx = [number, number, number];
+declare type mainFunctionArguments = {
+    total?: number;
+    centerHue?: number;
+    hueCycle?: number;
+    offsetTint?: number;
+    offsetShade?: number;
+    curveAccent?: number;
+    tintShadeHueShift?: number;
+    curveMethod?: curveMethod;
+    offsetCurveModTint?: number;
+    offsetCurveModShade?: number;
+    minSaturationLight?: vector2;
+    maxSaturationLight?: vector2;
+};
 /**
  * function hsv2hsl
  * @param h {Number} hue value 0...360
@@ -48,7 +62,7 @@ export declare const pointOnCurve: (curveMethod: curveMethod, i: number, total: 
     all: [[h,s,l]...], // all colors
   }
 */
-export default function generateRandomColorRamp(total: number, centerHue?: number, hueCycle?: number, offsetTint?: number, offsetShade?: number, curveAccent?: number, tintShadeHueShift?: number, curveMethod?: curveMethod, offsetCurveModTint?: number, offsetCurveModShade?: number, minSaturationLight?: vector2, maxSaturationLight?: vector2): {
+export default function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: mainFunctionArguments): {
     light: hsx[];
     dark: hsx[];
     base: hsx[];
