@@ -11,66 +11,40 @@
   <style>
     :root {
       font-family: "Inter", sans-serif;
-      background: #212121;
-
-      --tp-base-background-color: hsla(230, 5%, 90%, 1.00);
-      --tp-base-shadow-color: hsla(0, 0%, 0%, 0.10);
-      --tp-button-background-color: hsla(230, 7%, 75%, 1.00);
-      --tp-button-background-color-active: hsla(230, 7%, 60%, 1.00);
-      --tp-button-background-color-focus: hsla(230, 7%, 65%, 1.00);
-      --tp-button-background-color-hover: hsla(230, 7%, 70%, 1.00);
-      --tp-button-foreground-color: hsla(230, 10%, 30%, 1.00);
-      --tp-container-background-color: hsla(230, 15%, 30%, 0.20);
-      --tp-container-background-color-active: hsla(230, 15%, 30%, 0.32);
-      --tp-container-background-color-focus: hsla(230, 15%, 30%, 0.28);
-      --tp-container-background-color-hover: hsla(230, 15%, 30%, 0.24);
-      --tp-container-foreground-color: hsla(230, 10%, 30%, 1.00);
-      --tp-groove-foreground-color: hsla(230, 15%, 30%, 0.10);
-      --tp-input-background-color: hsla(230, 15%, 30%, 0.10);
-      --tp-input-background-color-active: hsla(230, 15%, 30%, 0.22);
-      --tp-input-background-color-focus: hsla(230, 15%, 30%, 0.18);
-      --tp-input-background-color-hover: hsla(230, 15%, 30%, 0.14);
-      --tp-input-foreground-color: hsla(230, 10%, 30%, 1.00);
-      --tp-label-foreground-color: hsla(230, 10%, 30%, 0.70);
-      --tp-monitor-background-color: hsla(230, 15%, 30%, 0.10);
-      --tp-monitor-foreground-color: hsla(230, 10%, 30%, 0.50);
+      background: #202124;
     }
-
-    .tp-dfwv {
-      width: 320px !important;
-    }
-
-    article {
-      padding: 0 2rem 1rem;
-      background: #fff;
-      color: #202124;
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      overflow: auto;
+    .app {
       display: flex;
-      flex-direction: column;
     }
-    article > aside {
-      margin-top: 2rem;
-      max-width: 24rem;
+    .settings {
+      flex: 0 0 20rem;
+      padding: 4.6rem 2rem;
+      background: #202124;
+      color: #fff;
     }
-
+    .settings h3 {
+      margin-bottom: 2em;
+    }
+    [data-pane] {
+      position: sticky;
+      top: 2rem;
+    }
+    .main {
+      flex: 1 1 auto;
+      background: #fff;
+      padding: 2rem;
+    }
+    .main aside {
+      max-width: 27rem;
+    }
     h1 {
       font-size: calc(1rem + 12vw);
       font-weight: 700;
       margin-top: 1rem;
     }
-    a {
-      font-size: 1em;
-      margin-top: .4em;
-      font-weight: 700;
-    }
 
     h2 {
-      margin: .3em 0 1rem;
+      margin: 1.5em 0 1rem;
       font-size: calc(1rem + 2vw);
       line-height: 1.1;
       font-weight: 700;
@@ -78,23 +52,22 @@
     h2 + p {
       margin-bottom: 1rem;
     }
-    h2:first-child {
-      /*margin-top: 0;*/
+    a {
+      font-size: 1em;
+      margin-top: .4em;
+      font-weight: 700;
     }
-
     [data-colors] {
       display: flex;
       flex-wrap: wrap;
       width: 100%;
     }
-
     [data-colors] i {
       flex: 1 0 calc(var(--w, 0.11) * 100%);
       width: calc(var(--w, 0.11) * 100%);
       padding-top: calc(var(--w, 0.11) * 100%);
       background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
     }
-
     [data-palette] {
       position: relative;
       background: var(--col-0);
@@ -128,16 +101,13 @@
       margin: 0;
       padding: 0;
     }
-
     [data-figure] {
       background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)), linear-gradient(to left, hsl(var(--deg, 0deg), 100%, 50%), hsl(var(--deg, 0deg), 0%, 100%));
     }
-
     [data-ramp] {
       margin-top: 1rem;
       height: 4rem;
     }
-
     [data-list] {
       margin: 2rem 0;
       display: flex;
@@ -166,37 +136,218 @@
       line-height: 1.4;
       font-weight: 300;
     }
+
+    .pane__section,
+    .pane__label {
+      display: block;
+    }
+
+    .pane {
+      box-sizing: border-box;
+      background: var(--color-bg);
+      display: block;
+      cursor: default;
+      background: #202124;
+      color: #fff;
+      --size-gutter: 1rem;
+      --color-inverted: #fff;
+    }
+    .pane__section {
+      display: block;
+    }
+    .pane__section + .pane__section {
+      margin-top: calc(var(--size-gutter) * 2);
+    }
+    .pane__inputs {
+      display: flex;
+      touch-action: manipulation;
+    }
+    .pane__input--number {
+      flex-grow: 1;
+    }
+    .pane .pane__input--number + input[type=number] {
+      display: block;
+      flex-basis: 4rem;
+      width: 4rem;
+    }
+    .pane__desc {
+      margin: 1em 0 3em;
+      font-size: 0.6em;
+    }
+    .pane select {
+      font-size: 0.8em;
+      border-radius: 2rem;
+      padding: 0.2rem;
+    }
+    .pane input, 
+    .pane select {
+      display: block;
+      box-sizing: border-box;
+      touch-action: manipulation;
+      font-family: 'Space Mono', monospace;
+      border: none;
+      width: auto;
+    }
+    .pane input[type=number], 
+    .pane select[type=number] {
+      color: var(--color-inverted);
+      background: none;
+      border: none;
+      text-align: right;
+      font-size: 0.8em;
+      flex: 0 0 3rem;
+      width: 3rem;
+    }
+    .pane input {
+      background-color: transparent;
+    }
+    .pane input[type=range] {
+      -webkit-appearance: none;
+    }
+    .pane input[type=range] {
+      margin: 0;
+      padding-top: 0.7em;
+      margin-top: -0.7em;
+    }
+    .pane input[type=range]:focus {
+      outline: none;
+    }
+    .pane input[type=range]:focus::-webkit-slider-thumb {
+      background-color: var(--color-inverted);
+      clip-path: polygon(100% 0%, 0% 0%, 50% 100%, 50% 100%);
+    }
+    .pane input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 1rem;
+      animate: 0.2s;
+      background: transparent;
+      color: var(--c-black);
+      border-radius: 0;
+      border: solid var(--color-inverted);
+      border-width: 0 0 1px;
+    }
+    .pane input[type=range]::-webkit-slider-thumb {
+      border: 2px solid transparent;
+      height: 0.75rem;
+      width: 0.5rem;
+      border-radius: 0;
+      background: var(--color-inverted);
+      -webkit-appearance: none;
+      margin-top: 0.25rem;
+      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .pane input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 1rem;
+      animate: 0.2s;
+      background: transparent;
+      color: var(--c-black);
+      border-radius: 0;
+      border: solid var(--color-inverted);
+      border-width: 0 0 1px;
+    }
+    .pane input[type=range]::-moz-range-thumb {
+      border: 2px solid transparent;
+      height: 0.75rem;
+      width: 0.5rem;
+      border-radius: 0;
+      background: var(--color-inverted);
+      -webkit-appearance: none;
+      margin-top: 0.25rem;
+      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .pane input[type=range]::-ms-track {
+      width: 100%;
+      height: 1rem;
+      animate: 0.2s;
+      background: transparent;
+      color: var(--c-black);
+      border-radius: 0;
+      border: solid var(--color-inverted);
+      border-width: 0 0 1px;
+    }
+    .pane input[type=range]::-ms-fill-lower {
+      background: var(--color-inverted);
+      border: none;
+      border-radius: 100%;
+    }
+    .pane input[type=range]::-ms-fill-upper {
+      background: var(--color-inverted);
+      border-radius: 100%;
+      box-shadow: none;
+    }
+    .pane input[type=range]::-ms-thumb {
+      border: 2px solid transparent;
+      height: 0.75rem;
+      width: 0.5rem;
+      border-radius: 0;
+      background: var(--color-inverted);
+      -webkit-appearance: none;
+      margin-top: 0.25rem;
+      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .pane select {
+      color: var(--color-inverted);
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      border: 0;
+      box-shadow: 0 1px 0 0 var(--color-inverted);
+      border-radius: 0;
+      padding: 0.25rem 1rem 0.25rem 0rem;
+      background-color: transparent;
+      background-size: 1.25em 1.25em;
+      background-image: conic-gradient(var(--color-inverted) 5%, transparent 0 95%, var(--color-inverted) 0);
+      background-repeat: no-repeat;
+      background-position: right 0% top 120%;
+    }
+    .pane select option {
+      color: var(--color-bg);
+    }
+    .pane select:focus {
+      outline: none;
+      background-color: transparent;
+    }
+    
   </style>
 </head>
 
 <body>
-  <article>
-    <h1>Fette&shy;Palette</h1>
-    <p>Color palette generation using curves within the HSV color model</p>
-    <aside>
-      <h2>HSL Slice Preview</h2>
-      <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
-    </aside>
-    <aside>
-      <h2>Full Palette</h2>
-      <div data-colors></div>
-    </aside>
-  
-    <aside>
-      <h2>Example Use</h2>
-      <p><strong>4 random colors form palette</strong> (click & hold to re-generate)</p>
-      <div data-palette>
-        <b><i></i><i></i></b>
-      </div>
-      <div data-ramp></div>
-    </aside>
-    <aside data-list>
-    </aside>
-    <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
-  
-  </article>
+  <article class="app">
+    <aside class="settings">
+      <h3>Settings</h3>
+      <div data-pane>
 
-  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.3/dist/tweakpane.min.js"></script>
+      </div>
+    </aside>
+    <section class="main">
+      <h1>Fette&shy;Palette</h1>
+      <p>Color palette generation using curves within the HSV color model</p>
+      <aside>
+        <h2>HSL Slice Preview</h2>
+        <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
+      </aside>
+      <aside>
+        <h2>Full Palette</h2>
+        <div data-colors></div>
+      </aside>
+    
+      <aside>
+        <h2>Example Use</h2>
+        <p><strong>4 random colors form palette</strong> (click & hold to re-generate)</p>
+        <div data-palette>
+          <b><i></i><i></i></b>
+        </div>
+        <div data-ramp></div>
+      </aside>
+      <aside data-list>
+      </aside>
+      <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
+    </section>
+  </article>
   <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
 
   <script type="module">
@@ -213,10 +364,154 @@
       return arr;
     }
 
-    const pane = new Tweakpane.Pane({
-      title: 'FettePalette Parameters',
-      expanded: true,
-    });
+    class Pane {
+      constructor (
+        $dom, 
+        nameSpace = 'pane',
+        throttleTimer = 50,
+      ) {
+        this.watches = new Map();
+        this.nameSpace = nameSpace;
+        
+        this.$dom = $dom;
+        this.$el = document.createElement('div');
+        this.$el.classList.add(nameSpace);
+        this.$el.addEventListener('input', (e) => this._onChange(e), {
+          captures: true,
+          passive: true,
+        }, true);
+
+        $dom.appendChild(this.$el);
+
+        this.events = {};
+        this.timer;
+      }
+
+      _onChange (event) {
+        const $target = event.target;
+        
+        if ('key' in $target.dataset) {
+          const key = $target.dataset.key;
+          const ref = this.watches.get(key);
+          
+          if ( $target.dataset.type === 'number') {
+            ref[key] = new Number($target.value);
+          } else {
+            ref[key] = $target.value;
+          }
+
+          if('siblingid' in $target.dataset) {
+            document.getElementById($target.dataset.siblingid).value = $target.value;
+          }
+
+          if (this.events.hasOwnProperty('change')) {
+            clearTimeout(this.timer); 
+            this.events['change'].forEach(fn => {
+              this.timer = setTimeout(() => {
+                fn.apply(ref);
+              }, this.throttleTimer);
+            });
+          }
+        }   
+      }
+
+      on(event, fn) {
+        if (!this.events.hasOwnProperty(event)) {
+          this.events[event] = [];
+        }
+        this.events[event].push(fn);
+      }
+
+      addInput(reference, key, options) {
+        this.watches.set(key, reference);
+        this._appendInput(reference, key, options)
+      }
+
+      _appendInput(reference, key, options) {
+        let type = typeof reference[key];
+
+        const $e = document.createElement('label');
+        const $label = document.createElement('strong');
+        const $section = document.createElement('div');
+
+        let $i, $in;
+
+        if (type === 'number') {
+          $i = document.createElement('input');
+          $in = document.createElement('input');
+
+          $i.setAttribute('type', 'range');
+          $in.setAttribute('type', 'number');
+
+          if (options.hasOwnProperty('min')) {
+            $i.setAttribute('min', options.min);
+            $in.setAttribute('min', options.min);
+          }
+          if (options.hasOwnProperty('max')) {
+            $i.setAttribute('max', options.max);
+            $in.setAttribute('max', options.max);
+          }
+          if (options.hasOwnProperty('step')) {
+            $i.setAttribute('step', options.step);
+            $in.setAttribute('step', options.step);
+          }
+        } else if (type === 'string') {
+          if (options.hasOwnProperty('options')) {
+            $i = document.createElement('select');
+
+            options.options.forEach(option => {
+              const $opt = document.createElement('option');
+              $opt.setAttribute('value', option);
+              $opt.innerHTML = option;
+              $i.appendChild($opt);
+            });
+          } else {
+            $i = document.createElement('input');
+            $i.setAttribute('type', 'text');
+          }
+        }
+
+        $i.dataset.key = key;
+        $i.dataset.type = type;
+        $i.value = reference[key];
+        $i.id = `${this.nameSpace}--${key}`;
+        $i.classList.add(
+          `${this.nameSpace}__input`,
+          `${this.nameSpace}__input--${type}`
+        );
+        
+        $section.appendChild($i);
+        $section.classList.add(
+          `${this.nameSpace}__inputs`,
+          `${this.nameSpace}__inputs--${type}`
+        );
+
+        if ($in) {
+          $in.dataset.key = key;
+          $in.dataset.type = type;
+          $in.value = reference[key];
+          $in.id = `${this.nameSpace}--${key}--value`;
+          $i.classList.add(
+            `${this.nameSpace}__input`,
+            `${this.nameSpace}__input--${type}`
+          );
+          $in.dataset.siblingid = `${this.nameSpace}--${key}`;
+          $i.dataset.siblingid = `${this.nameSpace}--${key}--value`;
+          $section.appendChild($in);
+        }
+
+        $label.innerHTML = key;
+        $label.classList.add(`${this.nameSpace}__label`);
+        
+        $e.classList.add(`${this.nameSpace}__section`);
+        $e.appendChild($label);
+        $e.append($section);
+
+        this.$el.appendChild($e);
+      }
+    }
+
+    const pane = new Pane(document.querySelector('[data-pane]'))
 
     const PARAMS = {
       colors: 9,
@@ -235,6 +530,7 @@
       maxSaturation: 1,
       maxLight: 1,
     };
+
     pane.addInput(
       PARAMS, 'colors',
       { min: 3, max: 35, step: 1 }
@@ -249,13 +545,13 @@
       { min: 0, max: 1.5, step: 0.001 }
     );
     pane.addInput(PARAMS, 'curveMethod', {
-      options: {
-        lamé: 'lamé',
-        arc: 'arc',
-        pow: 'pow',
-        powY: 'powY',
-        powX: 'powX',
-      },
+      options: [
+        'lamé',
+        'arc',
+        'pow',
+        'powY',
+        'powX',
+      ],
     });
     pane.addInput(
       PARAMS, 'curveAccent',
