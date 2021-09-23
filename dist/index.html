@@ -365,6 +365,11 @@
       </aside>
       <aside data-list>
       </aside>
+      <select data-mode>
+        <option>hex</option>
+        <option>rgb</option>
+        <option>hsl</option>
+      </select>
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
   </article>
@@ -680,8 +685,6 @@ generateRandomColorRamp({
   maxSaturationLight: [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
 });
 `
-
-
       points(
         PARAMS.colors,
         PARAMS.offsetTint,
@@ -765,16 +768,30 @@ generateRandomColorRamp({
       }
 
     }
+    let colorMode = 'hsl';
+
+    function hslToWhateverString (hsl, whatever) {
+      if (whatever === 'hsl') {
+        return `${Math.floor(hsl[0])}° ${Math.floor(hsl[1] * 100)}% ${Math.floor(hsl[2] * 100)}%`;
+      } else if (whatever === 'hex') {
+        return culori.formatHex({ mode: 'hsl', h: hsl[0], s: hsl[1], l: hsl[2] });
+      } else if (whatever === 'rgb') {
+        const col = culori.rgb(`hsl(${hsl[0]},${hsl[1] * 100}%,${hsl[2] * 100}%)`);
+        return `${Math.round(col.r * 255)} ${Math.round(col.g * 255)} ${Math.round(col.b * 255)}`;
+      }
+    }
 
     function list(colors) {
       document.querySelector('[data-list]').innerHTML = `
         <div>
-        <h3>Light Colors</h3>
+        <h3>
+          Light Colors
+        </h3>
         <ol>
           ${colors.light.map(e => {
-              const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+              const hex = hslToWhateverString(e, 'hex');
               return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+                ${hslToWhateverString(e,colorMode)}
             </li>`}).join('')}
         </ol>
         </div>
@@ -782,9 +799,9 @@ generateRandomColorRamp({
         <h3>Base Colors</h3>
         <ol>
           ${colors.base.map(e => {
-                const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+                const hex = hslToWhateverString(e, 'hex');
                 return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+              ${hslToWhateverString(e, colorMode)}
             </li>`}).join('')}
         </ol>
         </div>
@@ -792,19 +809,38 @@ generateRandomColorRamp({
         <h3>Dark Colors</h3>
         <ol>
           ${colors.dark.map(e => {
-            const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
+            const hex = hslToWhateverString(e, 'hex');
             return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
+              ${hslToWhateverString(e, colorMode)}
             </li>`}).join('')}
         </ol>
         </div>
       `
     }
 
+    document.querySelector('[data-mode]').addEventListener('change', (e) => {
+      colorMode = e.target.value;
+      list(colors);
+    })
+
     let timer;
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
     $pal.addEventListener('pointerup', () => clearInterval(timer));
+    /**
+      let expString = this.paletteTitle + '\n';
+      expString += `⸺\n`;
+      expString = list.reduce((rem, color) => (
+        rem + color.name + ' ' + color.value + '\n'
+      ), expString);
+      expString += `⸺\n`;
+      expString += `${this.colors.join(',')}\n`;
+      expString += `⸺\n`;
+      expString += `URL:\n`;
+      expString += `${window.location.origin + "/?s=" + this.constructURL()}\n`;
 
+
+      navigator.clipboard.writeText(expString);
+     **/
     pane.on('change', bam);
 
     bam();
