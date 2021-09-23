@@ -1,7 +1,7 @@
 export type CurveMethod = 'lamé'|'arc'|'pow'|'powY'|'powX';
-type Vector2 = [number, number];
-type Vector3 = [number, number, number];
-type MainFunctionArguments = {
+export type Vector2 = [number, number];
+export type Vector3 = [number, number, number];
+export type GenerateRandomColorRampArgument = {
   total?: number,
   centerHue?: number,
   hueCycle?: number,
@@ -135,7 +135,7 @@ export default function generateRandomColorRamp  ({
   offsetCurveModShade = 0.03,
   minSaturationLight  = [0, 0],
   maxSaturationLight  = [1, 1]
-}:MainFunctionArguments = {}):{
+}:GenerateRandomColorRampArgument = {}):{
   light: Vector3[],
   dark: Vector3[],
   base: Vector3[],
