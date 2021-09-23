@@ -39,6 +39,7 @@
     .main aside {
       max-width: 27rem;
     }
+
     h1 {
       font-size: calc(1rem + 11vw);
       font-weight: 900;
@@ -135,14 +136,15 @@
       display: none;
     }
     [data-list] h5 {
-      margin-top: .5em;
+      font-weight: 600;
+      margin-top: .75em;
       margin-bottom: .4em;
     }
     [data-list] li {
-      font-family: monospace;
       font-size: 0.8rem;
       line-height: 1.2;
       position: relative;
+      padding-bottom: .5em;
     }
     [data-list] li ~ li {
       margin-top: .5rem;
@@ -167,6 +169,9 @@
       padding: .25rem 0 .5rem;
       transition: 200ms height;
     }
+    .color-info > div {
+      margin-top: .5em;
+    }
     [data-list] > div {
       flex: 1;
     }
@@ -176,8 +181,10 @@
     p {
       margin-top: 1em;
       max-width: 20rem;
-      line-height: 1.4;
-      font-weight: 300;
+      font-size: 0.8em;
+      letter-spacing: 0.002em;
+      line-height: 1.38;
+      font-weight: 400;
     }
 
     .pane__section,
