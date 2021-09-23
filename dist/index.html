@@ -663,7 +663,7 @@
       });
 
       document.querySelector('[data-code]').innerHTML = `
-generateRandomColorRamp(
+generateRandomColorRamp({
   total: ${PARAMS.colors},
   centerHue: ${PARAMS.centerHue},
   hueCycle: ${PARAMS.hueCycle},
@@ -676,7 +676,7 @@ generateRandomColorRamp(
   offsetCurveModShade: ${PARAMS.offsetCurveModShade},
   minSaturationLight: [${PARAMS.minSaturation}, ${PARAMS.minLight}],
   maxSaturationLight: [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
-);
+});
 `
 
 
