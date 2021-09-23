@@ -370,6 +370,10 @@
       margin-bottom: 1rem;
     }
     
+    svg:not(:root){
+      overflow: visible;
+    } 
+    
   </style>
 </head>
 
@@ -389,6 +393,10 @@
     <section class="main">
       <h1>Fette&shy;Palette</h1>
       <p>Color palette generation using curves within the HSV color model</p>
+      <!--p>
+        <mark>Fette­Palette</mark> is a function that returns an object containing
+        as many base colors, tints and shades as set in <code>colors</code>.
+      </p-->
       <aside>
         <h2>HSL Slice Preview</h2>
         <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
