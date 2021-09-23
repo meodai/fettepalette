@@ -370,6 +370,7 @@
         <option>rgb</option>
         <option>hsl</option>
       </select>
+      <!--button data-copy>copy all the colors</button-->
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
   </article>
@@ -826,21 +827,12 @@ generateRandomColorRamp({
     let timer;
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
     $pal.addEventListener('pointerup', () => clearInterval(timer));
-    /**
-      let expString = this.paletteTitle + '\n';
-      expString += `⸺\n`;
-      expString = list.reduce((rem, color) => (
-        rem + color.name + ' ' + color.value + '\n'
-      ), expString);
-      expString += `⸺\n`;
-      expString += `${this.colors.join(',')}\n`;
-      expString += `⸺\n`;
-      expString += `URL:\n`;
-      expString += `${window.location.origin + "/?s=" + this.constructURL()}\n`;
 
-
+    /*document.querySelector('[data-copy]').addEventListener('click', () => {
+      const expString = JSON.stringify(colors);
       navigator.clipboard.writeText(expString);
-     **/
+    });*/
+
     pane.on('change', bam);
 
     bam();
