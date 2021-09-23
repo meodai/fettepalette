@@ -372,7 +372,7 @@
     import generateRandomColorRamp ,{ hsv2hsl, random, pointOnCurve } from './index.js';
 
     console.clear();
-
+    
     const shuffleArray = array => {
       let arr = [...array];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -647,35 +647,35 @@
     }
 
     function bam() {
-      colors = generateRandomColorRamp(
-        PARAMS.colors,
-        PARAMS.centerHue,
-        PARAMS.hueCycle,
-        PARAMS.offsetTint,
-        PARAMS.offsetShade,
-        PARAMS.curveAccent,
-        PARAMS.tintShadeHueShift,
-        PARAMS.curveMethod,
-        PARAMS.offsetCurveModTint,
-        PARAMS.offsetCurveModShade,
-        [PARAMS.minSaturation, PARAMS.minLight],
-        [PARAMS.maxSaturation, PARAMS.maxLight]
-      );
+      colors = generateRandomColorRamp({
+        total: PARAMS.colors,
+        centerHue: PARAMS.centerHue,
+        hueCycle: PARAMS.hueCycle,
+        offsetTint: PARAMS.offsetTint,
+        offsetShade: PARAMS.offsetShade,
+        curveAccent: PARAMS.curveAccent,
+        tintShadeHueShift: PARAMS.tintShadeHueShift,
+        curveMethod: PARAMS.curveMethod,
+        offsetCurveModTint: PARAMS.offsetCurveModTint,
+        offsetCurveModShade: PARAMS.offsetCurveModShade,
+        minSaturationLight: [PARAMS.minSaturation, PARAMS.minLight],
+        maxSaturationLight: [PARAMS.maxSaturation, PARAMS.maxLight],
+      });
 
       document.querySelector('[data-code]').innerHTML = `
 generateRandomColorRamp(
-  ${PARAMS.colors},
-  ${PARAMS.centerHue},
-  ${PARAMS.hueCycle},
-  ${PARAMS.offsetTint},
-  ${PARAMS.offsetShade},
-  ${PARAMS.curveAccent},
-  ${PARAMS.tintShadeHueShift},
-  '${PARAMS.curveMethod}',
-  ${PARAMS.offsetCurveModTint},
-  ${PARAMS.offsetCurveModShade},
-  [${PARAMS.minSaturation}, ${PARAMS.minLight}],
-  [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
+  total: ${PARAMS.colors},
+  centerHue: ${PARAMS.centerHue},
+  hueCycle: ${PARAMS.hueCycle},
+  curveMethod: '${PARAMS.curveMethod}',
+  curveAccent: ${PARAMS.curveAccent},
+  offsetTint: ${PARAMS.offsetTint},
+  offsetShade: ${PARAMS.offsetShade},
+  tintShadeHueShift: ${PARAMS.tintShadeHueShift},
+  offsetCurveModTint: ${PARAMS.offsetCurveModTint},
+  offsetCurveModShade: ${PARAMS.offsetCurveModShade},
+  minSaturationLight: [${PARAMS.minSaturation}, ${PARAMS.minLight}],
+  maxSaturationLight: [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
 );
 `
 

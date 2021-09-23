@@ -1,6 +1,20 @@
 export type curveMethod = 'lamé'|'arc'|'pow'|'powY'|'powX';
 type vector2 = [number, number];
 type hsx = [number, number, number];
+type mainFunctionArguments = {
+  total?:number,
+  centerHue?:number,
+  hueCycle?:number,
+  offsetTint?:number,
+  offsetShade?:number,
+  curveAccent?:number,
+  tintShadeHueShift?:number,
+  curveMethod?:curveMethod, 
+  offsetCurveModTint?:number,
+  offsetCurveModShade?:number,
+  minSaturationLight?:vector2,
+  maxSaturationLight?:vector2,
+};
 
 /**
  * function hsv2hsl
@@ -108,20 +122,20 @@ export const pointOnCurve = (
 
 // arc || lamé: https://observablehq.com/@daformat/draw-squircle-shapes-with-svg-javascript
   
-export default function generateRandomColorRamp  (
-  total:number,
-  centerHue:number           = 0,
-  hueCycle:number            = 0.3,
-  offsetTint:number          = 0.1,
-  offsetShade:number         = 0.1,
-  curveAccent:number         = 0,
-  tintShadeHueShift:number   = 0.1,
-  curveMethod:curveMethod    = 'arc', 
-  offsetCurveModTint:number  = 0.03,
-  offsetCurveModShade:number = 0.03,
-  minSaturationLight:vector2 = [0, 0],
-  maxSaturationLight:vector2 = [1, 1]
-):{
+export default function generateRandomColorRamp  ({
+  total               = 3,
+  centerHue           = 0,
+  hueCycle            = 0.3,
+  offsetTint          = 0.1,
+  offsetShade         = 0.1,
+  curveAccent         = 0,
+  tintShadeHueShift   = 0.1,
+  curveMethod         = 'arc', 
+  offsetCurveModTint  = 0.03,
+  offsetCurveModShade = 0.03,
+  minSaturationLight  = [0, 0],
+  maxSaturationLight  = [1, 1]
+}:mainFunctionArguments = {}):{
   light: hsx[],
   dark: hsx[],
   base: hsx[],

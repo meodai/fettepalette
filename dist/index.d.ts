@@ -1,6 +1,20 @@
 export declare type curveMethod = 'lamé' | 'arc' | 'pow' | 'powY' | 'powX';
 declare type vector2 = [number, number];
 declare type hsx = [number, number, number];
+declare type mainFunctionArguments = {
+    total?: number;
+    centerHue?: number;
+    hueCycle?: number;
+    offsetTint?: number;
+    offsetShade?: number;
+    curveAccent?: number;
+    tintShadeHueShift?: number;
+    curveMethod?: curveMethod;
+    offsetCurveModTint?: number;
+    offsetCurveModShade?: number;
+    minSaturationLight?: vector2;
+    maxSaturationLight?: vector2;
+};
 /**
  * function hsv2hsl
  * @param h {Number} hue value 0...360
@@ -29,21 +43,26 @@ export declare const random: (min: number, max: number) => number;
 export declare const pointOnCurve: (curveMethod: curveMethod, i: number, total: number, curveAccent: number, min?: vector2, max?: vector2) => number[];
 /**
  * generateRandomColorRamp()
- * @param total
- * @param centerHue
- * @param hueCycle
- * @param offsetTint
- * @param offsetShade
- * @param curveAccent
- * @param tintShadeHueShift
- * @param curveMethod
- * @param offsetCurveModTint
- * @param offsetCurveModShade
- * @param minSaturationLight
- * @param maxSaturationLight
- * @returns
- */
-export default function generateRandomColorRamp(total: number, centerHue?: number, hueCycle?: number, offsetTint?: number, offsetShade?: number, curveAccent?: number, tintShadeHueShift?: number, curveMethod?: curveMethod, offsetCurveModTint?: number, offsetCurveModShade?: number, minSaturationLight?: vector2, maxSaturationLight?: vector2): {
+ * @param total: int 3... > Amount of base colors.
+ * @param centerHu: float 0...1 > 0 Red, 180 Teal etc..
+ * @param hueCycle: float 0...1 > How much the color changes over the curve 0: not at all, 1: full rainbow
+ * @param offsetTint: float  0...1 > Tint curve difference
+ * @param offsetShade: float  0...1 > Shade curve difference
+ * @param curveAccent: float  0...1 > How pronounced should the curve be, depends a lot on the curve method
+ * @param tintShadeHueShift: float 0...1 > Shifts the colors for the shades and tints
+ * @param curveMethod: string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve
+ * @param offsetCurveModTint: float 0...1 > amplifies the curveAccent of for the tint colors
+ * @param offsetCurveModShade: float 0...1 > amplifies the curveAccent of for the shade colors
+ * @param minSaturationLight: array [0...1, 0...1] > minium saturation and light of the generated colors
+ * @param maxSaturationLight: array [0...1, 0...1] > maximum saturation and light of the generated colors
+ * @returns Object {
+    light: [[h,s,l]...], // tints
+    dark: [[h,s,l]...], // shades
+    base: [[h,s,l]...], // smedium colors
+    all: [[h,s,l]...], // all colors
+  }
+*/
+export default function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: mainFunctionArguments): {
     light: hsx[];
     dark: hsx[];
     base: hsx[];

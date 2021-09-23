@@ -31,25 +31,43 @@ import generateRandomColorRamp from 'culori';
 ```js
 import generateRandomColorRamp from 'colordescription';
 
-function generateRandomColorRamp  (
-  10,  // total of base colors in the ramp
-  180, // at what hue should the generation start at
-  0.3, // hsl spins how much should the hue change over the curve, 0: not at all, 1: one full rainbow
-  0.1,  // offset for the tints
-  0.1, // offset of the shades
-  0, // how accentuated is the curve (depends heavely on curveMethod)
-  0.1, // defines how shifted the hue is in for the shades and the tints
-  'arc', // what method is used to draw the curve in the HSV color model 
-  0.03, // modifies the tint curve
-  0.03, //modifies the shade curve
-  [0, 0], // defines the min saturation and light of all the colors
-  [1, 1], // defines the max saturation and light of all the colors
-)
+function generateRandomColorRamp  ({
+  total:                10,   // total of base colors in the ramp
+
+  centerHue:            180,  // at what hue should the generation start at
+
+  hueCycle:             0.3,  // hsl spins how much should the hue change over 
+                              // the curve, 0: not at all, 1: one full rainbow
+
+  offsetTint:           0.1,  // offset for the tints
+
+  offsetShade:          0.1,  // offset of the shades
+
+  curveMethod:         'arc', // what method is used to draw the curve in the 
+                              // HSV color model 
+
+  curveAccent:          0,    // how accentuated is the curve 
+                              // (depends heavely on curveMethod)
+
+  tintShadeHueShift:    0.1,  // defines how shifted the hue is in 
+                              //for the shades and the tints
+
+  offsetCurveModTint:  0.03,  // modifies the tint curve
+
+  offsetCurveModShade: 0.03,  //modifies the shade curve
+
+  minSaturationLight:  [0, 0],// defines the min saturation and light of all 
+                              // the colors
+
+  maxSaturationLight:  [1, 1],// defines the max saturation and light of all 
+                              //the colors
+})
 ```
 
-### generateRandomColorRamp()
+### generateRandomColorRamp(Options{})
 
-Function returns an ob object containing 4 arrays: 
+Function returns an ob object containing 4 arrays:
+
 ```js
 {
     light: [], // tints 
@@ -58,10 +76,11 @@ Function returns an ob object containing 4 arrays:
     all: [], // all colors
  }
 ```
+
 Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...360,0...1,0...1]`
 
 
-#### Arguments
+#### Options
 
 1. `total` int 3... > Amount of base colors.
 2. `centerHue` float 0...1 > 0 Red, 180 Teal etc..
