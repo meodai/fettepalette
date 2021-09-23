@@ -82,15 +82,15 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 
 #### Options
 
-1. `total` int 3... > Amount of base colors.
-2. `centerHue` float 0...1 > 0 Red, 180 Teal etc..
-3. `hueCycle` float 0...1 > How much the color changes over the curve 0: not at all, 1: full rainbow
-4. `offsetTint` float  0...1 > Tint curve difference
-5. `offsetShade` float  0...1 > Shade curve difference
-6. `curveAccent` float  0...1 > How pronounced should the curve be, depends a lot on the curve method
-7. `tintShadeHueShift` float 0...1 > Shifts the colors for the shades and tints
-8. `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve
-9. `offsetCurveModTint` float 0...1 > amplifies the curveAccent of for the tint colors
-10. `offsetCurveModShade` float 0...1 > amplifies the curveAccent of for the shade colors
-11. `minSaturationLight` array [0...1, 0...1] > minium saturation and light of the generated colors
-12. `maxSaturationLight` array [0...1, 0...1] > maximum saturation and light of the generated colors
+- `total` int 3... > Amount of base colors.
+- `centerHue` float 0...1 > 0 Red, 180 Teal etc..
+- `hueCycle` float 0...1 > How much the color changes over the curve 0: not at all, 1: full rainbow
+- `offsetTint` float  0...1 > Tint curve difference
+- `offsetShade` float  0...1 > Shade curve difference
+- `curveAccent` float  0...1 > How pronounced should the curve be, depends a lot on the curve method
+- `tintShadeHueShift` float 0...1 > Shifts the colors for the shades and tints
+- `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve
+- `offsetCurveModTint` float 0...1 > amplifies the curveAccent of for the tint colors
+- `offsetCurveModShade` float 0...1 > amplifies the curveAccent of for the shade colors
+- `minSaturationLight` array [0...1, 0...1] > minium saturation and light of the generated colors
+- `maxSaturationLight` array [0...1, 0...1] > maximum saturation and light of the generated colors
