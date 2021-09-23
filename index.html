@@ -121,27 +121,46 @@
       display: flex;
       gap: 0.5rem;
     }
+    [data-list] .contrast div {
+      margin-top: .35em;
+    }
     [data-list] h3 {
       margin-bottom: 0.5rem;
       margin-top: 2rem;
       display: none;
     }
+    [data-list] h5 {
+      margin-top: .5em;
+      margin-bottom: .4em;
+    }
     [data-list] li {
       font-family: monospace;
       font-size: 0.8rem;
       line-height: 1.2;
+      position: relative;
     }
     [data-list] li ~ li {
-      margin-top: 1.25rem;
+      margin-top: .5rem;
     }
     [data-list] li::before {
-      user-slectable: none;
+      user-select: none;
       content: "";
       background: var(--col);
       display: block;
       width: 100%;
-      height: 3rem;
+      height: 2rem;
       margin-bottom: 0.25rem;
+    }
+    [data-copy] {
+      margin-top: .15em;
+    }
+    [data-list] .color-info {
+      top: 100%;
+      z-index: 1;
+      left: 0;
+      right: 0;
+      padding: .25rem 0 .5rem;
+      transition: 200ms height;
     }
     [data-list] > div {
       flex: 1;
@@ -245,7 +264,6 @@
     .pane input[type=range]::-webkit-slider-runnable-track {
       width: 100%;
       height: 1rem;
-      animate: 0.2s;
       background: transparent;
       color: var(--c-black);
       border-radius: 0;
@@ -761,7 +779,7 @@ generateRandomColorRamp({
 
         newElement.setAttribute('r', '3');
 
-        newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg, ${hsl[1] * 100}%,${hsl[2] * 100}%)`;
+        newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg,${hsl[1] * 100}%,${hsl[2] * 100}%)`;
         newElement.style.stroke = '#212121';
         newElement.style.strokeWidth = '.5px';
 
@@ -812,12 +830,16 @@ generateRandomColorRamp({
       const printColors = (arr) => arr.map(({ hsl, rgb, hex, contrast }) => {
         return `
           <li style="--col:${hex}">
-            <h5>colors:</h5>
-            <div data-copy title="Click to copy">hsl(${Math.floor(hsl[0])}, ${Math.floor(hsl[1] * 100)}%, ${Math.floor(hsl[2] * 100)}%)</div>
-            <div data-copy title="Click to copy">rgb(${Math.floor(rgb[0])}, ${Math.floor(rgb[1] * 100)}, ${Math.floor(rgb[2] * 100)})</div>
-            <div data-copy title="Click to copy">${hex}</div>
-            <h5 style="margin-top: 0.25rem;">contrasts:</h5>
-            <div><span style="color: #ffffff; text-shadow: 0 0 2px #000000;">⬤</span> ${contrast.white.toFixed(2)} - <span style="color: #000000;">⬤</span> ${contrast.black.toFixed(2)}</div>
+            <div class="color-info">
+              <div data-copy title="Click to copy">hsl(${Math.floor(hsl[0])},${Math.floor(hsl[1] * 100)}%,${Math.floor(hsl[2] * 100)}%)</div>
+              <div data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1] * 100)},${Math.floor(rgb[2] * 100)})</div>
+              <div data-copy title="Click to copy">${hex}</div>
+              <h5>wcag contrast:</h5>
+              <div class="contrast">
+                <div><span style="color: #ffffff; text-shadow: 0 0 2px #000000;">⬤</span> ${contrast.white.toFixed(2)}</div>
+                <div><span style="color: #000000;">⬤</span> ${contrast.black.toFixed(2)}</div>
+              </div>
+            </div>
           </li>
         `
       }).join('');
