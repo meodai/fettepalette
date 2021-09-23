@@ -378,14 +378,6 @@
       </aside>
       <aside data-list>
       </aside>
-      <label>
-        <strong>Color Model</strong>
-        <select data-mode>
-          <option>hsl</option>
-          <option>hex</option>
-          <option>rgb</option>
-        </select>
-      </label>
       <!--button data-copy>copy all the colors</button-->
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
@@ -859,11 +851,6 @@ generateRandomColorRamp({
         });
       }
     }
-
-    document.querySelector('[data-mode]').addEventListener('change', (e) => {
-      colorMode = e.target.value;
-      list(colors);
-    })
 
     let timer;
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
