@@ -25,7 +25,7 @@
     .settings h3 {
       margin-bottom: 2em;
     }
-    [data-pane] {
+    .settings__inner {
       position: sticky;
       top: 2rem;
     }
@@ -38,9 +38,13 @@
       max-width: 27rem;
     }
     h1 {
-      font-size: calc(1rem + 12vw);
+      font-size: calc(1rem + 11vw);
       font-weight: 700;
       margin-top: 1rem;
+    }
+    pre {
+      font-family: monospace;
+      font-size: 1rem;
     }
 
     h2 {
@@ -240,7 +244,6 @@
     .pane input[type=range]::-moz-range-track {
       width: 100%;
       height: 1rem;
-      animate: 0.2s;
       background: transparent;
       color: var(--c-black);
       border-radius: 0;
@@ -261,7 +264,6 @@
     .pane input[type=range]::-ms-track {
       width: 100%;
       height: 1rem;
-      animate: 0.2s;
       background: transparent;
       color: var(--c-black);
       border-radius: 0;
@@ -311,6 +313,10 @@
       outline: none;
       background-color: transparent;
     }
+    .settings .code-title {
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
     
   </style>
 </head>
@@ -319,8 +325,13 @@
   <article class="app">
     <aside class="settings">
       <h3>Settings</h3>
-      <div data-pane>
-
+      
+      <div class="settings__inner">
+        <div data-pane></div>
+        <h3 class="code-title">Function Call</h3>
+        <code>
+          <pre data-code></pre>
+        </code>
       </div>
     </aside>
     <section class="main">
@@ -643,6 +654,23 @@
         [PARAMS.minSaturation, PARAMS.minLight],
         [PARAMS.maxSaturation, PARAMS.maxLight]
       );
+
+      document.querySelector('[data-code]').innerHTML = `
+generateRandomColorRamp(
+  ${PARAMS.colors},
+  ${PARAMS.centerHue},
+  ${PARAMS.hueCycle},
+  ${PARAMS.offsetTint},
+  ${PARAMS.offsetShade},
+  ${PARAMS.curveAccent},
+  ${PARAMS.tintShadeHueShift},
+  '${PARAMS.curveMethod}',
+  ${PARAMS.offsetCurveModTint},
+  ${PARAMS.offsetCurveModShade},
+  [${PARAMS.minSaturation}, ${PARAMS.minLight}],
+  [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
+);
+`
 
 
       points(
