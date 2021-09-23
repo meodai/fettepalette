@@ -1,7 +1,7 @@
 export declare type CurveMethod = 'lamé' | 'arc' | 'pow' | 'powY' | 'powX';
-declare type Vector2 = [number, number];
-declare type Vector3 = [number, number, number];
-declare type MainFunctionArguments = {
+export declare type Vector2 = [number, number];
+export declare type Vector3 = [number, number, number];
+export declare type GenerateRandomColorRampArgument = {
     total?: number;
     centerHue?: number;
     hueCycle?: number;
@@ -62,10 +62,9 @@ export declare const pointOnCurve: (curveMethod: CurveMethod, i: number, total: 
     all: [[h,s,l]...], // all colors
   }
 */
-export default function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: MainFunctionArguments): {
+export default function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: GenerateRandomColorRampArgument): {
     light: Vector3[];
     dark: Vector3[];
     base: Vector3[];
     all: Vector3[];
 };
-export {};
