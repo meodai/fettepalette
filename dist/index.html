@@ -117,6 +117,7 @@
     [data-list] {
       margin: 2rem 0;
       display: flex;
+      gap: 0.5rem;
     }
     [data-list] h3 {
       margin-bottom: 0.5rem;
@@ -126,15 +127,25 @@
     [data-list] li {
       font-family: monospace;
       font-size: 0.8rem;
-      margin-top: 0.5em;
+      line-height: 1.2;
+    }
+    [data-list] li ~ li {
+      margin-top: 1.25rem;
     }
     [data-list] li::before {
       user-slectable: none;
-      content: "⬤";
-      color: var(--col);
+      content: "";
+      background: var(--col);
+      display: block;
+      width: 100%;
+      height: 3rem;
+      margin-bottom: 0.25rem;
     }
     [data-list] > div {
-      flex: 0 0 33.333%;
+      flex: 1;
+    }
+    [data-copy] {
+      cursor: pointer;
     }
     p {
       margin-top: 1em;
@@ -642,10 +653,10 @@
       }
 
       for (let i = 0; i < 4; i++) {
-        $pal.style.setProperty(`--col-${i}`, `hsl(${allColors[i][0]},${allColors[i][1] * 100}%,${allColors[i][2] * 100}%)`);
+        $pal.style.setProperty(`--col-${i}`, `hsl(${allColors[i].hsl[0]},${allColors[i].hsl[1] * 100}%,${allColors[i].hsl[2] * 100}%)`);
       }
 
-      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b[2] - a[2]).map(c => `hsl(${c[0]},${c[1] * 100}%,${c[2] * 100}%)`).join(',')})`)
+      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b.hsl[2] - a.hsl[2]).map(c => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`).join(',')})`)
     }
 
     function bam() {
@@ -663,6 +674,24 @@
         minSaturationLight: [PARAMS.minSaturation, PARAMS.minLight],
         maxSaturationLight: [PARAMS.maxSaturation, PARAMS.maxLight],
       });
+
+      // Mutate colors object
+      for (const key in colors) {
+        colors[key] = colors[key].map(([h, s, l]) => {
+          const { r, g, b } = culori.converter('rgb')({ mode: 'hsl', h: 0, s: 1, l: .5 })
+          return {
+            hsl: [h, s, l],
+            rgb: [r * 255, g * 255, b * 255],
+            hex: culori.formatHex({ mode: 'hsl', h, s, l }),
+            contrast: {
+              white: culori.wcagContrast('#ffffff', { mode: 'hsl', h, s, l }),
+              black: culori.wcagContrast('#000000', { mode: 'hsl', h, s, l })
+            }
+          }
+        });
+      }
+
+      console.clear();
 
       document.querySelector('[data-code]').innerHTML = `
 generateRandomColorRamp({
@@ -695,10 +724,10 @@ generateRandomColorRamp({
         [PARAMS.maxSaturation, PARAMS.maxLight]
       );
 
-      $picker.style.setProperty(`--deg`, `${colors.all[Math.floor(colors.all.length * .5)][0]}deg`);
+      $picker.style.setProperty(`--deg`, `${colors.all[Math.floor(colors.all.length * .5)].hsl[0]}deg`);
 
       document.querySelector('[data-colors]').innerHTML = colors.all.reduce((r, c) => {
-        return `${r}<i style="--w: ${1 / PARAMS.colors}; --h: ${c[0]}; --s: ${c[1] * 100}; --l: ${c[2] * 100}"></i>`
+        return `${r}<i style="--w: ${1 / PARAMS.colors}; --h: ${c.hsl[0]}; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`
       }, '');
 
       palette(colors, 'random');
@@ -731,7 +760,7 @@ generateRandomColorRamp({
 
         newElement.setAttribute('r', '3');
 
-        newElement.style.fill = `hsl(${colorsArr[i - 1][0]}deg, ${hsl[1] * 100}%,${hsl[2] * 100}%)`;
+        newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg, ${hsl[1] * 100}%,${hsl[2] * 100}%)`;
         newElement.style.stroke = '#212121';
         newElement.style.strokeWidth = '.5px';
 
@@ -767,38 +796,47 @@ generateRandomColorRamp({
     }
 
     function list(colors) {
+      const printColors = (arr) => arr.map(({ hsl, rgb, hex, contrast }) => {
+        return `
+          <li style="--col:${hex}">
+            <h5>colors:</h5>
+            <div data-copy title="Click to copy">hsl(${Math.floor(hsl[0])}, ${Math.floor(hsl[1] * 100)}%, ${Math.floor(hsl[2] * 100)}%)</div>
+            <div data-copy title="Click to copy">rgb(${Math.floor(rgb[0])}, ${Math.floor(rgb[1] * 100)}, ${Math.floor(rgb[2] * 100)})</div>
+            <div data-copy title="Click to copy">${hex}</div>
+            <h5 style="margin-top: 0.25rem;">contrasts:</h5>
+            <div><span style="color: #ffffff; text-shadow: 0 0 2px #000000;">⬤</span> ${contrast.white.toFixed(2)} - <span style="color: #000000;">⬤</span> ${contrast.black.toFixed(2)}</div>
+          </li>
+        `
+      }).join('');
+
       document.querySelector('[data-list]').innerHTML = `
         <div>
-        <h3>Light Colors</h3>
-        <ol>
-          ${colors.light.map(e => {
-              const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
-              return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
-            </li>`}).join('')}
-        </ol>
+          <h3>Light Colors</h3>
+          <ol>${printColors(colors.light)}</ol>
         </div>
         <div>
-        <h3>Base Colors</h3>
-        <ol>
-          ${colors.base.map(e => {
-                const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
-                return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
-            </li>`}).join('')}
-        </ol>
+          <h3>Base Colors</h3>
+          <ol>${printColors(colors.base)}</ol>
         </div>
         <div>
-        <h3>Dark Colors</h3>
-        <ol>
-          ${colors.dark.map(e => {
-            const hex = culori.formatHex({ mode: 'hsl', h: e[0], s: e[1], l: e[2] });
-            return `<li style="--col:${hex}">
-              ${Math.floor(e[0])}° ${Math.floor(e[1] * 100)}% ${Math.floor(e[2] * 100)}%
-            </li>`}).join('')}
-        </ol>
+          <h3>Dark Colors</h3>
+          <ol>${printColors(colors.dark)}</ol>
         </div>
       `
+
+      if (navigator.clipboard) {
+        [...document.querySelectorAll('[data-list] [data-copy]')].forEach($el => {
+          const text = $el.innerText;
+          $el.addEventListener('click', () => {
+            navigator.clipboard.writeText(text).then(() => {
+              $el.innerText = 'copied!';
+              setTimeout(() => {
+                $el.innerText = text;
+              }, 500)
+            })
+          });
+        });
+      }
     }
 
     let timer;
