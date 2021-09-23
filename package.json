@@ -1,17 +1,19 @@
 {
   "name": "fettepalette",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Color ramp generator using curves within the HSV color model",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.iife.js",
   "type": "module",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build && npm run build:esm && npm run build:browser && npm run build:node",
+    "build": "npm run lint && tsc --build && npm run build:esm && npm run build:browser && npm run build:node",
     "build:esm": "esbuild src/index.ts --outfile=dist/index.esm.js --format=esm --bundle --target=es2020 --minify",
     "build:browser": "esbuild src/index.ts --outfile=dist/index.iife.js --bundle --target=es6 --format=iife --global-name=fettePalette --minify",
     "build:node": "esbuild src/index.ts --outfile=dist/index.js --platform=node --target=node14 --minify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,9 @@
   },
   "homepage": "https://github.com/meodai/fettepalette#readme",
   "devDependencies": {
-    "esbuild": "^0.12.29"
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "esbuild": "^0.12.29",
+    "eslint": "^7.32.0"
   }
 }

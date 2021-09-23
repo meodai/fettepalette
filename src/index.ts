@@ -1,19 +1,19 @@
-export type curveMethod = 'lamé'|'arc'|'pow'|'powY'|'powX';
-type vector2 = [number, number];
-type hsx = [number, number, number];
-type mainFunctionArguments = {
-  total?:number,
-  centerHue?:number,
-  hueCycle?:number,
-  offsetTint?:number,
-  offsetShade?:number,
-  curveAccent?:number,
-  tintShadeHueShift?:number,
-  curveMethod?:curveMethod, 
-  offsetCurveModTint?:number,
-  offsetCurveModShade?:number,
-  minSaturationLight?:vector2,
-  maxSaturationLight?:vector2,
+export type CurveMethod = 'lamé'|'arc'|'pow'|'powY'|'powX';
+type Vector2 = [number, number];
+type Vector3 = [number, number, number];
+type MainFunctionArguments = {
+  total?: number,
+  centerHue?: number,
+  hueCycle?: number,
+  offsetTint?: number,
+  offsetShade?: number,
+  curveAccent?: number,
+  tintShadeHueShift?: number,
+  curveMethod?: CurveMethod, 
+  offsetCurveModTint?: number,
+  offsetCurveModShade?: number,
+  minSaturationLight?: Vector2,
+  maxSaturationLight?: Vector2,
 };
 
 /**
@@ -28,7 +28,7 @@ export const hsv2hsl = (
   s: number, 
   v: number, 
   l: number = v - v * s / 2, m = Math.min(l, 1 - l),
-):hsx => [h, m ? (v - l) / m : 0, l];
+):Vector3 => [h, m ? (v - l) / m : 0, l];
 
 /**
  * function random
@@ -58,27 +58,27 @@ export const random = (
  * @returns           {Array} Vector on curve x, y
  */
 export const pointOnCurve = (
-  curveMethod:curveMethod,
+  curveMethod:CurveMethod,
   i:number,
   total:number,
   curveAccent:number,
-  min:vector2         = [0, 0],
-  max:vector2         = [1, 1],
-):number[] => {
+  min:Vector2         = [0, 0],
+  max:Vector2         = [1, 1],
+):Vector2 => {
   const limit = Math.PI / 2;
   const slice = limit / total;
 
-  let x:number, 
-      y:number;
+  let x = 0,
+      y = 0;
 
   if (curveMethod === 'lamé') {
-    let t = i / total * limit;
+    const t = i / total * limit;
     const exp = 2 / (2 + (20 * curveAccent));
     const cosT = Math.cos(t);
     const sinT = Math.sin(t);
     x = Math.sign(cosT) * (Math.abs(cosT) ** exp);
     y = Math.sign(sinT) * (Math.abs(sinT) ** exp);
-  } else if (curveMethod === 'arc') { // pow
+  } else if (curveMethod === 'arc') {
     y = Math.cos(-Math.PI / 2 + i * slice + curveAccent);
     x = Math.sin(Math.PI / 2 + i * slice - curveAccent);
   } else if (curveMethod === 'pow') {
@@ -135,32 +135,32 @@ export default function generateRandomColorRamp  ({
   offsetCurveModShade = 0.03,
   minSaturationLight  = [0, 0],
   maxSaturationLight  = [1, 1]
-}:mainFunctionArguments = {}):{
-  light: hsx[],
-  dark: hsx[],
-  base: hsx[],
-  all: hsx[]
+}:MainFunctionArguments = {}):{
+  light: Vector3[],
+  dark: Vector3[],
+  base: Vector3[],
+  all: Vector3[]
 } {
-  const baseColors = [];
-
-  const lightColors = [];
-  const darkColors = [];
+  const baseColors:Vector3[] = [];
+  const lightColors:Vector3[] = [];
+  const darkColors:Vector3[] = [];
 
   for (let i = 1; i < (total + 1); i++) {
-    const [x, y] = pointOnCurve(curveMethod, i, total + 1, curveAccent, minSaturationLight, maxSaturationLight);
+    const [x, y] = pointOnCurve(
+      curveMethod, 
+      i, 
+      total + 1, 
+      curveAccent, 
+      minSaturationLight, 
+      maxSaturationLight
+    );
     const h = (360 + ((-180 * hueCycle) + (centerHue + i * (360 / (total + 1)) * hueCycle))) % 360;
 
     const hsl = hsv2hsl(
       h, x, y
     );
 
-    baseColors.push(
-      [
-        hsl[0],
-        hsl[1],
-        hsl[2]
-      ]
-    );
+    baseColors.push(hsl);
 
     const [xl, yl] = pointOnCurve(
       curveMethod, 
@@ -209,140 +209,3 @@ export default function generateRandomColorRamp  ({
     ],
   }
 }
-
-/*
-const PARAMS = {
-  colors: 9,
-  centerHue: 0,
-  hueCycle: 0.3,
-  offsetTint: 0.01,
-  offsetShade: 0.01,
-  curveAccent: 0,
-  tintShadeHueShift: 0.01,
-  colorMode: 'hsl',
-  curveMethod: 'lamé', //arc, pow
-  offsetCurveModTint: 0.03,
-  offsetCurveModShade: 0.03,
-  minSaturation: 0,
-  minLight: 0,
-  maxSaturation: 1,
-  maxLight: 1,
-};
-
-// `min` and `max`: slider
-pane.addInput(
-  PARAMS, 'colors', {
-    min: 3,
-    max: 35,
-    step: 1
-  }
-);
-
-pane.addInput(
-  PARAMS, 'centerHue', {
-    min: 0,
-    max: 360,
-    step: 0.1
-  }
-);
-
-pane.addInput(
-  PARAMS, 'hueCycle', {
-    min: 0,
-    max: 1.5,
-    step: 0.001
-  }
-);
-
-pane.addInput(PARAMS, 'curveMethod', {
-  options: {
-    lamé: 'lamé',
-    arc: 'arc',
-    pow: 'pow',
-    powY: 'powY',
-    powX: 'powX',
-  },
-});
-
-pane.addInput(
-  PARAMS, 'curveAccent', {
-    min: -0.095,
-    max: 1,
-    step: 0.001
-  }
-);
-
-
-pane.addInput(
-  PARAMS, 'offsetTint', {
-    min: 0,
-    max: 0.4,
-    step: 0.001
-  }
-);
-
-
-pane.addInput(
-  PARAMS, 'offsetShade', {
-    min: 0,
-    max: 0.4,
-    step: 0.001
-  }
-);
-
-pane.addInput(
-  PARAMS, 'offsetCurveModTint', {
-    min: 0,
-    max: 0.4,
-    step: 0.0001
-  }
-);
-
-
-pane.addInput(
-  PARAMS, 'offsetCurveModShade', {
-    min: 0,
-    max: 0.4,
-    step: 0.0001
-  }
-);
-
-
-pane.addInput(
-  PARAMS, 'tintShadeHueShift', {
-    min: 0,
-    max: 1,
-    step: 0.001
-  }
-);
-
-pane.addInput(
-  PARAMS, 'minSaturation', {
-    min: 0,
-    max: 1,
-    step: 0.001
-  }
-);
-pane.addInput(
-  PARAMS, 'minLight', {
-    min: 0,
-    max: 1,
-    step: 0.001
-  }
-);
-
-pane.addInput(
-  PARAMS, 'maxSaturation', {
-    min: 0,
-    max: 1,
-    step: 0.001
-  }
-);
-pane.addInput(
-  PARAMS, 'maxLight', {
-    min: 0,
-    max: 1,
-    step: 0.001
-  }
-);
-*/

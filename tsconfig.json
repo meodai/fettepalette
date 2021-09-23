@@ -8,6 +8,8 @@
     "outDir": "dist",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true
   },
   "include": [
     "src/**/*"
