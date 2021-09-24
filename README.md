@@ -1,4 +1,4 @@
-<img width="100" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette logo"/>
+<img width="400" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette logo"/>
 
 # FettePalette
 
