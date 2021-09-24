@@ -27,7 +27,8 @@ export const hsv2hsl = (
   h: number, 
   s: number, 
   v: number, 
-  l: number = v - v * s / 2, m = Math.min(l, 1 - l),
+  l: number = v - v * s / 2, 
+  m: number = Math.min(l, 1 - l),
 ):Vector3 => [h, m ? (v - l) / m : 0, l];
 
 /**
