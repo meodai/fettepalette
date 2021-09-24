@@ -81,14 +81,31 @@
       padding-top: calc(var(--w, 0.11) * 100%);
       background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
     }
+    
     [data-palette] {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    [data-palette-xl] {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    [data-palette] .palette-sample {
+      outline: 4px solid #fff;
+    }
+
+    .palette-sample {
       position: relative;
       background: var(--col-0);
-      padding-top: 100%;
+      padding-top: calc(100% / var(--x));
       margin: 0;
       user-select: none;
+      flex: 0 0 calc(100% / var(--x));
     }
-    [data-palette] b {
+    .palette-sample b {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -97,16 +114,16 @@
       transform: translate(-50%, -50%);
       background: var(--col-1);
     }
-    [data-palette] i {
+    .palette-sample i {
       position: absolute;
       width: 50%;
       height: 50%;
       right: 0;
     }
-    [data-palette] i:first-child {
+    .palette-sample i:first-child {
       background: var(--col-2);
     }
-    [data-palette] i:last-child {
+    .palette-sample i:last-child {
       bottom: 0;
       background: var(--col-3);
     }
@@ -369,7 +386,7 @@
       margin-top: 3rem;
       margin-bottom: 1rem;
     }
-    
+
     svg:not(:root){
       overflow: visible;
     } 
@@ -409,8 +426,10 @@
       <aside>
         <h2>Example Use</h2>
         <p><strong>4 random colors form palette</strong> (click & hold to re-generate)</p>
+        <div data-palette-xl>
+        </div>
+
         <div data-palette>
-          <b><i></i><i></i></b>
         </div>
         <div data-ramp></div>
       </aside>
@@ -419,7 +438,11 @@
         <h2>Full Palette</h2>
         <div data-list></div>
       </aside>
-      <!--button data-copy>copy all the colors</button-->
+
+      <aside>
+        <h2>Color Names</h2>
+        <div data-names></div>
+      </aside>
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
   </article>
@@ -670,6 +693,7 @@
     );
 
     const $pal = document.querySelector('[data-palette]');
+    const $palxl = document.querySelector('[data-palette-xl]');
     const $picker = document.querySelector('[data-figure]');
     const $ramp = document.querySelector('[data-ramp]');
     let colors = [];
@@ -696,11 +720,32 @@
           break;
       }
 
-      for (let i = 0; i < 4; i++) {
-        $pal.style.setProperty(`--col-${i}`, `hsl(${allColors[i].hsl[0]},${allColors[i].hsl[1] * 100}%,${allColors[i].hsl[2] * 100}%)`);
+      let localcolors = [...allColors];
+      $pal.innerHTML = '';
+
+      $palxl.innerHTML = '';
+      
+      for (let i = 0; i < 4 * 4; i++) {
+        $pal.appendChild(paletteDom(localcolors, 4));
+        localcolors = shuffleArray(localcolors);
       }
 
+      $palxl.appendChild(paletteDom(localcolors, 1));
+      
       $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b.hsl[2] - a.hsl[2]).map(c => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`).join(',')})`)
+    }
+
+    function paletteDom (colorArr, x=1) {
+      const $div = document.createElement('div');
+      $div.classList.add('palette-sample');
+      $div.style.setProperty('--x', x);
+      $div.innerHTML = '<b><i></i><i></i></b>';
+
+      for (let i = 0; i < 4; i++) {
+        $div.style.setProperty(`--col-${i}`, `hsl(${colorArr[i].hsl[0]},${colorArr[i].hsl[1] * 100}%,${colorArr[i].hsl[2] * 100}%)`);
+      }
+
+      return $div;
     }
 
     function bam() {
@@ -771,9 +816,10 @@ generateRandomColorRamp({
       document.querySelector('[data-colors]').innerHTML = colors.all.reduce((r, c) => {
         return `${r}<i style="--w: ${1 / PARAMS.colors}; --h: ${c.hsl[0]}; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`
       }, '');
-
+      
       palette(colors, 'random');
-      list(colors)
+      list(colors);
+      //names(colors);
     }
 
     function points(
@@ -896,15 +942,18 @@ generateRandomColorRamp({
         });
       }
     }
+    /*
+    function names(colors) {
+      fetch(`https://api.color.pizza/v1/?values=
+      ${colors.}&goodnamesonly=true&noduplicates=true}`)
+    }*/
 
     let timer;
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
     $pal.addEventListener('pointerup', () => clearInterval(timer));
 
-    /*document.querySelector('[data-copy]').addEventListener('click', () => {
-      const expString = JSON.stringify(colors);
-      navigator.clipboard.writeText(expString);
-    });*/
+    $palxl.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100) });
+    $palxl.addEventListener('pointerup', () => clearInterval(timer));
 
     pane.on('change', bam);
 
