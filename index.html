@@ -963,6 +963,7 @@ generateRandomColorRamp({
     const $names = document.querySelector('[data-names]');
 
     function names(colors) {
+      $names.innerHTML = `<strong style="--col: #fff">…</strong>`;
       clearTimeout(timer);
       timer = setTimeout(() => {
         let hexes = colors.all.map(c => c.hex.replace('#', ''));
