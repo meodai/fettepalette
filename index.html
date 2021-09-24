@@ -385,6 +385,23 @@
     svg:not(:root){
       overflow: visible;
     } 
+
+    [data-names] strong {
+      display: block;
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--col);
+      margin-top: .5em;
+    }
+
+    .color-names {
+      padding: 2rem;
+      padding-right: var(--sidebarwidth);
+    }
+
+    .color-names h2 {
+      color: #fff;
+    }
     
   </style>
 </head>
@@ -427,16 +444,17 @@
       </aside>
 
       <aside>
-        <h2>Full Palette</h2>
+        <h2>Color Properies</h2>
         <div data-list></div>
       </aside>
 
-      <aside>
-        <h2>Color Names</h2>
-        <div data-names></div>
-      </aside>
+      
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
+    <aside class="color-names">
+      <h2>Color Names</h2>
+      <div data-names></div>
+    </aside>
   </article>
   <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
 
@@ -815,7 +833,8 @@ generateRandomColorRamp({
       
       palette(colors, 'random');
       list(colors);
-      //names(colors);
+
+      names(colors);
     }
 
     function points(
@@ -938,13 +957,22 @@ generateRandomColorRamp({
         });
       }
     }
-    /*
-    function names(colors) {
-      fetch(`https://api.color.pizza/v1/?values=
-      ${colors.}&goodnamesonly=true&noduplicates=true}`)
-    }*/
 
+    
     let timer;
+    const $names = document.querySelector('[data-names]');
+
+    function names(colors) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        let hexes = colors.all.map(c => c.hex.replace('#', ''));
+        fetch(`https://api.color.pizza/v1/?values=${hexes.join(',')}&noduplicates=true&goodnamesonly=true}`)
+        .then(r => r.json()).then(d => {
+          $names.innerHTML = d.colors.reduce((r,d) => `${r}<strong style="--col: ${d.requestedHex}">${d.name}</strong>` ,'');
+        });
+      }, 1000);
+    }
+
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
     $pal.addEventListener('pointerup', () => clearInterval(timer));
 
