@@ -429,7 +429,7 @@
       display: flex;
       margin-top: 4rem;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 8px;
     }
 
     [data-names] li {
@@ -520,7 +520,12 @@
       <aside class="section">
         <div class="section__text">
           <h2>Full Palette</h2>
-
+          <p>
+            <code>colors</code> sets the amount of base colors. However
+            the class returns an <code>Object</code> containing <code>light</code>,
+            <code>base</code> and <code>dark</code> colors in an array of HSL coordinates.
+            (as well as an array with all of them called <code>all</code>)
+          </p>
         </div>
         <div class="section__fig">
           <div data-colors></div>
