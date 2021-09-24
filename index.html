@@ -85,13 +85,8 @@
     [data-palette] {
       display: flex;
       flex-wrap: wrap;
-      margin-top: 1rem;
     }
 
-    [data-palette-xl] {
-      display: flex;
-      flex-wrap: wrap;
-    }
 
     [data-palette] .palette-sample {
       outline: 4px solid #fff;
@@ -426,9 +421,6 @@
       <aside>
         <h2>Example Use</h2>
         <p><strong>4 random colors form palette</strong> (click & hold to re-generate)</p>
-        <div data-palette-xl>
-        </div>
-
         <div data-palette>
         </div>
         <div data-ramp></div>
@@ -693,7 +685,6 @@
     );
 
     const $pal = document.querySelector('[data-palette]');
-    const $palxl = document.querySelector('[data-palette-xl]');
     const $picker = document.querySelector('[data-figure]');
     const $ramp = document.querySelector('[data-ramp]');
     let colors = [];
@@ -723,14 +714,19 @@
       let localcolors = [...allColors];
       $pal.innerHTML = '';
 
-      $palxl.innerHTML = '';
+      $pal.appendChild(paletteDom(localcolors, 1));
+      localcolors = shuffleArray(localcolors);
       
-      for (let i = 0; i < 4 * 4; i++) {
+      for (let i = 0; i < 2; i++) {
+        $pal.appendChild(paletteDom(localcolors, 2));
+        localcolors = shuffleArray(localcolors);
+      }
+
+      for (let i = 0; i < 4 * 2; i++) {
         $pal.appendChild(paletteDom(localcolors, 4));
         localcolors = shuffleArray(localcolors);
       }
 
-      $palxl.appendChild(paletteDom(localcolors, 1));
       
       $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b.hsl[2] - a.hsl[2]).map(c => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`).join(',')})`)
     }
@@ -951,9 +947,6 @@ generateRandomColorRamp({
     let timer;
     $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
     $pal.addEventListener('pointerup', () => clearInterval(timer));
-
-    $palxl.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100) });
-    $palxl.addEventListener('pointerup', () => clearInterval(timer));
 
     pane.on('change', bam);
 
