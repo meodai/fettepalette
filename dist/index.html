@@ -14,6 +14,7 @@
       background: #202124;
       --sidebarwidth: 20rem;
     }
+
     .settings {
       position: fixed;
       width: var(--sidebarwidth);
@@ -21,23 +22,41 @@
       background: #202124;
       color: #fff;
       order: 1;
-      right: 0;
+      left: 0;
       top: 0;
       bottom: 0;
       overflow-y: auto;
       box-sizing: border-box;
       z-index: 2;
     }
-    .settings h3 {
-      margin-bottom: 2em;
-    }
+
     .main {
-      margin-right: var(--sidebarwidth);
+      margin-left: var(--sidebarwidth);
       background: #fff;
-      padding: 2rem;
+      padding: 4rem;
     }
-    .main aside {
-      max-width: 27rem;
+
+    .section {
+      display: flex;
+      margin-top: 4rem;
+      max-width: calc(50rem + 12.5vw);
+    }
+    .section__text {
+      flex: 1 0 calc(100% - 25rem - 4rem);
+      order: 1;
+      width: calc(100% - 25rem - 4rem);
+    }
+    .section__fig {
+      flex: 1 1 25rem;
+      order: 0;
+      margin-right: 4rem;
+    }
+    .section code {
+      font-family: monospace;
+      font-size: 1.3em;
+      background: #202124;
+      color: #fff;
+      padding: 0 .75ex .2ex;
     }
 
     h1 {
@@ -46,6 +65,25 @@
       letter-spacing: -0.055em;
       margin-top: 2rem;
       line-height: .85;
+      margin-left: -.045em;
+    }
+
+    h2, h3, [data-names] strong {
+      margin: 0 0 .75rem;
+      font-size: calc(1.5rem + 2vw);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+    }
+
+
+    h2 + p {
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      margin-top: 1.5em;
+      font-size: calc(.5rem + 1vw);
     }
     pre {
       font-family: monospace;
@@ -53,22 +91,21 @@
       max-width: 100%;
     }
 
-    h2 {
-      margin: 1.5em 0 1rem;
-      font-size: calc(1rem + 2vw);
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 0.72;
-      margin-bottom: 1em;
-    }
-    h2 + p {
-      margin-bottom: 1rem;
-    }
     a {
       font-size: 1em;
       margin-top: .4em;
       font-weight: 700;
+    }
+
+    button {
+      display: block;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      font: inherit;
+      font-size: inherit;
+      color: inherit;
     }
     [data-colors] {
       display: flex;
@@ -81,17 +118,14 @@
       padding-top: calc(var(--w, 0.11) * 100%);
       background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
     }
-    
+
     [data-palette] {
       display: flex;
       flex-wrap: wrap;
     }
-
-
     [data-palette] .palette-sample {
       outline: 4px solid #fff;
     }
-
     .palette-sample {
       position: relative;
       background: var(--col-0);
@@ -131,58 +165,68 @@
       background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)), linear-gradient(to left, hsl(var(--deg, 0deg), 100%, 50%), hsl(var(--deg, 0deg), 0%, 100%));
     }
     [data-ramp] {
-      margin-top: 1rem;
-      height: 4rem;
+      height: 10rem;
     }
     [data-list] {
-      margin: 2rem 0;
+      margin: 0 0 2rem;
       display: flex;
-      gap: 0.5rem;
+      gap: 4px;
     }
-    [data-list] .contrast div {
-      margin-top: .35em;
-    }
-    [data-list] h3 {
-      margin-bottom: 0.5rem;
-      margin-top: 2rem;
-      display: none;
-    }
-    [data-list] h5 {
-      font-weight: 600;
-      margin-top: .75em;
-      margin-bottom: .4em;
-    }
-    [data-list] li {
+
+    .swatch {
+      position: relative;
       font-size: 0.8rem;
       line-height: 1.2;
-      position: relative;
       padding-bottom: .5em;
     }
-    [data-list] li ~ li {
-      margin-top: .5rem;
+
+    [data-list] h3 {
+      display: none;
+      margin-top: 0;
     }
-    [data-list] li::before {
+
+    .swatch::before {
       user-select: none;
       content: "";
       background: var(--col);
       display: block;
       width: 100%;
-      height: 2rem;
+      height: 1.2em;
       margin-bottom: 0.25rem;
     }
-    [data-copy] {
-      margin-top: .15em;
+    .swatch::after {
+      position: absolute;
+      display: block;
+      content: '';
+      top: 2px;
+      right: 2px; 
+      width: 2px;
+      height: calc(1.2em - 4px);
+      background: var(--coltext);
     }
-    [data-list] .color-info {
-      top: 100%;
-      z-index: 1;
-      left: 0;
-      right: 0;
-      padding: .25rem 0 .5rem;
-      transition: 200ms height;
+
+    .color-info {
+      padding: 0.5rem;
     }
-    .color-info > div {
+
+    .color-info strong {
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 1ex;
+    }
+    .color-info button {
+      font-size: .6rem;
       margin-top: .5em;
+    }
+    .color-info__contrast {
+      position: absolute;
+      top: 8.7rem;
+      left: .5rem;
+      color: var(--colbg);
+      font-size: .8em;
+    }
+    .color-info__contrast h5 {
+      display: none;
     }
     [data-list] > div {
       flex: 1;
@@ -192,7 +236,7 @@
     }
     p {
       margin-top: 1em;
-      max-width: 20rem;
+      max-width: 22rem;
       font-size: 0.8em;
       letter-spacing: 0.002em;
       line-height: 1.38;
@@ -377,26 +421,37 @@
       outline: none;
       background-color: transparent;
     }
-    .settings .code-title {
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-    }
 
     svg:not(:root){
       overflow: visible;
     } 
+    [data-names] ol {
+      display: flex;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
 
-    [data-names] strong {
+    [data-names] li {
+      position: relative;
+      width: 10rem;
+      background: #fff;
+      color: #202124;
+    } 
+    
+    [data-names] li::before {
+      content: '';
       display: block;
-      font-size: 4rem;
-      font-weight: 900;
-      color: var(--col);
-      margin-top: .5em;
+      padding-top: 100%;
+      background: var(--col);
     }
 
     .color-names {
-      padding: 2rem;
-      padding-right: var(--sidebarwidth);
+      position: relative;
+      z-index: 10;
+      padding: 4rem;
+      padding-left: calc(var(--sidebarwidth) + 4rem);
+      color: #fff;
     }
 
     .color-names h2 {
@@ -408,58 +463,129 @@
 
 <body>
   <article class="app">
-    <aside class="settings">
-      <!--h3>Settings</h3-->
-      
-      <div class="settings__inner">
-        <div data-pane></div>
+    <section class="settings">
+      <aside>
+        <h3>About</h3>
+        <p>
+          FettePalette is lightweight, dependency free and fast JavaScript function
+          written in TypeScript. It generates color ramps based on a curve withing
+          the HSV color model. This page serves as preview of the for the variety
+          of options the function takes.
+        </p>
+      </aside>
+      <aside>
         <h3 class="code-title">Function Call</h3>
         <code>
           <pre data-code></pre>
         </code>
-      </div>
-    </aside>
+      </aside>
+      <aside>
+        <h3>Settings</h3>
+        <div class="settings__inner">
+          <div data-pane></div>
+        </div>
+      </aside>
+    </section>
     <section class="main">
       <h1>Fette&shy;Palette</h1>
-      <p>Color palette generation using curves within the HSV color model</p>
+
       <!--p>
         <mark>Fette­Palette</mark> is a function that returns an object containing
         as many base colors, tints and shades as set in <code>colors</code>.
       </p-->
-      <aside>
-        <h2>HSL Slice Preview</h2>
-        <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
-      </aside>
-      <aside>
-        <h2>Full Palette</h2>
-        <div data-colors></div>
-      </aside>
-    
-      <aside>
-        <h2>Example Use</h2>
-        <p><strong>4 random colors form palette</strong> (click & hold to re-generate)</p>
-        <div data-palette>
+      <aside class="section">
+        <div class="section__text">
+          <h2>HSV Slice Preview</h2>
+          <p>
+            This shows the curve drawn within the HSV color model. 
+            It is drawn using the method set in <code>curveMethod</code>. (lamé, arc, pow, powX or powY)
+          </p>
+          <p>
+            The white dots represent the tints and the black dots the shades.
+            <code>offsetTint</code>, <code>offsetShade</code>, <code>offsetCurveModTint</code>
+            and <code>offsetCurveModShade</code> have in imact on the curve and the positions 
+            of those points.
+          </p>
+          <p>
+            The change in hue can be set with the <code>hueCycle</code> option. 
+            <code>0</code> means the same color for the full curve and <code>1</code>
+            would be a full rotation around the hue wheel.
+          </p>
         </div>
-        <div data-ramp></div>
+        <div class="section__fig">
+          <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
+        </div>
       </aside>
 
-      <aside>
-        <h2>Color Properies</h2>
-        <div data-list></div>
+      <aside class="section">
+        <div class="section__text">
+          <h2>Full Palette</h2>
+
+        </div>
+        <div class="section__fig">
+          <div data-colors></div>
+        </div>
+      </aside>
+    
+      <aside class="section">
+        <div class="section__text">
+          <h2>Example Use</h2>
+          <p>click & hold to re-generate</p>
+          <p>
+            Each of those squares shows four random entires from the generated colors. 
+            In a single square every color is unique. But because the returned colors
+            are segragated in <code>light</code>, <code>base</code> and <code>dark</code>. 
+            Depending on your needs, you could make sure to have a certain amount of each.
+          </p>
+        </div>
+        <div class="section__fig">
+          <div data-palette></div>
+        </div>
+      </aside>
+
+      <aside class="section">
+        <div class="section__text">
+          <h2>Color Ramp</h2>
+          <p>Showing a gradient of 4 random colors sorted by light</p>
+        </div>
+        <div class="section__fig">
+          <div data-ramp></div>
+        </div>
+      </aside>
+
+      <aside class="section">
+        <div class="section__text">
+          <h2>HSL Colors</h2>
+          <p>
+            Full list of the generated colors.
+          </p>
+          <p>
+            We used <a title="culori" href="https://culorijs.org/">a library</a> 
+            to convert the the HSL colors into different color models. We deliberately
+            choose to only deliver HSL <code>[0…360, 0…1, 0…1]</code> to keep the function
+            fast and lightweight. There are plenty of awesome color libraries if 
+            you need to have the colors converted to an other color model.
+          </p>
+
+          
+        </div>
+        <div class="section__fig">
+          <div data-list></div>
+        </div>
       </aside>
 
       
       <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
     </section>
     <aside class="color-names">
-      <h2>Color Names</h2>
+      <h2>Color Properies</h2>
       <div data-names></div>
     </aside>
   </article>
   <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
 
   <script type="module">
-    import generateRandomColorRamp ,{ hsv2hsl, random, pointOnCurve } from './index.js';
+    import generateRandomColorRamp, { hsv2hsl, random, pointOnCurve } from './index.js';
 
     console.clear();
     
@@ -638,6 +764,14 @@
       maxSaturation: 1,
       maxLight: 1,
     };
+    pane.addInput(PARAMS, 'curveMethod', {
+      options: ['lamé', 'arc', 'pow', 'powY', 'powX'],
+    });
+    
+    pane.addInput(
+      PARAMS, 'curveAccent',
+      { min: -0.095, max: 1, step: 0.001 }
+    );
 
     pane.addInput(
       PARAMS, 'colors',
@@ -652,19 +786,7 @@
       PARAMS, 'hueCycle',
       { min: 0, max: 1.5, step: 0.001 }
     );
-    pane.addInput(PARAMS, 'curveMethod', {
-      options: [
-        'lamé',
-        'arc',
-        'pow',
-        'powY',
-        'powX',
-      ],
-    });
-    pane.addInput(
-      PARAMS, 'curveAccent',
-      { min: -0.095, max: 1, step: 0.001 }
-    );
+
     pane.addInput(
       PARAMS, 'offsetTint',
       { min: 0, max: 0.4, step: 0.001 }
@@ -796,8 +918,7 @@
 
       console.clear();
 
-      document.querySelector('[data-code]').innerHTML = `
-generateRandomColorRamp({
+      document.querySelector('[data-code]').innerHTML = `generateRandomColorRamp({
   total: ${PARAMS.colors},
   centerHue: ${PARAMS.centerHue},
   hueCycle: ${PARAMS.hueCycle},
@@ -811,7 +932,8 @@ generateRandomColorRamp({
   minSaturationLight: [${PARAMS.minSaturation}, ${PARAMS.minLight}],
   maxSaturationLight: [${PARAMS.maxSaturation}, ${PARAMS.maxLight}],
 });
-`
+`;
+
       points(
         PARAMS.colors,
         PARAMS.offsetTint,
@@ -897,6 +1019,7 @@ generateRandomColorRamp({
       }
 
     }
+
     let colorMode = 'hsl';
 
     function hslToWhateverString (hsl, whatever) {
@@ -910,52 +1033,46 @@ generateRandomColorRamp({
       }
     }
 
-    function list(colors) {
-      const printColors = (arr) => arr.map(({ hsl, rgb, hex, contrast }) => {
+    const printColors = (arr, simple, names) => arr.map(({ hsl, rgb, hex, contrast}, i) => {
+      if (simple) {
         return `
-          <li style="--col:${hex}">
-            <div class="color-info">
-              <div data-copy title="Click to copy">hsl(${Math.floor(hsl[0])},${Math.floor(hsl[1] * 100)}%,${Math.floor(hsl[2] * 100)}%)</div>
-              <div data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1] * 100)},${Math.floor(rgb[2] * 100)})</div>
-              <div data-copy title="Click to copy">${hex}</div>
-              <h5>wcag contrast:</h5>
-              <div class="contrast">
-                <div><span style="color: #ffffff; text-shadow: 0 0 2px #000000;">⬤</span> ${contrast.white.toFixed(2)}</div>
-                <div><span style="color: #000000;">⬤</span> ${contrast.black.toFixed(2)}</div>
+          <li class="swatch swatch--simple" style="--col:${hex}; --coltext: ${contrast.black > contrast.white ?'#202125' : '#fff'}">
+            <div data-copy title="Click to copy">${Math.floor(hsl[0])}° ${Math.floor(hsl[1] * 100)}% ${Math.floor(hsl[2] * 100)}%</div>
+          </li>`;
+        } else {
+          return `
+            <li class="full" style="--col:${hex}; --coltext: ${contrast.black < contrast.white ? '#202125' : '#fff'}; --colbg: ${contrast.black > contrast.white ? '#202125' : '#fff'}">
+              <div class="color-info">
+                <strong>${names[i].name}</strong>
+                <button data-copy title="Click to copy">hsl(${Math.floor(hsl[0])},${Math.floor(hsl[1] * 100)}%,${Math.floor(hsl[2] * 100)}%)</button>
+                <button data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1] * 100)},${Math.floor(rgb[2] * 100)})</button>
+                <button data-copy title="Click to copy">${hex}</button>
+                <div class="color-info__contrast">
+                  <h5>wcag contrast:</h5>
+                  <em><span style="color: #ffffff;"">Aa</span> ${contrast.white.toFixed(2)}</em>
+                  <span style="color: #000000;">Aa</span> ${contrast.black.toFixed(2)}</em>
+                </div>
               </div>
-            </div>
-          </li>
-        `
-      }).join('');
+            </li>
+          `
+      }
+    }).join('');
 
+    function list(colors) {
       document.querySelector('[data-list]').innerHTML = `
         <div>
           <h3>Light Colors</h3>
-          <ol>${printColors(colors.light)}</ol>
+          <ol>${printColors(colors.light, true)}</ol>
         </div>
         <div>
           <h3>Base Colors</h3>
-          <ol>${printColors(colors.base)}</ol>
+          <ol>${printColors(colors.base, true)}</ol>
         </div>
         <div>
           <h3>Dark Colors</h3>
-          <ol>${printColors(colors.dark)}</ol>
+          <ol>${printColors(colors.dark, true)}</ol>
         </div>
       `
-
-      if (navigator.clipboard) {
-        [...document.querySelectorAll('[data-list] [data-copy]')].forEach($el => {
-          const text = $el.innerText;
-          $el.addEventListener('click', () => {
-            navigator.clipboard.writeText(text).then(() => {
-              $el.innerText = 'copied!';
-              setTimeout(() => {
-                $el.innerText = text;
-              }, 500)
-            })
-          });
-        });
-      }
     }
 
     
@@ -969,7 +1086,7 @@ generateRandomColorRamp({
         let hexes = colors.all.map(c => c.hex.replace('#', ''));
         fetch(`https://api.color.pizza/v1/?values=${hexes.join(',')}&noduplicates=true&goodnamesonly=true}`)
         .then(r => r.json()).then(d => {
-          $names.innerHTML = d.colors.reduce((r,d) => `${r}<strong style="--col: ${d.requestedHex}">${d.name}</strong>` ,'');
+          $names.innerHTML = `<ol>${printColors(colors.all, false, d.colors)}</ol>`
         });
       }, 1000);
     }
@@ -978,6 +1095,23 @@ generateRandomColorRamp({
     $pal.addEventListener('pointerup', () => clearInterval(timer));
 
     pane.on('change', bam);
+
+    if (navigator.clipboard) {
+      document.querySelector('body').addEventListener('click', (e) => {
+        const $el = e.target;
+        if ($el.matches('[data-copy]')) {
+          const text = $el.innerText;
+
+          navigator.clipboard.writeText(text).then(() => {
+            $el.innerText = 'copied!';
+            setTimeout(() => {
+              $el.innerText = text;
+            }, 500)
+          });
+        }
+      })
+    };
+
 
     bam();
   </script>
