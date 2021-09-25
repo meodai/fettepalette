@@ -908,7 +908,7 @@
       // Mutate colors object
       for (const key in colors) {
         colors[key] = colors[key].map(([h, s, l]) => {
-          const { r, g, b } = culori.converter('rgb')({ mode: 'hsl', h: 0, s: 1, l: .5 })
+          const { r, g, b } = culori.converter('rgb')({ mode: 'hsl', h, s, l })
           return {
             hsl: [h, s, l],
             rgb: [r * 255, g * 255, b * 255],
@@ -1025,19 +1025,6 @@
 
     }
 
-    let colorMode = 'hsl';
-
-    function hslToWhateverString (hsl, whatever) {
-      if (whatever === 'hsl') {
-        return `${Math.floor(hsl[0])}° ${Math.floor(hsl[1] * 100)}% ${Math.floor(hsl[2] * 100)}%`;
-      } else if (whatever === 'hex') {
-        return culori.formatHex({ mode: 'hsl', h: hsl[0], s: hsl[1], l: hsl[2] });
-      } else if (whatever === 'rgb') {
-        const col = culori.rgb(`hsl(${hsl[0]},${hsl[1] * 100}%,${hsl[2] * 100}%)`);
-        return `${Math.round(col.r * 255)} ${Math.round(col.g * 255)} ${Math.round(col.b * 255)}`;
-      }
-    }
-
     const printColors = (arr, simple, names) => arr.map(({ hsl, rgb, hex, contrast}, i) => {
       if (simple) {
         return `
@@ -1050,7 +1037,7 @@
               <div class="color-info">
                 <strong>${names[i].name}</strong>
                 <button data-copy title="Click to copy">hsl(${Math.floor(hsl[0])},${Math.floor(hsl[1] * 100)}%,${Math.floor(hsl[2] * 100)}%)</button>
-                <button data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1] * 100)},${Math.floor(rgb[2] * 100)})</button>
+                <button data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1])},${Math.floor(rgb[2])})</button>
                 <button data-copy title="Click to copy">${hex}</button>
                 <div class="color-info__contrast">
                   <h5>wcag contrast:</h5>
