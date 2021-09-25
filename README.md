@@ -97,4 +97,4 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 
 - Video: [Hue Shifting in Pixel Art](https://www.youtube.com/watch?v=PNtMAxYaGyg) by [Brandon James Greer](https://twitter.com/BJGpixel)
 - Article: [How to make your own color palettes](https://medium.com/@greggunn/how-to-make-your-own-color-palettes-712959fbf021) by [Greg Gunn](https://www.ggunn.com/)
-- Tweet: [Hue Shifting](https://twitter.com/ENDESGA/status/971690827482202112) by [https://github.com/ENDESGA](ENDESGA)
+- Tweet: [Hue Shifting](https://twitter.com/ENDESGA/status/971690827482202112) by [ENDESGA](https://github.com/ENDESGA)
