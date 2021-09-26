@@ -1,4 +1,5 @@
-export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX";
+export declare type FuncNumberReturn = (number: any) => Vector2;
+export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | FuncNumberReturn;
 export declare type Vector2 = [number, number];
 export declare type Vector3 = [number, number, number];
 export declare type GenerateRandomColorRampArgument = {
