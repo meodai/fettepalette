@@ -1,6 +1,6 @@
 {
   "name": "fettepalette",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Color ramp generator using curves within the HSV color model",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
