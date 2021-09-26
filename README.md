@@ -27,7 +27,7 @@ import { generateRandomColorRamp } from "fettepalette";
 ## Usage
 
 ```js
-import {generateRandomColorRamp} from 'colordescription';
+import { generateRandomColorRamp } from 'fettepalette';
 
 function generateRandomColorRamp  ({
   total:                10,    // total of base colors in the ramp
