@@ -1,5 +1,6 @@
 export declare type FuncNumberReturn = (arg0: number) => Vector2;
 export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | FuncNumberReturn;
+export declare type ColorModel = "hsl" | "hsv";
 export declare type Vector2 = [number, number];
 export declare type Vector3 = [number, number, number];
 export declare type GenerateRandomColorRampArgument = {
@@ -15,6 +16,7 @@ export declare type GenerateRandomColorRampArgument = {
     offsetCurveModShade?: number;
     minSaturationLight?: Vector2;
     maxSaturationLight?: Vector2;
+    colorModel?: ColorModel;
 };
 /**
  * function hsv2hsl
@@ -24,6 +26,14 @@ export declare type GenerateRandomColorRampArgument = {
  * @returns {Array} h:0...360 s:0...1 l:0...1
  */
 export declare const hsv2hsl: (h: number, s: number, v: number, l?: number, m?: number) => Vector3;
+/**
+ * function hsv2hsx
+ * @param h {Number} hue value 0...360
+ * @param s {Number} saturation 0...1
+ * @param v {Number} value 0...1
+ * @returns {Array} h:0...360 s:0...1 l:0...1
+ */
+export declare const hsv2hsx: (h: number, s: number, v: number, mode: ColorModel) => Vector3;
 /**
  * function pointOnCurve
  * @param curveMethod {String} Defines how the curve is drawn
@@ -56,7 +66,7 @@ export declare const pointOnCurve: (curveMethod: CurveMethod, i: number, total: 
     all: [[h,s,l]...], // all colors
   }
 */
-export declare function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight, }?: GenerateRandomColorRampArgument): {
+export declare function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight, colorModel, }?: GenerateRandomColorRampArgument): {
     light: Vector3[];
     dark: Vector3[];
     base: Vector3[];
