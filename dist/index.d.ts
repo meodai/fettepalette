@@ -1,4 +1,4 @@
-export declare type FuncNumberReturn = (number: any) => Vector2;
+export declare type FuncNumberReturn = (arg0: number) => Vector2;
 export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | FuncNumberReturn;
 export declare type Vector2 = [number, number];
 export declare type Vector3 = [number, number, number];
@@ -24,13 +24,6 @@ export declare type GenerateRandomColorRampArgument = {
  * @returns {Array} h:0...360 s:0...1 l:0...1
  */
 export declare const hsv2hsl: (h: number, s: number, v: number, l?: number, m?: number) => Vector3;
-/**
- * function random
- * @param min {Number} minimum number
- * @param max {Number} maximum number
- * @returns   {Number} number in given range
- */
-export declare const random: (min: number, max: number) => number;
 /**
  * function pointOnCurve
  * @param curveMethod {String} Defines how the curve is drawn

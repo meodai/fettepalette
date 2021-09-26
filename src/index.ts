@@ -1,4 +1,11 @@
-export type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX";
+export type FuncNumberReturn = (arg0: number) => Vector2;
+export type CurveMethod =
+  | "lamé"
+  | "arc"
+  | "pow"
+  | "powY"
+  | "powX"
+  | FuncNumberReturn;
 export type Vector2 = [number, number];
 export type Vector3 = [number, number, number];
 export type GenerateRandomColorRampArgument = {
@@ -32,20 +39,6 @@ export const hsv2hsl = (
 ): Vector3 => [h, m ? (v - l) / m : 0, l];
 
 /**
- * function random
- * @param min {Number} minimum number
- * @param max {Number} maximum number
- * @returns   {Number} number in given range
- */
-export const random = (min: number, max: number): number => {
-  if (!max) {
-    max = min;
-    min = 0;
-  }
-  return Math.random() * (max - min) + min;
-};
-
-/**
  * function pointOnCurve
  * @param curveMethod {String} Defines how the curve is drawn
  * @param i           {Number} Point in curve (used in iteration)
@@ -65,12 +58,13 @@ export const pointOnCurve = (
 ): Vector2 => {
   const limit = Math.PI / 2;
   const slice = limit / total;
+  const percentile = i / total;
 
   let x = 0,
     y = 0;
 
   if (curveMethod === "lamé") {
-    const t = (i / total) * limit;
+    const t = percentile * limit;
     const exp = 2 / (2 + 20 * curveAccent);
     const cosT = Math.cos(t);
     const sinT = Math.sin(t);
@@ -80,14 +74,21 @@ export const pointOnCurve = (
     y = Math.cos(-Math.PI / 2 + i * slice + curveAccent);
     x = Math.sin(Math.PI / 2 + i * slice - curveAccent);
   } else if (curveMethod === "pow") {
-    x = Math.pow(1 - i / total, 1 - curveAccent);
-    y = Math.pow(i / total, 1 - curveAccent);
+    x = Math.pow(1 - percentile, 1 - curveAccent);
+    y = Math.pow(percentile, 1 - curveAccent);
   } else if (curveMethod === "powY") {
-    x = Math.pow(1 - i / total, curveAccent);
-    y = Math.pow(i / total, 1 - curveAccent);
+    x = Math.pow(1 - percentile, curveAccent);
+    y = Math.pow(percentile, 1 - curveAccent);
   } else if (curveMethod === "powX") {
-    x = Math.pow(i / total, curveAccent);
-    y = Math.pow(i / total, 1 - curveAccent);
+    x = Math.pow(percentile, curveAccent);
+    y = Math.pow(percentile, 1 - curveAccent);
+  } else if (typeof curveMethod === "function") {
+    x = curveMethod(percentile)[0];
+    y = curveMethod(percentile)[1];
+  } else {
+    throw new Error(
+      `pointOnCurve() curveAccent parameter is expected to be "lamé" | "arc" | "pow" | "powY" | "powX" or a function but \`${curveMethod}\` given.`
+    );
   }
 
   x = min[0] + Math.min(Math.max(x, 0), 1) * (max[0] - min[0]);
