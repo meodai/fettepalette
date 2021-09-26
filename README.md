@@ -95,7 +95,7 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 
 #### Sain Options
 
-The script exports `generateRandomColorRampParams` that contains sain defaults:
+The script exports `generateRandomColorRampParams`, an onject that contains sain defaults. Makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane ...).
 
 ```js
 {
@@ -156,6 +156,20 @@ The script exports `generateRandomColorRampParams` that contains sain defaults:
     props: { min: 0, max: 1, step: 0.001  },
   },
 }
+```
+
+Integration with [tweakpane](https://cocopon.github.io/tweakpane/)
+
+```js
+  import {generateRandomColorRampParams} from 'fettepalette';
+
+  const PARAMS = {};
+
+  Object.keys(generateRandomColorRampParams).forEach(key => {
+    const param = generateRandomColorRampParams[key];
+    PARAMS[key] = param.default;
+    pane.addInput(PARAMS, key, param.props);
+  });
 ```
 
 ## Reading and Inspiration
