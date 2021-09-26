@@ -2,11 +2,9 @@
 
 # FettePalette
 
-Color palette generation function using curves within the HSV color model
-
-Based on: https://medium.com/@greggunn/how-to-make-your-own-color-palettes-712959fbf021
-
 Demo: https://meodai.github.io/fettepalette/
+Color palette generation function using curves within the HSV color model. 
+It is based on the idea of "hue shifting". A technique used by [pixel-artists and illustrators](#reading-and-inspiration). 
 
 ## Installation
 
@@ -159,3 +157,9 @@ The script exports `generateRandomColorRampParams` that contains sain defaults:
   },
 }
 ```
+
+## Reading and Inspiration
+
+- Video: [Hue Shifting in Pixel Art](https://www.youtube.com/watch?v=PNtMAxYaGyg) by [Brandon James Greer](https://twitter.com/BJGpixel)
+- Article: [How to make your own color palettes](https://medium.com/@greggunn/how-to-make-your-own-color-palettes-712959fbf021) by [Greg Gunn](https://www.ggunn.com/)
+- Tweet: [Hue Shifting](https://twitter.com/ENDESGA/status/971690827482202112) by [ENDESGA](https://github.com/ENDESGA)
