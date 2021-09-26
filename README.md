@@ -23,13 +23,13 @@ You can then import FettePalette into your project:
 let generateRandomColorRamp = require('fettepalette');
 
 // ES style: import individual methods
-import generateRandomColorRamp from 'culori';
+import {generateRandomColorRamp} from 'fettepalette';
 ```
 
 ## Usage
 
 ```js
-import generateRandomColorRamp from 'colordescription';
+import {generateRandomColorRamp} from 'colordescription';
 
 function generateRandomColorRamp  ({
   total:                10,   // total of base colors in the ramp
@@ -94,3 +94,68 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 - `offsetCurveModShade` float 0...1 > amplifies the curveAccent of for the shade colors
 - `minSaturationLight` array [0...1, 0...1] > minium saturation and light of the generated colors
 - `maxSaturationLight` array [0...1, 0...1] > maximum saturation and light of the generated colors
+
+#### Sain Options
+
+The script exports `generateRandomColorRampParams` that contains sain defaults:
+
+```js
+{
+  curveMethod: {
+    default: 'lamé',
+    props: { options: ['lamé', 'arc', 'pow', 'powY', 'powX'] },
+  },
+  curveAccent: {
+    default: 0,
+    props: { min: -0.095, max: 1, step: 0.001 },
+  },
+  total: {
+    default: 9,
+    props: { min: 3, max: 35, step: 1 },
+  },
+  centerHue: {
+    default: 0,
+    props: { min: 0, max: 360, step: 0.1 },
+  },
+  hueCycle: {
+    default: 0.3,
+    props: { min: 0, max: 1.5, step: 0.001 },
+  },
+  offsetTint: {
+    default: 0.01,
+    props: { min: 0, max: 0.4, step: 0.001 },
+  },
+  offsetShade: {
+    default: 0.01,
+    props: { min: 0, max: 0.4, step: 0.001 },
+  },
+  tintShadeHueShift: {
+    default: 0.01,
+    props: { min: 0, max: 1, step: 0.001 },
+  },
+  offsetCurveModTint: {
+    default: 0.03,
+    props: { min: 0, max: 0.4, step: 0.0001  },
+  },
+  offsetCurveModShade: {
+    default: 0.03,
+    props: { min: 0, max: 0.4, step: 0.0001  },
+  },
+  minSaturation: {
+    default: 0,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  minLight: {
+    default: 0,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  maxSaturation: {
+    default: 1,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  maxLight: {
+    default: 1,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+}
+```

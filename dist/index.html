@@ -590,7 +590,11 @@
   <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
 
   <script type="module">
-    import generateRandomColorRamp, { hsv2hsl, random, pointOnCurve } from './index.js';
+    import { 
+      generateRandomColorRamp,
+      generateRandomColorRampParams,
+      hsv2hsl, random, pointOnCurve 
+    } from './index.js';
 
     console.clear();
     
@@ -752,83 +756,13 @@
 
     const pane = new Pane(document.querySelector('[data-pane]'))
 
-    const PARAMS = {
-      colors: 9,
-      centerHue: 0,
-      hueCycle: 0.3,
-      offsetTint: 0.01,
-      offsetShade: 0.01,
-      curveAccent: 0,
-      tintShadeHueShift: 0.01,
-      colorMode: 'hsl',
-      curveMethod: 'lamé', //arc, pow
-      offsetCurveModTint: 0.03,
-      offsetCurveModShade: 0.03,
-      minSaturation: 0,
-      minLight: 0,
-      maxSaturation: 1,
-      maxLight: 1,
-    };
-    pane.addInput(PARAMS, 'curveMethod', {
-      options: ['lamé', 'arc', 'pow', 'powY', 'powX'],
+    const PARAMS = {};
+
+    Object.keys(generateRandomColorRampParams).forEach(key => {
+      const param = generateRandomColorRampParams[key];
+      PARAMS[key] = param.default;
+      pane.addInput(PARAMS, key, param.props);
     });
-    
-    pane.addInput(
-      PARAMS, 'curveAccent',
-      { min: -0.095, max: 1, step: 0.001 }
-    );
-
-    pane.addInput(
-      PARAMS, 'colors',
-      { min: 3, max: 35, step: 1 }
-    );
-    pane.addInput(
-      PARAMS, 'centerHue',
-      { min: 0, max: 360, step: 0.1 }
-    );
-
-    pane.addInput(
-      PARAMS, 'hueCycle',
-      { min: 0, max: 1.5, step: 0.001 }
-    );
-
-    pane.addInput(
-      PARAMS, 'offsetTint',
-      { min: 0, max: 0.4, step: 0.001 }
-    );
-    pane.addInput(
-      PARAMS, 'offsetShade',
-      { min: 0, max: 0.4, step: 0.001 }
-    );
-    pane.addInput(
-      PARAMS, 'offsetCurveModTint',
-      { min: 0, max: 0.4, step: 0.0001 }
-    );
-    pane.addInput(
-      PARAMS, 'offsetCurveModShade',
-      { min: 0, max: 0.4, step: 0.0001 }
-    );
-    pane.addInput(
-      PARAMS, 'tintShadeHueShift',
-      { min: 0, max: 1, step: 0.001 }
-    );
-    pane.addInput(
-      PARAMS, 'minSaturation',
-      { min: 0, max: 1, step: 0.001 }
-    );
-    pane.addInput( 
-      PARAMS, 'minLight',
-      { min: 0, max: 1, step: 0.001 }
-    );
-    pane.addInput(
-      PARAMS, 'maxSaturation',
-      { min: 0, max: 1, step: 0.001 }
-    );
-    pane.addInput(
-      PARAMS, 'maxLight',
-      { min: 0, max: 1, step: 0.001 }
-    );
-
     const $pal = document.querySelector('[data-palette]');
     const $picker = document.querySelector('[data-figure]');
     const $ramp = document.querySelector('[data-ramp]');
@@ -891,7 +825,7 @@
 
     function bam() {
       colors = generateRandomColorRamp({
-        total: PARAMS.colors,
+        total: PARAMS.total,
         centerHue: PARAMS.centerHue,
         hueCycle: PARAMS.hueCycle,
         offsetTint: PARAMS.offsetTint,
@@ -924,7 +858,7 @@
       console.clear();
 
       document.querySelector('[data-code]').innerHTML = `generateRandomColorRamp({
-  total: ${PARAMS.colors},
+  total: ${PARAMS.total},
   centerHue: ${PARAMS.centerHue},
   hueCycle: ${PARAMS.hueCycle},
   curveMethod: '${PARAMS.curveMethod}',
@@ -940,7 +874,7 @@
 `;
 
       points(
-        PARAMS.colors,
+        PARAMS.total,
         PARAMS.offsetTint,
         PARAMS.offsetShade,
         PARAMS.curveAccent,
@@ -955,7 +889,7 @@
       $picker.style.setProperty(`--deg`, `${colors.all[Math.floor(colors.all.length * .5)].hsl[0]}deg`);
 
       document.querySelector('[data-colors]').innerHTML = colors.all.reduce((r, c) => {
-        return `${r}<i style="--w: ${1 / PARAMS.colors}; --h: ${c.hsl[0]}; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`
+        return `${r}<i style="--w: ${1 / PARAMS.total}; --h: ${c.hsl[0]}; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`
       }, '');
       
       palette(colors, 'random');

@@ -123,7 +123,7 @@ export const pointOnCurve = (
 
 // arc || lamé: https://observablehq.com/@daformat/draw-squircle-shapes-with-svg-javascript
   
-export default function generateRandomColorRamp  ({
+export function generateRandomColorRamp  ({
   total               = 3,
   centerHue           = 0,
   hueCycle            = 0.3,
@@ -210,3 +210,62 @@ export default function generateRandomColorRamp  ({
     ],
   }
 }
+
+export const generateRandomColorRampParams = {
+  curveMethod: {
+    default: 'lamé',
+    props: { options: ['lamé', 'arc', 'pow', 'powY', 'powX'] },
+  },
+  curveAccent: {
+    default: 0,
+    props: { min: -0.095, max: 1, step: 0.001 },
+  },
+  total: {
+    default: 9,
+    props: { min: 3, max: 35, step: 1 },
+  },
+  centerHue: {
+    default: 0,
+    props: { min: 0, max: 360, step: 0.1 },
+  },
+  hueCycle: {
+    default: 0.3,
+    props: { min: 0, max: 1.5, step: 0.001 },
+  },
+  offsetTint: {
+    default: 0.01,
+    props: { min: 0, max: 0.4, step: 0.001 },
+  },
+  offsetShade: {
+    default: 0.01,
+    props: { min: 0, max: 0.4, step: 0.001 },
+  },
+  tintShadeHueShift: {
+    default: 0.01,
+    props: { min: 0, max: 1, step: 0.001 },
+  },
+  offsetCurveModTint: {
+    default: 0.03,
+    props: { min: 0, max: 0.4, step: 0.0001  },
+  },
+  offsetCurveModShade: {
+    default: 0.03,
+    props: { min: 0, max: 0.4, step: 0.0001  },
+  },
+  minSaturation: {
+    default: 0,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  minLight: {
+    default: 0,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  maxSaturation: {
+    default: 1,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+  maxLight: {
+    default: 1,
+    props: { min: 0, max: 1, step: 0.001  },
+  },
+};

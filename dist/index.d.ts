@@ -62,9 +62,121 @@ export declare const pointOnCurve: (curveMethod: CurveMethod, i: number, total: 
     all: [[h,s,l]...], // all colors
   }
 */
-export default function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: GenerateRandomColorRampArgument): {
+export declare function generateRandomColorRamp({ total, centerHue, hueCycle, offsetTint, offsetShade, curveAccent, tintShadeHueShift, curveMethod, offsetCurveModTint, offsetCurveModShade, minSaturationLight, maxSaturationLight }?: GenerateRandomColorRampArgument): {
     light: Vector3[];
     dark: Vector3[];
     base: Vector3[];
     all: Vector3[];
+};
+export declare const generateRandomColorRampParams: {
+    curveMethod: {
+        default: string;
+        props: {
+            options: string[];
+        };
+    };
+    curveAccent: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    total: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    centerHue: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    hueCycle: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    offsetTint: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    offsetShade: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    tintShadeHueShift: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    offsetCurveModTint: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    offsetCurveModShade: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    minSaturation: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    minLight: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    maxSaturation: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
+    maxLight: {
+        default: number;
+        props: {
+            min: number;
+            max: number;
+            step: number;
+        };
+    };
 };
