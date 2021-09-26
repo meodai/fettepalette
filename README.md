@@ -161,15 +161,15 @@ The script exports `generateRandomColorRampParams`, an onject that contains sain
 Integration with [tweakpane](https://cocopon.github.io/tweakpane/)
 
 ```js
-  import {generateRandomColorRampParams} from 'fettepalette';
+import {generateRandomColorRampParams} from 'fettepalette';
 
-  const PARAMS = {};
+const PARAMS = {};
 
-  Object.keys(generateRandomColorRampParams).forEach(key => {
-    const param = generateRandomColorRampParams[key];
-    PARAMS[key] = param.default;
-    pane.addInput(PARAMS, key, param.props);
-  });
+Object.keys(generateRandomColorRampParams).forEach(key => {
+  const param = generateRandomColorRampParams[key];
+  PARAMS[key] = param.default;
+  pane.addInput(PARAMS, key, param.props);
+});
 ```
 
 ## Reading and Inspiration
