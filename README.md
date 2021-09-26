@@ -93,9 +93,9 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 - `minSaturationLight` array [0...1, 0...1] > minium saturation and light of the generated colors
 - `maxSaturationLight` array [0...1, 0...1] > maximum saturation and light of the generated colors
 
-#### Sain Options
+#### Saint Options
 
-The script exports `generateRandomColorRampParams`, an onject that contains sain defaults. Makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane ...).
+To makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane ...), the script exports `generateRandomColorRampParams`, an onject that contains default and saint options to feed to the main function. 
 
 ```js
 {
