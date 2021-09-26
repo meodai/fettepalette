@@ -1,6 +1,6 @@
 {
   "name": "fettepalette",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Color ramp generator using curves within the HSV color model",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -13,7 +13,8 @@
     "build:browser": "esbuild src/index.ts --outfile=dist/index.iife.js --bundle --target=es6 --format=iife --global-name=generateRandomColorRamp --minify",
     "build:node": "esbuild src/index.ts --outfile=dist/index.js --platform=node --target=node14 --minify",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .ts && npx prettier --check ./src/"
+    "lint": "eslint . --ext .ts && npx prettier --check ./src/",
+    "prettier": "npx prettier --write ./src/"
   },
   "repository": {
     "type": "git",

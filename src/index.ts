@@ -6,6 +6,7 @@ export type CurveMethod =
   | "powY"
   | "powX"
   | FuncNumberReturn;
+export type ColorModel = "hsl" | "hsv";
 export type Vector2 = [number, number];
 export type Vector3 = [number, number, number];
 export type GenerateRandomColorRampArgument = {
@@ -21,6 +22,7 @@ export type GenerateRandomColorRampArgument = {
   offsetCurveModShade?: number;
   minSaturationLight?: Vector2;
   maxSaturationLight?: Vector2;
+  colorModel?: ColorModel;
 };
 
 /**
@@ -37,6 +39,20 @@ export const hsv2hsl = (
   l: number = v - (v * s) / 2,
   m: number = Math.min(l, 1 - l)
 ): Vector3 => [h, m ? (v - l) / m : 0, l];
+
+/**
+ * function hsv2hsx
+ * @param h {Number} hue value 0...360
+ * @param s {Number} saturation 0...1
+ * @param v {Number} value 0...1
+ * @returns {Array} h:0...360 s:0...1 l:0...1
+ */
+export const hsv2hsx = (
+  h: number,
+  s: number,
+  v: number,
+  mode: ColorModel
+): Vector3 => (mode === "hsl" ? hsv2hsl(h, s, v) : [h, s, v]);
 
 /**
  * function pointOnCurve
@@ -134,6 +150,7 @@ export function generateRandomColorRamp({
   offsetCurveModShade = 0.03,
   minSaturationLight = [0, 0],
   maxSaturationLight = [1, 1],
+  colorModel = "hsl",
 }: GenerateRandomColorRampArgument = {}): {
   light: Vector3[];
   dark: Vector3[];
@@ -158,7 +175,7 @@ export function generateRandomColorRamp({
         (-180 * hueCycle + (centerHue + i * (360 / (total + 1)) * hueCycle))) %
       360;
 
-    const hsl = hsv2hsl(h, x, y);
+    const hsl = hsv2hsx(h, x, y, colorModel);
 
     baseColors.push(hsl);
 
@@ -171,7 +188,7 @@ export function generateRandomColorRamp({
       maxSaturationLight
     );
 
-    const hslLight = hsv2hsl(h, xl, yl);
+    const hslLight = hsv2hsx(h, xl, yl, colorModel);
 
     lightColors.push([
       (h + 360 * tintShadeHueShift) % 360,
@@ -188,7 +205,7 @@ export function generateRandomColorRamp({
       maxSaturationLight
     );
 
-    const hslDark = hsv2hsl(h, xd, yd);
+    const hslDark = hsv2hsx(h, xd, yd, colorModel);
 
     darkColors.push([
       (360 + (h - 360 * tintShadeHueShift)) % 360,

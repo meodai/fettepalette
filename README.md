@@ -91,6 +91,8 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0…3
 - `offsetCurveModShade` float 0…1 > amplifies the curveAccent of for the shade colors
 - `minSaturationLight` array [0…1, 0…1] > minium saturation and light of the generated colors
 - `maxSaturationLight` array [0…1, 0…1] > maximum saturation and light of the generated colors
+- `colorModel` string 'hsl'|'hsv' > defines the color model of the returned colors
+hsv might be easier to convert into something else.
 
 #### Saint Options
 
