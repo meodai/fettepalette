@@ -3,8 +3,8 @@
 # FettePalette
 
 Demo: https://meodai.github.io/fettepalette/
-Color palette generation function using curves within the HSV color model. 
-It is based on the idea of "hue shifting". A technique used by [pixel-artists and illustrators](#reading-and-inspiration). 
+Color palette generation function using curves within the HSV color model.
+It is based on the idea of "hue shifting". A technique used by [pixel-artists and illustrators](#reading-and-inspiration).
 
 ## Installation
 
@@ -18,10 +18,10 @@ You can then import FettePalette into your project:
 
 ```js
 // CJS style
-let generateRandomColorRamp = require('fettepalette');
+let generateRandomColorRamp = require("fettepalette");
 
 // ES style: import individual methods
-import {generateRandomColorRamp} from 'fettepalette';
+import { generateRandomColorRamp } from "fettepalette";
 ```
 
 ## Usage
@@ -34,30 +34,30 @@ function generateRandomColorRamp  ({
 
   centerHue:            180,  // at what hue should the generation start at
 
-  hueCycle:             0.3,  // hsl spins how much should the hue change over 
+  hueCycle:             0.3,  // hsl spins how much should the hue change over
                               // the curve, 0: not at all, 1: one full rainbow
 
   offsetTint:           0.1,  // offset for the tints
 
   offsetShade:          0.1,  // offset of the shades
 
-  curveMethod:         'arc', // what method is used to draw the curve in the 
-                              // HSV color model 
+  curveMethod:         'arc', // what method is used to draw the curve in the
+                              // HSV color model
 
-  curveAccent:          0,    // how accentuated is the curve 
+  curveAccent:          0,    // how accentuated is the curve
                               // (depends heavely on curveMethod)
 
-  tintShadeHueShift:    0.1,  // defines how shifted the hue is in 
+  tintShadeHueShift:    0.1,  // defines how shifted the hue is in
                               //for the shades and the tints
 
   offsetCurveModTint:  0.03,  // modifies the tint curve
 
   offsetCurveModShade: 0.03,  //modifies the shade curve
 
-  minSaturationLight:  [0, 0],// defines the min saturation and light of all 
+  minSaturationLight:  [0, 0],// defines the min saturation and light of all
                               // the colors
 
-  maxSaturationLight:  [1, 1],// defines the max saturation and light of all 
+  maxSaturationLight:  [1, 1],// defines the max saturation and light of all
                               //the colors
 })
 ```
@@ -68,7 +68,7 @@ Function returns an ob object containing 4 arrays:
 
 ```js
 {
-    light: [], // tints 
+    light: [], // tints
     dark: [], // shades
     base: [], // smedium colors
     all: [], // all colors
@@ -77,15 +77,14 @@ Function returns an ob object containing 4 arrays:
 
 Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...360,0...1,0...1]`
 
-
 #### Options
 
 - `total` int 3... > Amount of base colors.
 - `centerHue` float 0...1 > 0 Red, 180 Teal etc..
 - `hueCycle` float 0...1 > How much the color changes over the curve 0: not at all, 1: full rainbow
-- `offsetTint` float  0...1 > Tint curve difference
-- `offsetShade` float  0...1 > Shade curve difference
-- `curveAccent` float  0...1 > How pronounced should the curve be, depends a lot on the curve method
+- `offsetTint` float 0...1 > Tint curve difference
+- `offsetShade` float 0...1 > Shade curve difference
+- `curveAccent` float 0...1 > How pronounced should the curve be, depends a lot on the curve method
 - `tintShadeHueShift` float 0...1 > Shifts the colors for the shades and tints
 - `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve
 - `offsetCurveModTint` float 0...1 > amplifies the curveAccent of for the tint colors
@@ -95,7 +94,7 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0...3
 
 #### Saint Options
 
-To makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane ...), the script exports `generateRandomColorRampParams`, an onject that contains default and saint options to feed to the main function. 
+To makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane ...), the script exports `generateRandomColorRampParams`, an onject that contains default and saint options to feed to the main function.
 
 ```js
 {
@@ -161,11 +160,11 @@ To makes it easy to integrate with your favourite settings pannel (dat.gui, twea
 Integration with [tweakpane](https://cocopon.github.io/tweakpane/)
 
 ```js
-import {generateRandomColorRampParams} from 'fettepalette';
+import { generateRandomColorRampParams } from "fettepalette";
 
 const PARAMS = {};
 
-Object.keys(generateRandomColorRampParams).forEach(key => {
+Object.keys(generateRandomColorRampParams).forEach((key) => {
   const param = generateRandomColorRampParams[key];
   PARAMS[key] = param.default;
   pane.addInput(PARAMS, key, param.props);

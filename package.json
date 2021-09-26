@@ -13,7 +13,7 @@
     "build:browser": "esbuild src/index.ts --outfile=dist/index.iife.js --bundle --target=es6 --format=iife --global-name=fettePalette --minify",
     "build:node": "esbuild src/index.ts --outfile=dist/index.js --platform=node --target=node14 --minify",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts && npx prettier --check ./src/"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "@typescript-eslint/parser": "^4.31.2",
     "esbuild": "^0.12.29",
     "eslint": "^7.32.0",
+    "prettier": "2.4.1",
     "typescript": "^4.4.3"
   }
 }

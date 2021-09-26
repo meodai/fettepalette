@@ -1,19 +1,19 @@
-export type CurveMethod = 'lamé'|'arc'|'pow'|'powY'|'powX';
+export type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX";
 export type Vector2 = [number, number];
 export type Vector3 = [number, number, number];
 export type GenerateRandomColorRampArgument = {
-  total?: number,
-  centerHue?: number,
-  hueCycle?: number,
-  offsetTint?: number,
-  offsetShade?: number,
-  curveAccent?: number,
-  tintShadeHueShift?: number,
-  curveMethod?: CurveMethod, 
-  offsetCurveModTint?: number,
-  offsetCurveModShade?: number,
-  minSaturationLight?: Vector2,
-  maxSaturationLight?: Vector2,
+  total?: number;
+  centerHue?: number;
+  hueCycle?: number;
+  offsetTint?: number;
+  offsetShade?: number;
+  curveAccent?: number;
+  tintShadeHueShift?: number;
+  curveMethod?: CurveMethod;
+  offsetCurveModTint?: number;
+  offsetCurveModShade?: number;
+  minSaturationLight?: Vector2;
+  maxSaturationLight?: Vector2;
 };
 
 /**
@@ -24,12 +24,12 @@ export type GenerateRandomColorRampArgument = {
  * @returns {Array} h:0...360 s:0...1 l:0...1
  */
 export const hsv2hsl = (
-  h: number, 
-  s: number, 
-  v: number, 
-  l: number = v - v * s / 2, 
-  m: number = Math.min(l, 1 - l),
-):Vector3 => [h, m ? (v - l) / m : 0, l];
+  h: number,
+  s: number,
+  v: number,
+  l: number = v - (v * s) / 2,
+  m: number = Math.min(l, 1 - l)
+): Vector3 => [h, m ? (v - l) / m : 0, l];
 
 /**
  * function random
@@ -37,10 +37,7 @@ export const hsv2hsl = (
  * @param max {Number} maximum number
  * @returns   {Number} number in given range
  */
-export const random = (
-  min: number, 
-  max: number,
-):number => {
+export const random = (min: number, max: number): number => {
   if (!max) {
     max = min;
     min = 0;
@@ -59,36 +56,36 @@ export const random = (
  * @returns           {Array} Vector on curve x, y
  */
 export const pointOnCurve = (
-  curveMethod:CurveMethod,
-  i:number,
-  total:number,
-  curveAccent:number,
-  min:Vector2         = [0, 0],
-  max:Vector2         = [1, 1],
-):Vector2 => {
+  curveMethod: CurveMethod,
+  i: number,
+  total: number,
+  curveAccent: number,
+  min: Vector2 = [0, 0],
+  max: Vector2 = [1, 1]
+): Vector2 => {
   const limit = Math.PI / 2;
   const slice = limit / total;
 
   let x = 0,
-      y = 0;
+    y = 0;
 
-  if (curveMethod === 'lamé') {
-    const t = i / total * limit;
-    const exp = 2 / (2 + (20 * curveAccent));
+  if (curveMethod === "lamé") {
+    const t = (i / total) * limit;
+    const exp = 2 / (2 + 20 * curveAccent);
     const cosT = Math.cos(t);
     const sinT = Math.sin(t);
-    x = Math.sign(cosT) * (Math.abs(cosT) ** exp);
-    y = Math.sign(sinT) * (Math.abs(sinT) ** exp);
-  } else if (curveMethod === 'arc') {
+    x = Math.sign(cosT) * Math.abs(cosT) ** exp;
+    y = Math.sign(sinT) * Math.abs(sinT) ** exp;
+  } else if (curveMethod === "arc") {
     y = Math.cos(-Math.PI / 2 + i * slice + curveAccent);
     x = Math.sin(Math.PI / 2 + i * slice - curveAccent);
-  } else if (curveMethod === 'pow') {
+  } else if (curveMethod === "pow") {
     x = Math.pow(1 - i / total, 1 - curveAccent);
     y = Math.pow(i / total, 1 - curveAccent);
-  } else if (curveMethod === 'powY') {
+  } else if (curveMethod === "powY") {
     x = Math.pow(1 - i / total, curveAccent);
     y = Math.pow(i / total, 1 - curveAccent);
-  } else if (curveMethod === 'powX') {
+  } else if (curveMethod === "powX") {
     x = Math.pow(i / total, curveAccent);
     y = Math.pow(i / total, 1 - curveAccent);
   }
@@ -97,7 +94,7 @@ export const pointOnCurve = (
   y = min[1] + Math.min(Math.max(y, 0), 1) * (max[1] - min[1]);
 
   return [x, y];
-}
+};
 
 /**
  * generateRandomColorRamp()
@@ -122,99 +119,95 @@ export const pointOnCurve = (
 */
 
 // arc || lamé: https://observablehq.com/@daformat/draw-squircle-shapes-with-svg-javascript
-  
-export function generateRandomColorRamp  ({
-  total               = 3,
-  centerHue           = 0,
-  hueCycle            = 0.3,
-  offsetTint          = 0.1,
-  offsetShade         = 0.1,
-  curveAccent         = 0,
-  tintShadeHueShift   = 0.1,
-  curveMethod         = 'arc', 
-  offsetCurveModTint  = 0.03,
-  offsetCurveModShade = 0.03,
-  minSaturationLight  = [0, 0],
-  maxSaturationLight  = [1, 1]
-}:GenerateRandomColorRampArgument = {}):{
-  light: Vector3[],
-  dark: Vector3[],
-  base: Vector3[],
-  all: Vector3[]
-} {
-  const baseColors:Vector3[] = [];
-  const lightColors:Vector3[] = [];
-  const darkColors:Vector3[] = [];
 
-  for (let i = 1; i < (total + 1); i++) {
+export function generateRandomColorRamp({
+  total = 3,
+  centerHue = 0,
+  hueCycle = 0.3,
+  offsetTint = 0.1,
+  offsetShade = 0.1,
+  curveAccent = 0,
+  tintShadeHueShift = 0.1,
+  curveMethod = "arc",
+  offsetCurveModTint = 0.03,
+  offsetCurveModShade = 0.03,
+  minSaturationLight = [0, 0],
+  maxSaturationLight = [1, 1],
+}: GenerateRandomColorRampArgument = {}): {
+  light: Vector3[];
+  dark: Vector3[];
+  base: Vector3[];
+  all: Vector3[];
+} {
+  const baseColors: Vector3[] = [];
+  const lightColors: Vector3[] = [];
+  const darkColors: Vector3[] = [];
+
+  for (let i = 1; i < total + 1; i++) {
     const [x, y] = pointOnCurve(
-      curveMethod, 
-      i, 
-      total + 1, 
-      curveAccent, 
-      minSaturationLight, 
+      curveMethod,
+      i,
+      total + 1,
+      curveAccent,
+      minSaturationLight,
       maxSaturationLight
     );
-    const h = (360 + ((-180 * hueCycle) + (centerHue + i * (360 / (total + 1)) * hueCycle))) % 360;
+    const h =
+      (360 +
+        (-180 * hueCycle + (centerHue + i * (360 / (total + 1)) * hueCycle))) %
+      360;
 
-    const hsl = hsv2hsl(
-      h, x, y
-    );
+    const hsl = hsv2hsl(h, x, y);
 
     baseColors.push(hsl);
 
     const [xl, yl] = pointOnCurve(
-      curveMethod, 
-      i, 
-      total + 1, 
-      curveAccent + offsetCurveModTint, 
-      minSaturationLight, 
+      curveMethod,
+      i,
+      total + 1,
+      curveAccent + offsetCurveModTint,
+      minSaturationLight,
       maxSaturationLight
     );
 
-    const hslLight = hsv2hsl(
-      h, xl, yl
+    const hslLight = hsv2hsl(h, xl, yl);
+
+    lightColors.push([
+      (h + 360 * tintShadeHueShift) % 360,
+      hslLight[1] - offsetTint,
+      hslLight[2] + offsetTint,
+    ]);
+
+    const [xd, yd] = pointOnCurve(
+      curveMethod,
+      i,
+      total + 1,
+      curveAccent - offsetCurveModShade,
+      minSaturationLight,
+      maxSaturationLight
     );
 
-    lightColors.push(
-      [
-        (h + 360 * tintShadeHueShift) % 360,
-        hslLight[1] - offsetTint,
-        hslLight[2] + offsetTint
-      ]
-    );
+    const hslDark = hsv2hsl(h, xd, yd);
 
-    const [xd, yd] = pointOnCurve(curveMethod, i, total + 1, curveAccent - offsetCurveModShade, minSaturationLight, maxSaturationLight);
-
-    const hslDark = hsv2hsl(
-      h, xd, yd
-    );
-
-    darkColors.push(
-      [
-        (360 + (h - 360 * tintShadeHueShift)) % 360,
-        hslDark[1] - offsetShade,
-        hslDark[2] - offsetShade
-      ]
-    );
+    darkColors.push([
+      (360 + (h - 360 * tintShadeHueShift)) % 360,
+      hslDark[1] - offsetShade,
+      hslDark[2] - offsetShade,
+    ]);
   }
 
   return {
     light: lightColors,
     dark: darkColors,
     base: baseColors,
-    all: [
-      ...lightColors, 
-      ...baseColors, 
-      ...darkColors,
-    ],
-  }
+    all: [...lightColors, ...baseColors, ...darkColors],
+  };
 }
 
 export const generateRandomColorRampParams = {
   curveMethod: {
-    default: 'lamé',
-    props: { options: ['lamé', 'arc', 'pow', 'powY', 'powX'] },
+    default: "lamé",
+    props: { options: ["lamé", "arc", "pow", "powY", "powX"] },
   },
   curveAccent: {
     default: 0,
@@ -246,26 +239,26 @@ export const generateRandomColorRampParams = {
   },
   offsetCurveModTint: {
     default: 0.03,
-    props: { min: 0, max: 0.4, step: 0.0001  },
+    props: { min: 0, max: 0.4, step: 0.0001 },
   },
   offsetCurveModShade: {
     default: 0.03,
-    props: { min: 0, max: 0.4, step: 0.0001  },
+    props: { min: 0, max: 0.4, step: 0.0001 },
   },
   minSaturation: {
     default: 0,
-    props: { min: 0, max: 1, step: 0.001  },
+    props: { min: 0, max: 1, step: 0.001 },
   },
   minLight: {
     default: 0,
-    props: { min: 0, max: 1, step: 0.001  },
+    props: { min: 0, max: 1, step: 0.001 },
   },
   maxSaturation: {
     default: 1,
-    props: { min: 0, max: 1, step: 0.001  },
+    props: { min: 0, max: 1, step: 0.001 },
   },
   maxLight: {
     default: 1,
-    props: { min: 0, max: 1, step: 0.001  },
+    props: { min: 0, max: 1, step: 0.001 },
   },
 };
