@@ -48,7 +48,7 @@ function generateRandomColorRamp  ({
                                // (depends heavely on curveMethod)
 
   tintShadeHueShift:    0.1,   // defines how shifted the hue is in
-                               //for the shades and the tints
+                               // for the shades and the tints
 
   offsetCurveModTint:  0.03,   // modifies the tint curve
 
@@ -58,8 +58,11 @@ function generateRandomColorRamp  ({
                                // the colors
 
   maxSaturationLight:  [1, 1], // defines the max saturation and light of all
-                               //the colors
-})
+                               // the colors
+  
+  colorModel:          'hsl',  // defines the color model of the returned colors
+                               // hsv and hsl are supported
+});
 ```
 
 ### generateRandomColorRamp(Options{})
@@ -79,19 +82,19 @@ Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0…3
 
 #### Options
 
-- `total` int 3… > Amount of base colors.
-- `centerHue` float 0…1 > 0 Red, 180 Teal etc..
-- `hueCycle` float 0…1 > How much the color changes over the curve 0: not at all, 1: full rainbow
-- `offsetTint` float 0…1 > Tint curve difference
-- `offsetShade` float 0…1 > Shade curve difference
-- `curveAccent` float 0…1 > How pronounced should the curve be, depends a lot on the curve method
-- `tintShadeHueShift` float 0…1 > Shifts the colors for the shades and tints
-- `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve. It also takes a function `(Number(0…1)) => [x,y]`
-- `offsetCurveModTint` float 0…1 > amplifies the curveAccent of for the tint colors
-- `offsetCurveModShade` float 0…1 > amplifies the curveAccent of for the shade colors
-- `minSaturationLight` array [0…1, 0…1] > minium saturation and light of the generated colors
-- `maxSaturationLight` array [0…1, 0…1] > maximum saturation and light of the generated colors
-- `colorModel` string 'hsl'|'hsv' > defines the color model of the returned colors
+- `total` int 3… → Amount of base colors.
+- `centerHue` float 0…1 → 0 Red, 180 Teal etc..
+- `hueCycle` float 0…1 → How much the color changes over the curve 0: not at all, 1: full rainbow
+- `offsetTint` float 0…1 → Tint curve difference
+- `offsetShade` float 0…1 → Shade curve difference
+- `curveAccent` float 0…1 → How pronounced should the curve be, depends a lot on the curve method
+- `tintShadeHueShift` float 0…1 → Shifts the colors for the shades and tints
+- `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' → method used to generate the curve. It also takes a function `(Number(0…1)) => [x,y]`
+- `offsetCurveModTint` float 0…1 → amplifies the curveAccent of for the tint colors
+- `offsetCurveModShade` float 0…1 → amplifies the curveAccent of for the shade colors
+- `minSaturationLight` array [0…1, 0…1] → minium saturation and light of the generated colors
+- `maxSaturationLight` array [0…1, 0…1] → maximum saturation and light of the generated colors
+- `colorModel` string 'hsl'|'hsv' → defines the color model of the returned colors
 hsv might be easier to convert into something else.
 
 #### Saint Options
