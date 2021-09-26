@@ -1,863 +1,925 @@
-<!doctype html>
+<!DOCTYPE html>
 
-<html lang=en>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fette Palette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <style>
+      :root {
+        font-family: "Inter", sans-serif;
+        background: #202124;
+        --sidebarwidth: 20rem;
+      }
 
-<head>
-  <meta charset=utf-8>
-  <title>Fette Palette</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  <style>
-    :root {
-      font-family: "Inter", sans-serif;
-      background: #202124;
-      --sidebarwidth: 20rem;
-    }
+      .settings {
+        position: fixed;
+        width: var(--sidebarwidth);
+        padding: 4.6rem 2rem;
+        background: #202124;
+        color: #fff;
+        order: 1;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
+        z-index: 2;
+      }
 
-    .settings {
-      position: fixed;
-      width: var(--sidebarwidth);
-      padding: 4.6rem 2rem;
-      background: #202124;
-      color: #fff;
-      order: 1;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      overflow-y: auto;
-      box-sizing: border-box;
-      z-index: 2;
-    }
+      .main {
+        margin-left: var(--sidebarwidth);
+        background: #fff;
+        padding: 4rem;
+      }
 
-    .main {
-      margin-left: var(--sidebarwidth);
-      background: #fff;
-      padding: 4rem;
-    }
+      .section {
+        display: flex;
+        margin-top: 4rem;
+        max-width: calc(50rem + 12.5vw);
+      }
+      .section__text {
+        flex: 1 0 calc(100% - 25rem - 4rem);
+        order: 1;
+        width: calc(100% - 25rem - 4rem);
+      }
+      .section__fig {
+        flex: 1 1 25rem;
+        order: 0;
+        margin-right: 4rem;
+      }
+      .section code {
+        font-family: monospace;
+        font-size: 1.3em;
+        background: #202124;
+        color: #fff;
+        padding: 0 0.75ex 0.2ex;
+      }
 
-    .section {
-      display: flex;
-      margin-top: 4rem;
-      max-width: calc(50rem + 12.5vw);
-    }
-    .section__text {
-      flex: 1 0 calc(100% - 25rem - 4rem);
-      order: 1;
-      width: calc(100% - 25rem - 4rem);
-    }
-    .section__fig {
-      flex: 1 1 25rem;
-      order: 0;
-      margin-right: 4rem;
-    }
-    .section code {
-      font-family: monospace;
-      font-size: 1.3em;
-      background: #202124;
-      color: #fff;
-      padding: 0 .75ex .2ex;
-    }
+      h1 {
+        font-size: calc(1rem + 11vw);
+        font-weight: 900;
+        letter-spacing: -0.055em;
+        margin-top: 2rem;
+        line-height: 0.85;
+        margin-left: -0.045em;
+      }
 
-    h1 {
-      font-size: calc(1rem + 11vw);
-      font-weight: 900;
-      letter-spacing: -0.055em;
-      margin-top: 2rem;
-      line-height: .85;
-      margin-left: -.045em;
-    }
+      h2,
+      h3,
+      [data-names] strong {
+        margin: 0 0 0.75rem;
+        font-size: calc(1.5rem + 2vw);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 0.9;
+      }
 
-    h2, h3, [data-names] strong {
-      margin: 0 0 .75rem;
-      font-size: calc(1.5rem + 2vw);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 0.9;
-    }
+      h2 + p {
+        margin-bottom: 1rem;
+      }
 
+      h3 {
+        margin-top: 1.5em;
+        font-size: calc(0.5rem + 1vw);
+      }
+      pre {
+        font-family: monospace;
+        font-size: 0.8rem;
+        max-width: 100%;
+      }
 
-    h2 + p {
-      margin-bottom: 1rem;
-    }
+      a {
+        font-size: 1em;
+        margin-top: 0.4em;
+        font-weight: 700;
+      }
 
-    h3 {
-      margin-top: 1.5em;
-      font-size: calc(.5rem + 1vw);
-    }
-    pre {
-      font-family: monospace;
-      font-size: .8rem;
-      max-width: 100%;
-    }
+      button {
+        display: block;
+        background: none;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        font: inherit;
+        font-size: inherit;
+        color: inherit;
+      }
+      [data-colors] {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      [data-colors] i {
+        flex: 1 0 calc(var(--w, 0.11) * 100%);
+        width: calc(var(--w, 0.11) * 100%);
+        padding-top: calc(var(--w, 0.11) * 100%);
+        background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
+      }
 
-    a {
-      font-size: 1em;
-      margin-top: .4em;
-      font-weight: 700;
-    }
+      [data-palette] {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      [data-palette] .palette-sample {
+        outline: 4px solid #fff;
+      }
+      .palette-sample {
+        position: relative;
+        background: var(--col-0);
+        padding-top: calc(100% / var(--x));
+        margin: 0;
+        user-select: none;
+        flex: 0 0 calc(100% / var(--x));
+      }
+      .palette-sample b {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--col-1);
+      }
+      .palette-sample i {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        right: 0;
+      }
+      .palette-sample i:first-child {
+        background: var(--col-2);
+      }
+      .palette-sample i:last-child {
+        bottom: 0;
+        background: var(--col-3);
+      }
 
-    button {
-      display: block;
-      background: none;
-      padding: 0;
-      border: none;
-      border-radius: 0;
-      font: inherit;
-      font-size: inherit;
-      color: inherit;
-    }
-    [data-colors] {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    [data-colors] i {
-      flex: 1 0 calc(var(--w, 0.11) * 100%);
-      width: calc(var(--w, 0.11) * 100%);
-      padding-top: calc(var(--w, 0.11) * 100%);
-      background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
-    }
+      figure {
+        margin: 0;
+        padding: 0;
+      }
+      [data-figure] {
+        background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)),
+          linear-gradient(
+            to left,
+            hsl(var(--deg, 0deg), 100%, 50%),
+            hsl(var(--deg, 0deg), 0%, 100%)
+          );
+      }
+      [data-ramp] {
+        height: 10rem;
+      }
+      [data-list] {
+        margin: 0 0 2rem;
+        display: flex;
+        gap: 4px;
+      }
 
-    [data-palette] {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    [data-palette] .palette-sample {
-      outline: 4px solid #fff;
-    }
-    .palette-sample {
-      position: relative;
-      background: var(--col-0);
-      padding-top: calc(100% / var(--x));
-      margin: 0;
-      user-select: none;
-      flex: 0 0 calc(100% / var(--x));
-    }
-    .palette-sample b {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--col-1);
-    }
-    .palette-sample i {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      right: 0;
-    }
-    .palette-sample i:first-child {
-      background: var(--col-2);
-    }
-    .palette-sample i:last-child {
-      bottom: 0;
-      background: var(--col-3);
-    }
+      .swatch {
+        position: relative;
+        font-size: 0.8rem;
+        line-height: 1.2;
+        padding-bottom: 0.5em;
+      }
 
-    figure {
-      margin: 0;
-      padding: 0;
-    }
-    [data-figure] {
-      background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)), linear-gradient(to left, hsl(var(--deg, 0deg), 100%, 50%), hsl(var(--deg, 0deg), 0%, 100%));
-    }
-    [data-ramp] {
-      height: 10rem;
-    }
-    [data-list] {
-      margin: 0 0 2rem;
-      display: flex;
-      gap: 4px;
-    }
+      [data-list] h3 {
+        display: none;
+        margin-top: 0;
+      }
 
-    .swatch {
-      position: relative;
-      font-size: 0.8rem;
-      line-height: 1.2;
-      padding-bottom: .5em;
-    }
+      .swatch::before {
+        user-select: none;
+        content: "";
+        background: var(--col);
+        display: block;
+        width: 100%;
+        height: 1.2em;
+        margin-bottom: 0.25rem;
+      }
+      .swatch::after {
+        position: absolute;
+        display: block;
+        content: "";
+        top: 2px;
+        right: 2px;
+        width: 2px;
+        height: calc(1.2em - 4px);
+        background: var(--coltext);
+      }
 
-    [data-list] h3 {
-      display: none;
-      margin-top: 0;
-    }
+      .color-info {
+        padding: 0.5rem;
+      }
 
-    .swatch::before {
-      user-select: none;
-      content: "";
-      background: var(--col);
-      display: block;
-      width: 100%;
-      height: 1.2em;
-      margin-bottom: 0.25rem;
-    }
-    .swatch::after {
-      position: absolute;
-      display: block;
-      content: '';
-      top: 2px;
-      right: 2px; 
-      width: 2px;
-      height: calc(1.2em - 4px);
-      background: var(--coltext);
-    }
+      .color-info strong {
+        font-size: 1rem;
+        display: block;
+        margin-bottom: 1ex;
+      }
+      .color-info button {
+        font-size: 0.6rem;
+        margin-top: 0.5em;
+      }
+      .color-info__contrast {
+        position: absolute;
+        top: 8.7rem;
+        left: 0.5rem;
+        color: var(--colbg);
+        font-size: 0.8em;
+      }
+      .color-info__contrast h5 {
+        display: none;
+      }
+      [data-list] > div {
+        flex: 1;
+      }
+      [data-copy] {
+        cursor: pointer;
+      }
+      p {
+        margin-top: 1em;
+        max-width: 22rem;
+        font-size: 0.8em;
+        letter-spacing: 0.002em;
+        line-height: 1.38;
+        font-weight: 400;
+      }
 
-    .color-info {
-      padding: 0.5rem;
-    }
+      .pane__section,
+      .pane__label {
+        display: block;
+      }
 
-    .color-info strong {
-      font-size: 1rem;
-      display: block;
-      margin-bottom: 1ex;
-    }
-    .color-info button {
-      font-size: .6rem;
-      margin-top: .5em;
-    }
-    .color-info__contrast {
-      position: absolute;
-      top: 8.7rem;
-      left: .5rem;
-      color: var(--colbg);
-      font-size: .8em;
-    }
-    .color-info__contrast h5 {
-      display: none;
-    }
-    [data-list] > div {
-      flex: 1;
-    }
-    [data-copy] {
-      cursor: pointer;
-    }
-    p {
-      margin-top: 1em;
-      max-width: 22rem;
-      font-size: 0.8em;
-      letter-spacing: 0.002em;
-      line-height: 1.38;
-      font-weight: 400;
-    }
+      .pane__label {
+        font-size: 0.8rem;
+        font-weight: 400;
+        line-height: 1;
+        margin-bottom: 0.8em;
+      }
 
-    .pane__section,
-    .pane__label {
-      display: block;
-    }
+      .pane {
+        box-sizing: border-box;
+        background: var(--color-bg);
+        display: block;
+        cursor: default;
+        background: #202124;
+        color: #fff;
+        --size-gutter: 1rem;
+        --color-inverted: #fff;
+      }
+      .pane__section {
+        display: block;
+      }
+      .pane__section + .pane__section {
+        margin-top: calc(var(--size-gutter) * 2);
+      }
+      .pane__inputs {
+        display: flex;
+        touch-action: manipulation;
+      }
+      .pane__input--number {
+        flex-grow: 1;
+      }
+      .pane .pane__input--number + input[type="number"] {
+        display: block;
+        flex-basis: 4rem;
+        width: 4rem;
+      }
+      .pane__desc {
+        margin: 1em 0 3em;
+        font-size: 0.6em;
+      }
+      .pane select {
+        font-size: 0.8em;
+        border-radius: 2rem;
+        padding: 0.2rem;
+      }
+      .pane input,
+      .pane select {
+        display: block;
+        box-sizing: border-box;
+        touch-action: manipulation;
+        font-family: "Space Mono", monospace;
+        border: none;
+        width: auto;
+      }
+      .pane input[type="number"],
+      .pane select[type="number"] {
+        color: var(--color-inverted);
+        background: none;
+        border: none;
+        text-align: right;
+        font-size: 0.8em;
+        flex: 0 0 3rem;
+        width: 3rem;
+      }
+      .pane input {
+        background-color: transparent;
+      }
+      .pane input[type="range"] {
+        -webkit-appearance: none;
+      }
+      .pane input[type="range"] {
+        margin: 0;
+        padding-top: 0.7em;
+        margin-top: -0.7em;
+      }
+      .pane input[type="range"]:focus {
+        outline: none;
+      }
+      .pane input[type="range"]:focus::-webkit-slider-thumb {
+        background-color: var(--color-inverted);
+        clip-path: polygon(100% 0%, 0% 0%, 50% 100%, 50% 100%);
+      }
+      .pane input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 1rem;
+        background: transparent;
+        color: var(--c-black);
+        border-radius: 0;
+        border: solid var(--color-inverted);
+        border-width: 0 0 1px;
+      }
+      .pane input[type="range"]::-webkit-slider-thumb {
+        border: 2px solid transparent;
+        height: 0.75rem;
+        width: 0.5rem;
+        border-radius: 0;
+        background: var(--color-inverted);
+        -webkit-appearance: none;
+        margin-top: 0.25rem;
+        transition: 150ms background-color, 200ms clip-path,
+          200ms -webkit-clip-path;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      }
+      .pane input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 1rem;
+        background: transparent;
+        color: var(--c-black);
+        border-radius: 0;
+        border: solid var(--color-inverted);
+        border-width: 0 0 1px;
+      }
+      .pane input[type="range"]::-moz-range-thumb {
+        border: 2px solid transparent;
+        height: 0.75rem;
+        width: 0.5rem;
+        border-radius: 0;
+        background: var(--color-inverted);
+        -webkit-appearance: none;
+        margin-top: 0.25rem;
+        transition: 150ms background-color, 200ms clip-path,
+          200ms -webkit-clip-path;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      }
+      .pane input[type="range"]::-ms-track {
+        width: 100%;
+        height: 1rem;
+        background: transparent;
+        color: var(--c-black);
+        border-radius: 0;
+        border: solid var(--color-inverted);
+        border-width: 0 0 1px;
+      }
+      .pane input[type="range"]::-ms-fill-lower {
+        background: var(--color-inverted);
+        border: none;
+        border-radius: 100%;
+      }
+      .pane input[type="range"]::-ms-fill-upper {
+        background: var(--color-inverted);
+        border-radius: 100%;
+        box-shadow: none;
+      }
+      .pane input[type="range"]::-ms-thumb {
+        border: 2px solid transparent;
+        height: 0.75rem;
+        width: 0.5rem;
+        border-radius: 0;
+        background: var(--color-inverted);
+        -webkit-appearance: none;
+        margin-top: 0.25rem;
+        transition: 150ms background-color, 200ms clip-path,
+          200ms -webkit-clip-path;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      }
+      .pane select {
+        color: var(--color-inverted);
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        border: 0;
+        box-shadow: 0 1px 0 0 var(--color-inverted);
+        border-radius: 0;
+        padding: 0.25rem 1rem 0.25rem 0rem;
+        background-color: transparent;
+        background-size: 1.25em 1.25em;
+        background-image: conic-gradient(
+          var(--color-inverted) 5%,
+          transparent 0 95%,
+          var(--color-inverted) 0
+        );
+        background-repeat: no-repeat;
+        background-position: right 0% top 120%;
+      }
+      .pane select option {
+        color: var(--color-bg);
+      }
+      .pane select:focus {
+        outline: none;
+        background-color: transparent;
+      }
 
-    .pane__label {
-      font-size: .8rem;
-      font-weight: 400;
-      line-height: 1;
-      margin-bottom: .8em;
-    }
+      svg:not(:root) {
+        overflow: visible;
+      }
+      [data-names] ol {
+        display: flex;
+        margin-top: 4rem;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
 
-    .pane {
-      box-sizing: border-box;
-      background: var(--color-bg);
-      display: block;
-      cursor: default;
-      background: #202124;
-      color: #fff;
-      --size-gutter: 1rem;
-      --color-inverted: #fff;
-    }
-    .pane__section {
-      display: block;
-    }
-    .pane__section + .pane__section {
-      margin-top: calc(var(--size-gutter) * 2);
-    }
-    .pane__inputs {
-      display: flex;
-      touch-action: manipulation;
-    }
-    .pane__input--number {
-      flex-grow: 1;
-    }
-    .pane .pane__input--number + input[type=number] {
-      display: block;
-      flex-basis: 4rem;
-      width: 4rem;
-    }
-    .pane__desc {
-      margin: 1em 0 3em;
-      font-size: 0.6em;
-    }
-    .pane select {
-      font-size: 0.8em;
-      border-radius: 2rem;
-      padding: 0.2rem;
-    }
-    .pane input, 
-    .pane select {
-      display: block;
-      box-sizing: border-box;
-      touch-action: manipulation;
-      font-family: 'Space Mono', monospace;
-      border: none;
-      width: auto;
-    }
-    .pane input[type=number], 
-    .pane select[type=number] {
-      color: var(--color-inverted);
-      background: none;
-      border: none;
-      text-align: right;
-      font-size: 0.8em;
-      flex: 0 0 3rem;
-      width: 3rem;
-    }
-    .pane input {
-      background-color: transparent;
-    }
-    .pane input[type=range] {
-      -webkit-appearance: none;
-    }
-    .pane input[type=range] {
-      margin: 0;
-      padding-top: 0.7em;
-      margin-top: -0.7em;
-    }
-    .pane input[type=range]:focus {
-      outline: none;
-    }
-    .pane input[type=range]:focus::-webkit-slider-thumb {
-      background-color: var(--color-inverted);
-      clip-path: polygon(100% 0%, 0% 0%, 50% 100%, 50% 100%);
-    }
-    .pane input[type=range]::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 1rem;
-      background: transparent;
-      color: var(--c-black);
-      border-radius: 0;
-      border: solid var(--color-inverted);
-      border-width: 0 0 1px;
-    }
-    .pane input[type=range]::-webkit-slider-thumb {
-      border: 2px solid transparent;
-      height: 0.75rem;
-      width: 0.5rem;
-      border-radius: 0;
-      background: var(--color-inverted);
-      -webkit-appearance: none;
-      margin-top: 0.25rem;
-      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    }
-    .pane input[type=range]::-moz-range-track {
-      width: 100%;
-      height: 1rem;
-      background: transparent;
-      color: var(--c-black);
-      border-radius: 0;
-      border: solid var(--color-inverted);
-      border-width: 0 0 1px;
-    }
-    .pane input[type=range]::-moz-range-thumb {
-      border: 2px solid transparent;
-      height: 0.75rem;
-      width: 0.5rem;
-      border-radius: 0;
-      background: var(--color-inverted);
-      -webkit-appearance: none;
-      margin-top: 0.25rem;
-      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    }
-    .pane input[type=range]::-ms-track {
-      width: 100%;
-      height: 1rem;
-      background: transparent;
-      color: var(--c-black);
-      border-radius: 0;
-      border: solid var(--color-inverted);
-      border-width: 0 0 1px;
-    }
-    .pane input[type=range]::-ms-fill-lower {
-      background: var(--color-inverted);
-      border: none;
-      border-radius: 100%;
-    }
-    .pane input[type=range]::-ms-fill-upper {
-      background: var(--color-inverted);
-      border-radius: 100%;
-      box-shadow: none;
-    }
-    .pane input[type=range]::-ms-thumb {
-      border: 2px solid transparent;
-      height: 0.75rem;
-      width: 0.5rem;
-      border-radius: 0;
-      background: var(--color-inverted);
-      -webkit-appearance: none;
-      margin-top: 0.25rem;
-      transition: 150ms background-color, 200ms clip-path, 200ms -webkit-clip-path;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    }
-    .pane select {
-      color: var(--color-inverted);
-      width: 100%;
-      box-sizing: border-box;
-      -webkit-appearance: none;
-      border: 0;
-      box-shadow: 0 1px 0 0 var(--color-inverted);
-      border-radius: 0;
-      padding: 0.25rem 1rem 0.25rem 0rem;
-      background-color: transparent;
-      background-size: 1.25em 1.25em;
-      background-image: conic-gradient(var(--color-inverted) 5%, transparent 0 95%, var(--color-inverted) 0);
-      background-repeat: no-repeat;
-      background-position: right 0% top 120%;
-    }
-    .pane select option {
-      color: var(--color-bg);
-    }
-    .pane select:focus {
-      outline: none;
-      background-color: transparent;
-    }
+      [data-names] li {
+        position: relative;
+        width: 10rem;
+        background: #fff;
+        color: #202124;
+      }
 
-    svg:not(:root){
-      overflow: visible;
-    } 
-    [data-names] ol {
-      display: flex;
-      margin-top: 4rem;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+      [data-names] li::before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+        background: var(--col);
+      }
 
-    [data-names] li {
-      position: relative;
-      width: 10rem;
-      background: #fff;
-      color: #202124;
-    } 
-    
-    [data-names] li::before {
-      content: '';
-      display: block;
-      padding-top: 100%;
-      background: var(--col);
-    }
-
-    .color-names {
-      /*position: relative;
+      .color-names {
+        /*position: relative;
       z-index: 10;*/
-      padding: 4rem;
-      padding-left: calc(var(--sidebarwidth) + 4rem);
-      color: #fff;
-    }
+        padding: 4rem;
+        padding-left: calc(var(--sidebarwidth) + 4rem);
+        color: #fff;
+      }
 
-    .color-names h2 {
-      color: #fff;
-    }
-    
-  </style>
-</head>
+      .color-names h2 {
+        color: #fff;
+      }
+    </style>
+  </head>
 
-<body>
-  <article class="app">
-    <section class="settings">
-      <aside>
-        <h3>About</h3>
-        <p>
-          FettePalette is lightweight, dependency free and fast JavaScript function
-          written in TypeScript. It generates color ramps based on a curve within
-          the HSV color model. This page serves as preview for the variety
-          of options the function takes.
-        </p>
-      </aside>
-      <aside>
-        <h3 class="code-title">Function Call</h3>
-        <code>
-          <pre data-code></pre>
-        </code>
-      </aside>
-      <aside>
-        <h3>Settings</h3>
-        <div class="settings__inner">
-          <div data-pane></div>
-        </div>
-      </aside>
-    </section>
-    <section class="main">
-      <h1>Fette&shy;Palette</h1>
+  <body>
+    <article class="app">
+      <section class="settings">
+        <aside>
+          <h3>About</h3>
+          <p>
+            FettePalette is lightweight, dependency free and fast JavaScript
+            function written in TypeScript. It generates color ramps based on a
+            curve within the HSV color model. This page serves as preview for
+            the variety of options the function takes.
+          </p>
+        </aside>
+        <aside>
+          <h3 class="code-title">Function Call</h3>
+          <code>
+            <pre data-code></pre>
+          </code>
+        </aside>
+        <aside>
+          <h3>Settings</h3>
+          <div class="settings__inner">
+            <div data-pane></div>
+          </div>
+        </aside>
+      </section>
+      <section class="main">
+        <h1>Fette&shy;Palette</h1>
 
-      <!--p>
+        <!--p>
         <mark>Fette­Palette</mark> is a function that returns an object containing
         as many base colors, tints and shades as set in <code>colors</code>.
       </p-->
-      <aside class="section">
-        <div class="section__text">
-          <h2>HSV Slice Preview</h2>
-          <p>
-            This shows the curve drawn within the HSV color model. 
-            It is drawn using the method set in <code>curveMethod</code>. (lamé, arc, pow, powX or powY)
-          </p>
-          <p>
-            The white dots represent the tints and the black dots the shades.
-            <code>offsetTint</code>, <code>offsetShade</code>, <code>offsetCurveModTint</code>
-            and <code>offsetCurveModShade</code> have in imact on the curve and the positions 
-            of those points.
-          </p>
-          <p>
-            The change in hue can be set with the <code>hueCycle</code> option. 
-            <code>0</code> means the same color for the full curve and <code>1</code>
-            would be a full rotation around the hue wheel.
-          </p>
-        </div>
-        <div class="section__fig">
-          <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
-        </div>
+        <aside class="section">
+          <div class="section__text">
+            <h2>HSV Slice Preview</h2>
+            <p>
+              This shows the curve drawn within the HSV color model. It is drawn
+              using the method set in <code>curveMethod</code>. (lamé, arc, pow,
+              powX or powY)
+            </p>
+            <p>
+              The white dots represent the tints and the black dots the shades.
+              <code>offsetTint</code>, <code>offsetShade</code>,
+              <code>offsetCurveModTint</code> and
+              <code>offsetCurveModShade</code> have in imact on the curve and
+              the positions of those points.
+            </p>
+            <p>
+              The change in hue can be set with the
+              <code>hueCycle</code> option. <code>0</code> means the same color
+              for the full curve and <code>1</code>
+              would be a full rotation around the hue wheel.
+            </p>
+          </div>
+          <div class="section__fig">
+            <figure><svg data-figure viewbox="0 0 100 100"></svg></figure>
+          </div>
+        </aside>
+
+        <aside class="section">
+          <div class="section__text">
+            <h2>Full Palette</h2>
+            <p>
+              <code>colors</code> sets the amount of base colors. However the
+              class returns an <code>Object</code> containing
+              <code>light</code>, <code>base</code> and <code>dark</code> colors
+              in an array of HSL coordinates. (as well as an array with all of
+              them called <code>all</code>)
+            </p>
+          </div>
+          <div class="section__fig">
+            <div data-colors></div>
+          </div>
+        </aside>
+
+        <aside class="section">
+          <div class="section__text">
+            <h2>Example Use</h2>
+            <p>click & hold to re-generate</p>
+            <p>
+              Each of those squares shows four random entires from the generated
+              colors. In a single square every color is unique. But because the
+              returned colors are segragated in <code>light</code>,
+              <code>base</code> and <code>dark</code>. Depending on your needs,
+              you could make sure to have a certain amount of each.
+            </p>
+          </div>
+          <div class="section__fig">
+            <div data-palette></div>
+          </div>
+        </aside>
+
+        <aside class="section">
+          <div class="section__text">
+            <h2>Color Ramp</h2>
+            <p>Showing a gradient of 4 random colors sorted by light</p>
+          </div>
+          <div class="section__fig">
+            <div data-ramp></div>
+          </div>
+        </aside>
+
+        <aside class="section">
+          <div class="section__text">
+            <h2>HSL Colors</h2>
+            <p>Full list of the generated colors.</p>
+            <p>
+              We used
+              <a title="culori" href="https://culorijs.org/">a library</a> to
+              convert the the HSL colors into different color models. We
+              deliberately choose to only deliver HSL
+              <code>[0…360, 0…1, 0…1]</code> to keep the function fast and
+              lightweight. There are plenty of awesome color libraries if you
+              need to have the colors converted to an other color model.
+            </p>
+          </div>
+          <div class="section__fig">
+            <div data-list></div>
+          </div>
+        </aside>
+
+        <p>
+          fork on
+          <a href="https://github.com/meodai/fettepalette">github</a> made by
+          <a href="https://www.elastiq.ch/">elastiq</a>.
+        </p>
+      </section>
+      <aside class="color-names">
+        <h2>Color Properies</h2>
+        <div data-names></div>
       </aside>
+    </article>
+    <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
 
-      <aside class="section">
-        <div class="section__text">
-          <h2>Full Palette</h2>
-          <p>
-            <code>colors</code> sets the amount of base colors. However
-            the class returns an <code>Object</code> containing <code>light</code>,
-            <code>base</code> and <code>dark</code> colors in an array of HSL coordinates.
-            (as well as an array with all of them called <code>all</code>)
-          </p>
-        </div>
-        <div class="section__fig">
-          <div data-colors></div>
-        </div>
-      </aside>
-    
-      <aside class="section">
-        <div class="section__text">
-          <h2>Example Use</h2>
-          <p>click & hold to re-generate</p>
-          <p>
-            Each of those squares shows four random entires from the generated colors. 
-            In a single square every color is unique. But because the returned colors
-            are segragated in <code>light</code>, <code>base</code> and <code>dark</code>. 
-            Depending on your needs, you could make sure to have a certain amount of each.
-          </p>
-        </div>
-        <div class="section__fig">
-          <div data-palette></div>
-        </div>
-      </aside>
+    <script type="module">
+      import {
+        generateRandomColorRamp,
+        generateRandomColorRampParams,
+        hsv2hsl,
+        random,
+        pointOnCurve,
+      } from "./index.js";
 
-      <aside class="section">
-        <div class="section__text">
-          <h2>Color Ramp</h2>
-          <p>Showing a gradient of 4 random colors sorted by light</p>
-        </div>
-        <div class="section__fig">
-          <div data-ramp></div>
-        </div>
-      </aside>
+      console.clear();
 
-      <aside class="section">
-        <div class="section__text">
-          <h2>HSL Colors</h2>
-          <p>
-            Full list of the generated colors.
-          </p>
-          <p>
-            We used <a title="culori" href="https://culorijs.org/">a library</a> 
-            to convert the the HSL colors into different color models. We deliberately
-            choose to only deliver HSL <code>[0…360, 0…1, 0…1]</code> to keep the function
-            fast and lightweight. There are plenty of awesome color libraries if 
-            you need to have the colors converted to an other color model.
-          </p>
-
-          
-        </div>
-        <div class="section__fig">
-          <div data-list></div>
-        </div>
-      </aside>
-
-      
-      <p>fork on <a href="https://github.com/meodai/fettepalette">github</a> made by <a href="https://www.elastiq.ch/">elastiq</a>.</p>
-    </section>
-    <aside class="color-names">
-      <h2>Color Properies</h2>
-      <div data-names></div>
-    </aside>
-  </article>
-  <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
-
-  <script type="module">
-    import { 
-      generateRandomColorRamp,
-      generateRandomColorRampParams,
-      hsv2hsl, random, pointOnCurve 
-    } from './index.js';
-
-    console.clear();
-    
-    const shuffleArray = array => {
-      let arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    class Pane {
-      constructor (
-        $dom, 
-        nameSpace = 'pane',
-        throttleTimer = 50,
-      ) {
-        this.watches = new Map();
-        this.nameSpace = nameSpace;
-        
-        this.$dom = $dom;
-        this.$el = document.createElement('div');
-        this.$el.classList.add(nameSpace);
-        this.$el.addEventListener('input', (e) => this._onChange(e), {
-          captures: true,
-          passive: true,
-        }, true);
-
-        $dom.appendChild(this.$el);
-
-        this.events = {};
-        this.timer;
-      }
-
-      _onChange (event) {
-        const $target = event.target;
-        
-        if ('key' in $target.dataset) {
-          const key = $target.dataset.key;
-          const ref = this.watches.get(key);
-          
-          if ( $target.dataset.type === 'number') {
-            ref[key] = new Number($target.value);
-          } else {
-            ref[key] = $target.value;
-          }
-
-          if('siblingid' in $target.dataset) {
-            document.getElementById($target.dataset.siblingid).value = $target.value;
-          }
-
-          if (this.events.hasOwnProperty('change')) {
-            clearTimeout(this.timer); 
-            this.events['change'].forEach(fn => {
-              this.timer = setTimeout(() => {
-                fn.apply(ref);
-              }, this.throttleTimer);
-            });
-          }
-        }   
-      }
-
-      on(event, fn) {
-        if (!this.events.hasOwnProperty(event)) {
-          this.events[event] = [];
+      const shuffleArray = (array) => {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
         }
-        this.events[event].push(fn);
-      }
+        return arr;
+      };
 
-      addInput(reference, key, options) {
-        this.watches.set(key, reference);
-        this._appendInput(reference, key, options)
-      }
+      class Pane {
+        constructor($dom, nameSpace = "pane", throttleTimer = 50) {
+          this.watches = new Map();
+          this.nameSpace = nameSpace;
 
-      _appendInput(reference, key, options) {
-        let type = typeof reference[key];
+          this.$dom = $dom;
+          this.$el = document.createElement("div");
+          this.$el.classList.add(nameSpace);
+          this.$el.addEventListener(
+            "input",
+            (e) => this._onChange(e),
+            {
+              captures: true,
+              passive: true,
+            },
+            true
+          );
 
-        const $e = document.createElement('label');
-        const $label = document.createElement('strong');
-        const $section = document.createElement('div');
+          $dom.appendChild(this.$el);
 
-        let $i, $in;
+          this.events = {};
+          this.timer;
+        }
 
-        if (type === 'number') {
-          $i = document.createElement('input');
-          $in = document.createElement('input');
+        _onChange(event) {
+          const $target = event.target;
 
-          $i.setAttribute('type', 'range');
-          $in.setAttribute('type', 'number');
+          if ("key" in $target.dataset) {
+            const key = $target.dataset.key;
+            const ref = this.watches.get(key);
 
-          if (options.hasOwnProperty('min')) {
-            $i.setAttribute('min', options.min);
-            $in.setAttribute('min', options.min);
-          }
-          if (options.hasOwnProperty('max')) {
-            $i.setAttribute('max', options.max);
-            $in.setAttribute('max', options.max);
-          }
-          if (options.hasOwnProperty('step')) {
-            $i.setAttribute('step', options.step);
-            $in.setAttribute('step', options.step);
-          }
-        } else if (type === 'string') {
-          if (options.hasOwnProperty('options')) {
-            $i = document.createElement('select');
+            if ($target.dataset.type === "number") {
+              ref[key] = new Number($target.value);
+            } else {
+              ref[key] = $target.value;
+            }
 
-            options.options.forEach(option => {
-              const $opt = document.createElement('option');
-              $opt.setAttribute('value', option);
-              $opt.innerHTML = option;
-              $i.appendChild($opt);
-            });
-          } else {
-            $i = document.createElement('input');
-            $i.setAttribute('type', 'text');
+            if ("siblingid" in $target.dataset) {
+              document.getElementById($target.dataset.siblingid).value =
+                $target.value;
+            }
+
+            if (this.events.hasOwnProperty("change")) {
+              clearTimeout(this.timer);
+              this.events["change"].forEach((fn) => {
+                this.timer = setTimeout(() => {
+                  fn.apply(ref);
+                }, this.throttleTimer);
+              });
+            }
           }
         }
 
-        $i.dataset.key = key;
-        $i.dataset.type = type;
-        $i.value = reference[key];
-        $i.id = `${this.nameSpace}--${key}`;
-        $i.classList.add(
-          `${this.nameSpace}__input`,
-          `${this.nameSpace}__input--${type}`
-        );
-        
-        $section.appendChild($i);
-        $section.classList.add(
-          `${this.nameSpace}__inputs`,
-          `${this.nameSpace}__inputs--${type}`
-        );
+        on(event, fn) {
+          if (!this.events.hasOwnProperty(event)) {
+            this.events[event] = [];
+          }
+          this.events[event].push(fn);
+        }
 
-        if ($in) {
-          $in.dataset.key = key;
-          $in.dataset.type = type;
-          $in.value = reference[key];
-          $in.id = `${this.nameSpace}--${key}--value`;
+        addInput(reference, key, options) {
+          this.watches.set(key, reference);
+          this._appendInput(reference, key, options);
+        }
+
+        _appendInput(reference, key, options) {
+          let type = typeof reference[key];
+
+          const $e = document.createElement("label");
+          const $label = document.createElement("strong");
+          const $section = document.createElement("div");
+
+          let $i, $in;
+
+          if (type === "number") {
+            $i = document.createElement("input");
+            $in = document.createElement("input");
+
+            $i.setAttribute("type", "range");
+            $in.setAttribute("type", "number");
+
+            if (options.hasOwnProperty("min")) {
+              $i.setAttribute("min", options.min);
+              $in.setAttribute("min", options.min);
+            }
+            if (options.hasOwnProperty("max")) {
+              $i.setAttribute("max", options.max);
+              $in.setAttribute("max", options.max);
+            }
+            if (options.hasOwnProperty("step")) {
+              $i.setAttribute("step", options.step);
+              $in.setAttribute("step", options.step);
+            }
+          } else if (type === "string") {
+            if (options.hasOwnProperty("options")) {
+              $i = document.createElement("select");
+
+              options.options.forEach((option) => {
+                const $opt = document.createElement("option");
+                $opt.setAttribute("value", option);
+                $opt.innerHTML = option;
+                $i.appendChild($opt);
+              });
+            } else {
+              $i = document.createElement("input");
+              $i.setAttribute("type", "text");
+            }
+          }
+
+          $i.dataset.key = key;
+          $i.dataset.type = type;
+          $i.value = reference[key];
+          $i.id = `${this.nameSpace}--${key}`;
           $i.classList.add(
             `${this.nameSpace}__input`,
             `${this.nameSpace}__input--${type}`
           );
-          $in.dataset.siblingid = `${this.nameSpace}--${key}`;
-          $i.dataset.siblingid = `${this.nameSpace}--${key}--value`;
-          $section.appendChild($in);
+
+          $section.appendChild($i);
+          $section.classList.add(
+            `${this.nameSpace}__inputs`,
+            `${this.nameSpace}__inputs--${type}`
+          );
+
+          if ($in) {
+            $in.dataset.key = key;
+            $in.dataset.type = type;
+            $in.value = reference[key];
+            $in.id = `${this.nameSpace}--${key}--value`;
+            $i.classList.add(
+              `${this.nameSpace}__input`,
+              `${this.nameSpace}__input--${type}`
+            );
+            $in.dataset.siblingid = `${this.nameSpace}--${key}`;
+            $i.dataset.siblingid = `${this.nameSpace}--${key}--value`;
+            $section.appendChild($in);
+          }
+
+          $label.innerHTML = key;
+          $label.classList.add(`${this.nameSpace}__label`);
+
+          $e.classList.add(`${this.nameSpace}__section`);
+          $e.appendChild($label);
+          $e.append($section);
+
+          this.$el.appendChild($e);
+        }
+      }
+
+      const pane = new Pane(document.querySelector("[data-pane]"));
+
+      const PARAMS = {};
+
+      Object.keys(generateRandomColorRampParams).forEach((key) => {
+        const param = generateRandomColorRampParams[key];
+        PARAMS[key] = param.default;
+        pane.addInput(PARAMS, key, param.props);
+      });
+      const $pal = document.querySelector("[data-palette]");
+      const $picker = document.querySelector("[data-figure]");
+      const $ramp = document.querySelector("[data-ramp]");
+      let colors = [];
+
+      const palette = (colors, method) => {
+        let allColors = [];
+
+        const lightColors = shuffleArray(colors.light);
+        const mediumColors = shuffleArray(colors.base);
+        const darkColors = shuffleArray(colors.dark);
+
+        switch (method) {
+          case "random":
+            allColors = shuffleArray(colors.all);
+            break;
+          case "l2md":
+            allColors = [
+              lightColors[0],
+              mediumColors[0],
+              darkColors[0],
+              lightColors[1],
+            ];
+            break;
+          case "lmd2":
+            allColors = [
+              darkColors[0],
+              mediumColors[0],
+              lightColors[0],
+              darkColors[1],
+            ];
+            break;
+          case "lm2d":
+            allColors = [
+              mediumColors[1],
+              mediumColors[0],
+              lightColors[0],
+              darkColors[1],
+            ];
+            break;
         }
 
-        $label.innerHTML = key;
-        $label.classList.add(`${this.nameSpace}__label`);
-        
-        $e.classList.add(`${this.nameSpace}__section`);
-        $e.appendChild($label);
-        $e.append($section);
+        let localcolors = [...allColors];
+        $pal.innerHTML = "";
 
-        this.$el.appendChild($e);
-      }
-    }
-
-    const pane = new Pane(document.querySelector('[data-pane]'))
-
-    const PARAMS = {};
-
-    Object.keys(generateRandomColorRampParams).forEach(key => {
-      const param = generateRandomColorRampParams[key];
-      PARAMS[key] = param.default;
-      pane.addInput(PARAMS, key, param.props);
-    });
-    const $pal = document.querySelector('[data-palette]');
-    const $picker = document.querySelector('[data-figure]');
-    const $ramp = document.querySelector('[data-ramp]');
-    let colors = [];
-
-    const palette = (colors, method) => {
-      let allColors = [];
-
-      const lightColors = shuffleArray(colors.light);
-      const mediumColors = shuffleArray(colors.base);
-      const darkColors = shuffleArray(colors.dark);
-
-      switch (method) {
-        case 'random':
-          allColors = shuffleArray(colors.all);
-          break;
-        case 'l2md':
-          allColors = [lightColors[0], mediumColors[0], darkColors[0], lightColors[1]];
-          break;
-        case 'lmd2':
-          allColors = [darkColors[0], mediumColors[0], lightColors[0], darkColors[1]];
-          break;
-        case 'lm2d':
-          allColors = [mediumColors[1], mediumColors[0], lightColors[0], darkColors[1]];
-          break;
-      }
-
-      let localcolors = [...allColors];
-      $pal.innerHTML = '';
-
-      $pal.appendChild(paletteDom(localcolors, 1));
-      localcolors = shuffleArray(localcolors);
-      
-      for (let i = 0; i < 2; i++) {
-        $pal.appendChild(paletteDom(localcolors, 2));
+        $pal.appendChild(paletteDom(localcolors, 1));
         localcolors = shuffleArray(localcolors);
+
+        for (let i = 0; i < 2; i++) {
+          $pal.appendChild(paletteDom(localcolors, 2));
+          localcolors = shuffleArray(localcolors);
+        }
+
+        for (let i = 0; i < 4 * 2; i++) {
+          $pal.appendChild(paletteDom(localcolors, 4));
+          localcolors = shuffleArray(localcolors);
+        }
+
+        $ramp.style.setProperty(
+          "background",
+          `linear-gradient(90deg, ${allColors
+            .slice(0, 4)
+            .sort((a, b) => b.hsl[2] - a.hsl[2])
+            .map(
+              (c) => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`
+            )
+            .join(",")})`
+        );
+      };
+
+      function paletteDom(colorArr, x = 1) {
+        const $div = document.createElement("div");
+        $div.classList.add("palette-sample");
+        $div.style.setProperty("--x", x);
+        $div.innerHTML = "<b><i></i><i></i></b>";
+
+        for (let i = 0; i < 4; i++) {
+          $div.style.setProperty(
+            `--col-${i}`,
+            `hsl(${colorArr[i].hsl[0]},${colorArr[i].hsl[1] * 100}%,${
+              colorArr[i].hsl[2] * 100
+            }%)`
+          );
+        }
+
+        return $div;
       }
 
-      for (let i = 0; i < 4 * 2; i++) {
-        $pal.appendChild(paletteDom(localcolors, 4));
-        localcolors = shuffleArray(localcolors);
-      }
-
-      
-      $ramp.style.setProperty('background', `linear-gradient(90deg, ${allColors.slice(0, 4).sort((a, b) => b.hsl[2] - a.hsl[2]).map(c => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`).join(',')})`)
-    }
-
-    function paletteDom (colorArr, x=1) {
-      const $div = document.createElement('div');
-      $div.classList.add('palette-sample');
-      $div.style.setProperty('--x', x);
-      $div.innerHTML = '<b><i></i><i></i></b>';
-
-      for (let i = 0; i < 4; i++) {
-        $div.style.setProperty(`--col-${i}`, `hsl(${colorArr[i].hsl[0]},${colorArr[i].hsl[1] * 100}%,${colorArr[i].hsl[2] * 100}%)`);
-      }
-
-      return $div;
-    }
-
-    function bam() {
-      colors = generateRandomColorRamp({
-        total: PARAMS.total,
-        centerHue: PARAMS.centerHue,
-        hueCycle: PARAMS.hueCycle,
-        offsetTint: PARAMS.offsetTint,
-        offsetShade: PARAMS.offsetShade,
-        curveAccent: PARAMS.curveAccent,
-        tintShadeHueShift: PARAMS.tintShadeHueShift,
-        curveMethod: PARAMS.curveMethod,
-        offsetCurveModTint: PARAMS.offsetCurveModTint,
-        offsetCurveModShade: PARAMS.offsetCurveModShade,
-        minSaturationLight: [PARAMS.minSaturation, PARAMS.minLight],
-        maxSaturationLight: [PARAMS.maxSaturation, PARAMS.maxLight],
-      });
-
-      // Mutate colors object
-      for (const key in colors) {
-        colors[key] = colors[key].map(([h, s, l]) => {
-          const { r, g, b } = culori.converter('rgb')({ mode: 'hsl', h, s, l })
-          return {
-            hsl: [h, s, l],
-            rgb: [r * 255, g * 255, b * 255],
-            hex: culori.formatHex({ mode: 'hsl', h, s, l }),
-            contrast: {
-              white: culori.wcagContrast('#ffffff', { mode: 'hsl', h, s, l }),
-              black: culori.wcagContrast('#000000', { mode: 'hsl', h, s, l })
-            }
-          }
+      function bam() {
+        colors = generateRandomColorRamp({
+          total: PARAMS.total,
+          centerHue: PARAMS.centerHue,
+          hueCycle: PARAMS.hueCycle,
+          offsetTint: PARAMS.offsetTint,
+          offsetShade: PARAMS.offsetShade,
+          curveAccent: PARAMS.curveAccent,
+          tintShadeHueShift: PARAMS.tintShadeHueShift,
+          curveMethod: PARAMS.curveMethod,
+          offsetCurveModTint: PARAMS.offsetCurveModTint,
+          offsetCurveModShade: PARAMS.offsetCurveModShade,
+          minSaturationLight: [PARAMS.minSaturation, PARAMS.minLight],
+          maxSaturationLight: [PARAMS.maxSaturation, PARAMS.maxLight],
         });
-      }
 
-      console.clear();
+        // Mutate colors object
+        for (const key in colors) {
+          colors[key] = colors[key].map(([h, s, l]) => {
+            const { r, g, b } = culori.converter("rgb")({
+              mode: "hsl",
+              h,
+              s,
+              l,
+            });
+            return {
+              hsl: [h, s, l],
+              rgb: [r * 255, g * 255, b * 255],
+              hex: culori.formatHex({ mode: "hsl", h, s, l }),
+              contrast: {
+                white: culori.wcagContrast("#ffffff", { mode: "hsl", h, s, l }),
+                black: culori.wcagContrast("#000000", { mode: "hsl", h, s, l }),
+              },
+            };
+          });
+        }
 
-      document.querySelector('[data-code]').innerHTML = `generateRandomColorRamp({
+        console.clear();
+
+        document.querySelector(
+          "[data-code]"
+        ).innerHTML = `generateRandomColorRamp({
   total: ${PARAMS.total},
   centerHue: ${PARAMS.centerHue},
   hueCycle: ${PARAMS.hueCycle},
@@ -873,119 +935,179 @@
 });
 `;
 
-      points(
-        PARAMS.total,
-        PARAMS.offsetTint,
-        PARAMS.offsetShade,
-        PARAMS.curveAccent,
-        colors.base,
-        PARAMS.curveMethod,
-        PARAMS.offsetCurveModTint,
-        PARAMS.offsetCurveModShade,
-        [PARAMS.minSaturation, PARAMS.minLight],
-        [PARAMS.maxSaturation, PARAMS.maxLight]
-      );
+        points(
+          PARAMS.total,
+          PARAMS.offsetTint,
+          PARAMS.offsetShade,
+          PARAMS.curveAccent,
+          colors.base,
+          PARAMS.curveMethod,
+          PARAMS.offsetCurveModTint,
+          PARAMS.offsetCurveModShade,
+          [PARAMS.minSaturation, PARAMS.minLight],
+          [PARAMS.maxSaturation, PARAMS.maxLight]
+        );
 
-      $picker.style.setProperty(`--deg`, `${colors.all[Math.floor(colors.all.length * .5)].hsl[0]}deg`);
+        $picker.style.setProperty(
+          `--deg`,
+          `${colors.all[Math.floor(colors.all.length * 0.5)].hsl[0]}deg`
+        );
 
-      document.querySelector('[data-colors]').innerHTML = colors.all.reduce((r, c) => {
-        return `${r}<i style="--w: ${1 / PARAMS.total}; --h: ${c.hsl[0]}; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`
-      }, '');
-      
-      palette(colors, 'random');
-      list(colors);
+        document.querySelector("[data-colors]").innerHTML = colors.all.reduce(
+          (r, c) => {
+            return `${r}<i style="--w: ${1 / PARAMS.total}; --h: ${
+              c.hsl[0]
+            }; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`;
+          },
+          ""
+        );
 
-      names(colors);
-    }
+        palette(colors, "random");
+        list(colors);
 
-    function points(
-      colorsInt, 
-      offsetTint, 
-      offsetShade, 
-      curveAccent, 
-      colorsArr, 
-      curveMethod, 
-      offsetCurveModTint, 
-      offsetCurveModShade, 
-      minSaturationLight, 
-      maxSaturationLight,
-    ) {
-      $picker.innerHTML = '';
-      const limit = Math.PI / 2;
-      const part = limit / (colorsInt + 1);
-
-      for (let i = 1; i < (colorsInt + 1); i++) {
-        const [x, y] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent, minSaturationLight, maxSaturationLight);
-        const hsl = hsv2hsl(0, x, y);
-        const newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-
-        newElement.setAttribute('cx', x * 100);
-        newElement.setAttribute('cy', 100 - y * 100);
-
-        newElement.setAttribute('r', '3');
-
-        newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg,${hsl[1] * 100}%,${hsl[2] * 100}%)`;
-        newElement.style.stroke = '#212121';
-        newElement.style.strokeWidth = '.5px';
-
-        const [xl, yl] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent + offsetCurveModTint, minSaturationLight, maxSaturationLight);
-
-        const newElementLight = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-
-        newElementLight.setAttribute('cx', (xl - offsetTint) * 100);
-        newElementLight.setAttribute('cy', 100 - (yl + offsetTint) * 100);
-
-        newElementLight.setAttribute('r', '1');
-
-        newElementLight.style.fill = `#fff`;
-        newElementLight.style.strokeWidth = '0px';
-
-        const newElementDark = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-
-        const [xd, yd] = pointOnCurve(curveMethod, i, colorsInt + 1, curveAccent - offsetCurveModShade, minSaturationLight, maxSaturationLight);
-
-        newElementDark.setAttribute('cx', (xd - offsetShade) * 100);
-        newElementDark.setAttribute('cy', 100 - (yd - offsetShade) * 100);
-
-        newElementDark.setAttribute('r', '1');
-
-        newElementDark.style.fill = `#000`;
-        newElementDark.style.strokeWidth = '0px';
-
-        $picker.appendChild(newElement);
-        $picker.appendChild(newElementLight);
-        $picker.appendChild(newElementDark);
+        names(colors);
       }
 
-    }
+      function points(
+        colorsInt,
+        offsetTint,
+        offsetShade,
+        curveAccent,
+        colorsArr,
+        curveMethod,
+        offsetCurveModTint,
+        offsetCurveModShade,
+        minSaturationLight,
+        maxSaturationLight
+      ) {
+        $picker.innerHTML = "";
+        const limit = Math.PI / 2;
+        const part = limit / (colorsInt + 1);
 
-    const printColors = (arr, simple, names) => arr.map(({ hsl, rgb, hex, contrast}, i) => {
-      if (simple) {
-        return `
-          <li class="swatch swatch--simple" style="--col:${hex}; --coltext: ${contrast.black > contrast.white ?'#202125' : '#fff'}">
-            <div data-copy title="Click to copy">${Math.floor(hsl[0])}° ${Math.floor(hsl[1] * 100)}% ${Math.floor(hsl[2] * 100)}%</div>
+        for (let i = 1; i < colorsInt + 1; i++) {
+          const [x, y] = pointOnCurve(
+            curveMethod,
+            i,
+            colorsInt + 1,
+            curveAccent,
+            minSaturationLight,
+            maxSaturationLight
+          );
+          const hsl = hsv2hsl(0, x, y);
+          const newElement = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+
+          newElement.setAttribute("cx", x * 100);
+          newElement.setAttribute("cy", 100 - y * 100);
+
+          newElement.setAttribute("r", "3");
+
+          newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg,${
+            hsl[1] * 100
+          }%,${hsl[2] * 100}%)`;
+          newElement.style.stroke = "#212121";
+          newElement.style.strokeWidth = ".5px";
+
+          const [xl, yl] = pointOnCurve(
+            curveMethod,
+            i,
+            colorsInt + 1,
+            curveAccent + offsetCurveModTint,
+            minSaturationLight,
+            maxSaturationLight
+          );
+
+          const newElementLight = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+
+          newElementLight.setAttribute("cx", (xl - offsetTint) * 100);
+          newElementLight.setAttribute("cy", 100 - (yl + offsetTint) * 100);
+
+          newElementLight.setAttribute("r", "1");
+
+          newElementLight.style.fill = `#fff`;
+          newElementLight.style.strokeWidth = "0px";
+
+          const newElementDark = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+
+          const [xd, yd] = pointOnCurve(
+            curveMethod,
+            i,
+            colorsInt + 1,
+            curveAccent - offsetCurveModShade,
+            minSaturationLight,
+            maxSaturationLight
+          );
+
+          newElementDark.setAttribute("cx", (xd - offsetShade) * 100);
+          newElementDark.setAttribute("cy", 100 - (yd - offsetShade) * 100);
+
+          newElementDark.setAttribute("r", "1");
+
+          newElementDark.style.fill = `#000`;
+          newElementDark.style.strokeWidth = "0px";
+
+          $picker.appendChild(newElement);
+          $picker.appendChild(newElementLight);
+          $picker.appendChild(newElementDark);
+        }
+      }
+
+      const printColors = (arr, simple, names) =>
+        arr
+          .map(({ hsl, rgb, hex, contrast }, i) => {
+            if (simple) {
+              return `
+          <li class="swatch swatch--simple" style="--col:${hex}; --coltext: ${
+                contrast.black > contrast.white ? "#202125" : "#fff"
+              }">
+            <div data-copy title="Click to copy">${Math.floor(
+              hsl[0]
+            )}° ${Math.floor(hsl[1] * 100)}% ${Math.floor(hsl[2] * 100)}%</div>
           </li>`;
-        } else {
-          return `
-            <li class="full" style="--col:${hex}; --coltext: ${contrast.black < contrast.white ? '#202125' : '#fff'}; --colbg: ${contrast.black > contrast.white ? '#202125' : '#fff'}">
+            } else {
+              return `
+            <li class="full" style="--col:${hex}; --coltext: ${
+                contrast.black < contrast.white ? "#202125" : "#fff"
+              }; --colbg: ${
+                contrast.black > contrast.white ? "#202125" : "#fff"
+              }">
               <div class="color-info">
                 <strong>${names[i].name}</strong>
-                <button data-copy title="Click to copy">hsl(${Math.floor(hsl[0])},${Math.floor(hsl[1] * 100)}%,${Math.floor(hsl[2] * 100)}%)</button>
-                <button data-copy title="Click to copy">rgb(${Math.floor(rgb[0])},${Math.floor(rgb[1])},${Math.floor(rgb[2])})</button>
+                <button data-copy title="Click to copy">hsl(${Math.floor(
+                  hsl[0]
+                )},${Math.floor(hsl[1] * 100)}%,${Math.floor(
+                hsl[2] * 100
+              )}%)</button>
+                <button data-copy title="Click to copy">rgb(${Math.floor(
+                  rgb[0]
+                )},${Math.floor(rgb[1])},${Math.floor(rgb[2])})</button>
                 <button data-copy title="Click to copy">${hex}</button>
                 <div class="color-info__contrast">
                   <h5>wcag contrast:</h5>
-                  <em><span style="color: #ffffff;"">Aa</span> ${contrast.white.toFixed(2)}</em>
-                  <span style="color: #000000;">Aa</span> ${contrast.black.toFixed(2)}</em>
+                  <em><span style="color: #ffffff;"">Aa</span> ${contrast.white.toFixed(
+                    2
+                  )}</em>
+                  <span style="color: #000000;">Aa</span> ${contrast.black.toFixed(
+                    2
+                  )}</em>
                 </div>
               </div>
             </li>
-          `
-      }
-    }).join('');
+          `;
+            }
+          })
+          .join("");
 
-    function list(colors) {
-      document.querySelector('[data-list]').innerHTML = `
+      function list(colors) {
+        document.querySelector("[data-list]").innerHTML = `
         <div>
           <h3>Light Colors</h3>
           <ol>${printColors(colors.light, true)}</ol>
@@ -998,49 +1120,58 @@
           <h3>Dark Colors</h3>
           <ol>${printColors(colors.dark, true)}</ol>
         </div>
-      `
-    }
+      `;
+      }
 
-    
-    let timer;
-    const $names = document.querySelector('[data-names]');
+      let timer;
+      const $names = document.querySelector("[data-names]");
 
-    function names(colors) {
-      $names.innerHTML = `<strong style="--col: #fff">…</strong>`;
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        let hexes = colors.all.map(c => c.hex.replace('#', ''));
-        fetch(`https://api.color.pizza/v1/?values=${hexes.join(',')}&noduplicates=true&goodnamesonly=true}`)
-        .then(r => r.json()).then(d => {
-          $names.innerHTML = `<ol>${printColors(colors.all, false, d.colors)}</ol>`
+      function names(colors) {
+        $names.innerHTML = `<strong style="--col: #fff">…</strong>`;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          let hexes = colors.all.map((c) => c.hex.replace("#", ""));
+          fetch(
+            `https://api.color.pizza/v1/?values=${hexes.join(
+              ","
+            )}&noduplicates=true&goodnamesonly=true}`
+          )
+            .then((r) => r.json())
+            .then((d) => {
+              $names.innerHTML = `<ol>${printColors(
+                colors.all,
+                false,
+                d.colors
+              )}</ol>`;
+            });
+        }, 1000);
+      }
+
+      $pal.addEventListener("pointerdown", () => {
+        palette(colors, "random");
+        timer = setInterval(() => palette(colors, "random"), 100);
+      });
+      $pal.addEventListener("pointerup", () => clearInterval(timer));
+
+      pane.on("change", bam);
+
+      if (navigator.clipboard) {
+        document.querySelector("body").addEventListener("click", (e) => {
+          const $el = e.target;
+          if ($el.matches("[data-copy]")) {
+            const text = $el.innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+              $el.innerText = "copied!";
+              setTimeout(() => {
+                $el.innerText = text;
+              }, 500);
+            });
+          }
         });
-      }, 1000);
-    }
+      }
 
-    $pal.addEventListener('pointerdown', () => { palette(colors, 'random'); timer = setInterval(() => palette(colors, 'random'), 100)});
-    $pal.addEventListener('pointerup', () => clearInterval(timer));
-
-    pane.on('change', bam);
-
-    if (navigator.clipboard) {
-      document.querySelector('body').addEventListener('click', (e) => {
-        const $el = e.target;
-        if ($el.matches('[data-copy]')) {
-          const text = $el.innerText;
-
-          navigator.clipboard.writeText(text).then(() => {
-            $el.innerText = 'copied!';
-            setTimeout(() => {
-              $el.innerText = text;
-            }, 500)
-          });
-        }
-      })
-    };
-
-
-    bam();
-  </script>
-</body>
-
+      bam();
+    </script>
+  </body>
 </html>
