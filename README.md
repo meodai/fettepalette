@@ -121,7 +121,7 @@ To makes it easy to integrate with your favourite settings pannel (dat.gui, twea
   },
   hueCycle: {
     default: 0.3,
-    props: { min: 0, max: 1.5, step: 0.001 },
+    props: { min: -1.5, max: 1.5, step: 0.001 },
   },
   offsetTint: {
     default: 0.01,
