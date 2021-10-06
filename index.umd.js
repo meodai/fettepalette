@@ -1,5 +1,16 @@
+(function(root, factory) {
+			if (typeof define === 'function' && define.amd) {
+				define([], factory);
+			} else if (typeof module === 'object' && module.exports) {
+				module.exports = factory();
+			} else {
+				root.fettepalette = factory();
+			}
+		}
+		(typeof self !== 'undefined' ? self : this, function() {
 var fettepalette = (() => {
   var __defProp = Object.defineProperty;
+  var __pow = Math.pow;
   var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
   var __export = (target, all) => {
     __markAsModule(target);
@@ -28,8 +39,8 @@ var fettepalette = (() => {
       const exp = 2 / (2 + 20 * curveAccent);
       const cosT = Math.cos(t);
       const sinT = Math.sin(t);
-      x = Math.sign(cosT) * Math.abs(cosT) ** exp;
-      y = Math.sign(sinT) * Math.abs(sinT) ** exp;
+      x = Math.sign(cosT) * __pow(Math.abs(cosT), exp);
+      y = Math.sign(sinT) * __pow(Math.abs(sinT), exp);
     } else if (curveMethod === "arc") {
       y = Math.cos(-Math.PI / 2 + i * slice + curveAccent);
       x = Math.sin(Math.PI / 2 + i * slice - curveAccent);
@@ -157,3 +168,4 @@ var fettepalette = (() => {
   };
   return src_exports;
 })();
+return fettepalette; }));
