@@ -1,13 +1,13 @@
 (function(root, factory) {
-			if (typeof define === 'function' && define.amd) {
-				define([], factory);
-			} else if (typeof module === 'object' && module.exports) {
-				module.exports = factory();
-			} else {
-				root.fettepalette = factory();
-			}
-		}
-		(typeof self !== 'undefined' ? self : this, function() {
+      if (typeof define === 'function' && define.amd) {
+      	define([], factory);
+      } else if (typeof module === 'object' && module.exports) {
+      	module.exports = factory();
+      } else {
+      	root.fettepalette = factory();
+      }
+    }
+    (typeof self !== 'undefined' ? self : this, function() {
 var fettepalette = (() => {
   var __defProp = Object.defineProperty;
   var __pow = Math.pow;
