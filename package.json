@@ -1,17 +1,19 @@
 {
   "name": "fettepalette",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "Color ramp generator using curves within the HSV color model",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "browser": "dist/index.iife.js",
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.min.mjs",
+  "browser": "./dist/index.min.js",
+  "jsdelivr": "./dist/index.umd.js",
+  "exports": {
+    "./require": "./dist/index.cjs",
+    ".": "./src/index.js"
+  },
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run lint && tsc --build && npm run build:esm && npm run build:browser && npm run build:node",
-    "build:esm": "esbuild src/index.ts --outfile=dist/index.esm.js --format=esm --bundle --target=es2020 --minify",
-    "build:browser": "esbuild src/index.ts --outfile=dist/index.iife.js --bundle --target=es6 --format=iife --global-name=fettepalette --minify",
-    "build:node": "esbuild src/index.ts --outfile=dist/index.js --platform=node --target=node14 --minify",
+    "build": "npm run lint && tsc --build && node ./build.js",
     "test": "npm run lint && echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts && npx prettier --check ./src/",
     "prettier": "npx prettier --write ./src/"
