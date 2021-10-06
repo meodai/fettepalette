@@ -1,4 +1,4 @@
-<img width="533" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette" />
+<h1><a href="https://meodai.github.io/fettepalette/"><img width="533" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette" /></a></h1>
 
 Color palette generation function using curves within the HSV color model.
 
