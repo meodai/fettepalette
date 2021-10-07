@@ -78,7 +78,7 @@ Function returns an ob object containing 4 arrays:
  }
 ```
 
-Each array contains every color as an array of HSL coordinates `[h,s,l]` `[0…360,0…1,0…1]`
+Each array contains every color as an array of HSL coordinates `[h,s,l/b]` `[0…360,0…1,0…1]`
 
 #### Options
 
