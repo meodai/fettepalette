@@ -671,7 +671,7 @@
         <div data-names></div>
       </aside>
     </article>
-    <script src="https://cdn.jsdelivr.net/npm/culori@0.18.2/build/culori.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/culori@1.2.0/bundled/culori.umd.js"></script>
 
     <script type="module">
       import {
@@ -682,6 +682,8 @@
       } from "./index.mjs";
 
       console.clear();
+
+      let outputModel = 'hsl';
 
       const shuffleArray = (array) => {
         let arr = [...array];
@@ -1001,6 +1003,7 @@
           offsetCurveModShade: PARAMS.offsetCurveModShade,
           minSaturationLight: [PARAMS.minSaturation, PARAMS.minLight],
           maxSaturationLight: [PARAMS.maxSaturation, PARAMS.maxLight],
+          colorModel: outputModel === 'hsl' ? 'hsl' : 'hsv',
         });
 
         // Mutate colors object
