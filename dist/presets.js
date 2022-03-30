@@ -27,7 +27,7 @@ export const presets = {
     minSaturationLight: [0, 0],
     maxSaturationLight: [1, 1],
   },
-  wineDinner: {
+  autumnRainbow: {
     total: 9,
     centerHue: 0,
     hueCycle: 0.3,
@@ -41,4 +41,18 @@ export const presets = {
     minSaturationLight: [0, 0],
     maxSaturationLight: [1, 1],
   },
+  moodyRainbow: {
+    total: 13,
+    centerHue: 0,
+    hueCycle: 1.456,
+    curveMethod: 'pow',
+    curveAccent: 0.344,
+    offsetTint: 0.142,
+    offsetShade: 0.266,
+    tintShadeHueShift: 0.01,
+    offsetCurveModTint: 0.03,
+    offsetCurveModShade: 0.03,
+    minSaturationLight: [0, 0],
+    maxSaturationLight: [1, 1],
+  }
 };
