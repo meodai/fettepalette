@@ -1,6 +1,6 @@
 {
   "name": "fettepalette",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Color ramp generator using curves within the HSV color model",
   "type": "module",
   "main": "./dist/index.cjs",
