@@ -1,10 +1,6 @@
 <h1><a href="https://meodai.github.io/fettepalette/"><img width="533" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette" /></a></h1>
 
-Color palette generation function using curves within the HSV color model.
-
-Docs & Demo: https://meodai.github.io/fettepalette/
-
-Based on the idea of "hue shifting". A technique used by [pixel-artists and illustrators](#reading-and-inspiration).
+Introducing FettePalette — a color palette generator that takes inspiration from the world of pixel art and illustration. Using curves and hue shifting within the HSV color model, the function creates beautiful and unique color palettes. Check out the [demo and docs](https://meodai.github.io/fettepalette/) and elevate your generatetive color game today!"
 
 ## Installation
 
