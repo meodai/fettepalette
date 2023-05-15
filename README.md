@@ -1,6 +1,6 @@
 <h1><a href="https://meodai.github.io/fettepalette/"><img width="533" src="https://github.com/meodai/fettepalette/blob/main/fp.png" alt="fette palette" /></a></h1>
 
-Introducing FettePalette — a color palette generator that takes inspiration from the world of pixel art and illustration. Using curves and hue shifting within the HSV color model, the function creates beautiful and unique color palettes. Check out the [demo and docs](https://meodai.github.io/fettepalette/) and elevate your generatetive color game today!"
+Introducing FettePalette — a color palette generator that takes inspiration from the world of pixel art and illustration. Using curves and hue shifting within the HSV color model, the function creates beautiful and unique color palettes. Check out the [demo and docs](https://meodai.github.io/fettepalette/) and elevate your generative color game today!"
 
 ## Installation
 
@@ -41,9 +41,9 @@ function generateRandomColorRamp  ({
                                // HSV color model, also takes a function 
 
   curveAccent:          0,     // how accentuated is the curve
-                               // (depends heavely on curveMethod)
+                               // (depends heavily on curveMethod)
 
-  tintShadeHueShift:    0.1,   // defines how shifted the hue is in
+  tintShadeHueShift:    0.1,   // defines how shifted the hue is
                                // for the shades and the tints
 
   offsetCurveModTint:  0.03,   // modifies the tint curve
@@ -63,13 +63,13 @@ function generateRandomColorRamp  ({
 
 ### generateRandomColorRamp(Options{})
 
-Function returns an ob object containing 4 arrays:
+Function returns an object containing 4 arrays:
 
 ```js
 {
     light: [], // tints
     dark: [], // shades
-    base: [], // smedium colors
+    base: [], // medium colors
     all: [], // all colors
  }
 ```
@@ -86,8 +86,8 @@ Each array contains every color as an array of HSL coordinates `[h,s,l/b]` `[0�
 - `curveAccent` float 0…1 → How pronounced should the curve be, depends a lot on the curve method
 - `tintShadeHueShift` float 0…1 → Shifts the colors for the shades and tints
 - `curveMethod` string 'lamé'|'arc'|'pow'|'powY'|'powX' → method used to generate the curve. It also takes a function `(Number(0…1)) => [x,y]`
-- `offsetCurveModTint` float 0…1 → amplifies the curveAccent of for the tint colors
-- `offsetCurveModShade` float 0…1 → amplifies the curveAccent of for the shade colors
+- `offsetCurveModTint` float 0…1 → amplifies the curveAccent of the tint colors
+- `offsetCurveModShade` float 0…1 → amplifies the curveAccent of the shade colors
 - `minSaturationLight` array [0…1, 0…1] → minium saturation and light of the generated colors
 - `maxSaturationLight` array [0…1, 0…1] → maximum saturation and light of the generated colors
 - `colorModel` string 'hsl'|'hsv' → defines the color model of the returned colors
@@ -95,7 +95,7 @@ hsv might be easier to convert into something else.
 
 #### Saint Options
 
-To makes it easy to integrate with your favourite settings pannel (dat.gui, tweakpane …), the script exports `generateRandomColorRampParams`, an onject that contains default and saint options to feed to the main function.
+To make it easy to integrate with your favourite settings panel (dat.gui, tweakpane …), the script exports `generateRandomColorRampParams`, an object that contains default and saint options to feed to the main function.
 
 ```js
 {
