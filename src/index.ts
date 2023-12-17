@@ -53,7 +53,7 @@ export type easingFunctionsType = {
   CurveMethod: (x: number, accentuation?: number) => number;
 };
 
-/* 
+/*
  * Easing functions modified to work with an accentuation parameter that exaggerates the curve
  * the accentuation parameter is a number between 0 and 1 but was not tested very thoroughly
  * can probably be improved by chaning how the accentuation is applied in each type of easing function
