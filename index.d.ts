@@ -1,6 +1,6 @@
 export declare type FuncNumberReturn = (arg0: number, arg1?: number) => Vector2;
 export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | "linear" | "easeInSine" | "easeOutSine" | "easeInOutSine" | "easeInQuad" | "easeOutQuad" | "easeInOutQuad" | "easeInCubic" | "easeOutCubic" | "easeInOutCubic" | "easeInQuart" | "easeOutQuart" | "easeInOutQuart" | "easeInQuint" | "easeOutQuint" | "easeInOutQuint" | "easeInExpo" | "easeOutExpo" | "easeInOutExpo" | "easeInCirc" | "easeOutCirc" | "easeInOutCirc" | "random" | FuncNumberReturn;
-export declare type ColorModel = "hsl" | "hsv";
+export declare type ColorModel = "hsl" | "hsv" | "lch" | "oklch";
 export declare type Vector2 = [number, number];
 export declare type Vector3 = [number, number, number];
 export declare type GenerateRandomColorRampArgument = {
@@ -100,6 +100,17 @@ export declare function generateRandomColorRamp({ total, centerHue, hueCycle, of
     base: Vector3[];
     all: Vector3[];
 };
+export declare type colorToCSSxLCHMode = "oklch" | "lch" | "hsl";
+/**
+ * Converts Hxx (Hue, Chroma, Lightness) values to a CSS `oklch()` color function string.
+ *
+ * @param {Object} hxx - An object with hue, chroma, and lightness properties.
+ * @param {number} hxx.hue - The hue value.
+ * @param {number} hxx.chroma - The chroma value.
+ * @param {number} hxx.lightness - The lightness value.
+ * @returns {string} - The CSS color function string in the format `oklch(lightness% chroma hue)`.
+ */
+export declare const colorToCSS: (color: Vector3, mode?: colorToCSSxLCHMode) => string;
 export declare const generateRandomColorRampParams: {
     curveMethod: {
         default: string;
