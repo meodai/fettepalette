@@ -101,7 +101,11 @@ To make it easy to integrate with your favourite settings panel (dat.gui, tweakp
 {
   curveMethod: {
     default: 'lamé',
-    props: { options: ['lamé', 'arc', 'pow', 'powY', 'powX'] },
+    props: { options: [
+      'lamé', 'arc', 'pow', 'powY', 'powX',
+      // or +/- standard easing functions 
+      'linear', 'easeInSine', 'easeOutSine', 'easeInOutSine', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeInCubic', 'easeOutCubic', 'easeInOutCubic', 'easeInQuart', 'easeOutQuart', 'easeInOutQuart', 'easeInQuint', 'easeOutQuint', 'easeInOutQuint', 'easeInExpo', 'easeOutExpo', 'easeInOutExpo', 'easeInCirc', 'easeOutCirc', 'easeInOutCirc', 'random'
+    ] },
   },
   curveAccent: {
     default: 0,
