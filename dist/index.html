@@ -159,7 +159,8 @@
         flex: 1 0 calc(var(--w, 0.11) * 100%);
         width: calc(var(--w, 0.11) * 100%);
         padding-top: calc(var(--w, 0.11) * 100%);
-        background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));
+        /*background: hsl(var(--h), calc(var(--s) * 1%), calc(var(--l) * 1%));*/
+        background: var(--c);
       }
 
       [data-palette] {
@@ -205,11 +206,12 @@
         padding: 0;
       }
       [data-figure] {
+
         background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)),
           linear-gradient(
             to left,
-            hsl(var(--deg, 0deg), 100%, 50%),
-            hsl(var(--deg, 0deg), 0%, 100%)
+            var(--col1),
+            var(--col2)
           );
       }
       [data-ramp] {
@@ -671,7 +673,7 @@
         <div data-names></div>
       </aside>
     </article>
-    <script src="https://cdn.jsdelivr.net/npm/culori@2.0.3/bundled/culori.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/culori@3.3.0/bundled/culori.umd.js"></script>
 
     <script type="module">
       import {
@@ -679,6 +681,7 @@
         generateRandomColorRampParams,
         hsv2hsl,
         pointOnCurve,
+        colorToCSS,
       } from "./index.mjs";
 
       console.clear();
@@ -894,10 +897,16 @@
 
       const PARAMS = {};
 
+      PARAMS.model = 'hsl';
+
       Object.keys(generateRandomColorRampParams).forEach((key) => {
         const param = generateRandomColorRampParams[key];
         PARAMS[key] = param.default;
         pane.addInput(PARAMS, key, param.props);
+      });
+
+      pane.addInput(PARAMS, 'model', {
+        options: ['hsl', 'oklch', 'lch']
       });
 
       const $pal = document.querySelector("[data-palette]");
@@ -964,7 +973,7 @@
             .slice(0, 4)
             .sort((a, b) => b.hsl[2] - a.hsl[2])
             .map(
-              (c) => `hsl(${c.hsl[0]},${c.hsl[1] * 100}%,${c.hsl[2] * 100}%)`
+              (c) => c.css
             )
             .join(",")})`
         );
@@ -979,9 +988,7 @@
         for (let i = 0; i < 4; i++) {
           $div.style.setProperty(
             `--col-${i}`,
-            `hsl(${colorArr[i].hsl[0]},${colorArr[i].hsl[1] * 100}%,${
-              colorArr[i].hsl[2] * 100
-            }%)`
+            colorArr[i].css
           );
         }
 
@@ -1019,6 +1026,7 @@
               hsl: [h, s, l],
               rgb: [r * 255, g * 255, b * 255],
               hex: culori.formatHex({ mode: "hsl", h, s, l }),
+              css: colorToCSS([h, s, l], PARAMS.model),
               contrast: {
                 white: culori.wcagContrast("#ffffff", { mode: "hsl", h, s, l }),
                 black: culori.wcagContrast("#000000", { mode: "hsl", h, s, l }),
@@ -1059,16 +1067,35 @@
           [PARAMS.maxSaturation, PARAMS.maxLight]
         );
 
+
         $picker.style.setProperty(
           `--deg`,
           `${colors.all[Math.floor(colors.all.length * 0.5)].hsl[0]}deg`
         );
+        
+        let col1 = `hsl(var(--deg, 0deg), 100%, 50%)`;
+        let col2 = `hsl(var(--deg, 0deg), 0%, 100%)`;
+
+        if (PARAMS.model === 'oklch') {
+          col1 = `oklch(.5 .4 var(--deg, 0deg))`;
+          col2 = `oklch(1 0 var(--deg, 0deg))`;
+        } else if (PARAMS.model === 'lch') {
+          col1 = `lch(50 150 var(--deg, 0deg))`;
+          col2 = `lch(100 0 var(--deg, 0deg))`;
+        }
+        $picker.style.setProperty(
+          `--col1`, col1
+        );
+        $picker.style.setProperty(
+          `--col2`, col2
+        )
+
 
         document.querySelector("[data-colors]").innerHTML = colors.all.reduce(
           (r, c) => {
             return `${r}<i style="--w: ${1 / PARAMS.total}; --h: ${
               c.hsl[0]
-            }; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}"></i>`;
+            }; --s: ${c.hsl[1] * 100}; --l: ${c.hsl[2] * 100}; --c: ${c.css};"></i>`;
           },
           ""
         );
@@ -1120,8 +1147,9 @@
           newElement.style.fill = `hsl(${colorsArr[i - 1].hsl[0]}deg,${
             hsl[1] * 100
           }%,${hsl[2] * 100}%)`;
-          newElement.style.stroke = "#212121";
-          newElement.style.strokeWidth = ".5px";
+          newElement.style.fill = colorsArr[i - 1].css;
+          newElement.style.stroke = "#202126";
+          newElement.style.strokeWidth = ".25px";
 
           const [xl, yl] = pointOnCurve(
             curveMethod,
@@ -1140,10 +1168,11 @@
           newElementLight.setAttribute("cx", (xl - offsetTint) * 100);
           newElementLight.setAttribute("cy", 100 - (yl + offsetTint) * 100);
 
-          newElementLight.setAttribute("r", "1");
+          newElementLight.setAttribute("r", ".5");
 
           newElementLight.style.fill = `#fff`;
-          newElementLight.style.strokeWidth = "0px";
+          newElementLight.style.strokeWidth = ".1px";
+          newElementLight.style.stroke = "#000";
 
           const newElementDark = document.createElementNS(
             xmlns,
@@ -1162,10 +1191,11 @@
           newElementDark.setAttribute("cx", (xd - offsetShade) * 100);
           newElementDark.setAttribute("cy", 100 - (yd - offsetShade) * 100);
 
-          newElementDark.setAttribute("r", "1");
+          newElementDark.setAttribute("r", ".5");
 
           newElementDark.style.fill = `#000`;
-          newElementDark.style.strokeWidth = "0px";
+          newElementDark.style.strokeWidth = ".1px";
+          newElementDark.style.stroke = "#fff";
 
           $picker.appendChild(newElement);
           $picker.appendChild(newElementLight);
@@ -1175,10 +1205,10 @@
 
       const printColors = (arr, simple, names) =>
         arr
-          .map(({ hsl, rgb, hex, contrast }, i) => {
+          .map(({ hsl, rgb, hex, contrast, css }, i) => {
             if (simple) {
               return `
-          <li class="swatch swatch--simple" style="--col:${hex}; --coltext: ${
+          <li class="swatch swatch--simple" style="--col:${css}; --coltext: ${
                 contrast.black > contrast.white ? "#202125" : "#fff"
               }">
             <div data-copy title="Click to copy">${Math.floor(
@@ -1187,7 +1217,7 @@
           </li>`;
             } else {
               return `
-            <li class="full" style="--col:${hex}; --coltext: ${
+            <li class="full" style="--col:${css}; --coltext: ${
                 contrast.black < contrast.white ? "#202125" : "#fff"
               }; --colbg: ${
                 contrast.black > contrast.white ? "#202125" : "#fff"

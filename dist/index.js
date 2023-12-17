@@ -10,6 +10,7 @@ var fettepalette = (() => {
   // src/index.ts
   var src_exports = {};
   __export(src_exports, {
+    colorToCSS: () => colorToCSS,
     easingFunctions: () => easingFunctions,
     generateRandomColorRamp: () => generateRandomColorRamp,
     generateRandomColorRampParams: () => generateRandomColorRampParams,
@@ -144,6 +145,12 @@ var fettepalette = (() => {
       all: [...lightColors, ...baseColors, ...darkColors]
     };
   }
+  var colorModsCSS = {
+    oklch: (color) => [color[2], color[1] * 0.4, color[0]],
+    lch: (color) => [color[2] * 100, color[1] * 150, color[0]],
+    hsl: (color) => [color[0], color[1] * 100 + "%", color[2] * 100 + "%"]
+  };
+  var colorToCSS = (color, mode = "oklch") => `${mode}(${colorModsCSS[mode](color).join(" ")})`;
   var generateRandomColorRampParams = {
     curveMethod: {
       default: "lam\xE9",
@@ -189,11 +196,11 @@ var fettepalette = (() => {
     },
     minSaturation: {
       default: 0,
-      props: { min: 0, max: 1, step: 1e-3 }
+      props: { min: -0.25, max: 1, step: 1e-3 }
     },
     minLight: {
       default: 0,
-      props: { min: 0, max: 1, step: 1e-3 }
+      props: { min: -0.25, max: 1, step: 1e-3 }
     },
     maxSaturation: {
       default: 1,

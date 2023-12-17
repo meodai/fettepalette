@@ -30,7 +30,7 @@ export type CurveMethod =
   | "random"
   | FuncNumberReturn;
 
-export type ColorModel = "hsl" | "hsv";
+export type ColorModel = "hsl" | "hsv" | "lch" | "oklch";
 export type Vector2 = [number, number];
 export type Vector3 = [number, number, number];
 export type GenerateRandomColorRampArgument = {
@@ -357,6 +357,31 @@ export function generateRandomColorRamp({
   };
 }
 
+/**
+ * functions to convert from the ramp's colors values to CSS color functions.
+ */
+const colorModsCSS = {
+  oklch: (color) => [color[2], color[1] * 0.4, color[0]],
+  lch: (color) => [color[2] * 100, color[1] * 150, color[0]],
+  hsl: (color) => [color[0], color[1] * 100 + "%", color[2] * 100 + "%"],
+};
+
+export type colorToCSSxLCHMode = "oklch" | "lch" | "hsl";
+/**
+ * Converts Hxx (Hue, Chroma, Lightness) values to a CSS `oklch()` color function string.
+ *
+ * @param {Object} hxx - An object with hue, chroma, and lightness properties.
+ * @param {number} hxx.hue - The hue value.
+ * @param {number} hxx.chroma - The chroma value.
+ * @param {number} hxx.lightness - The lightness value.
+ * @returns {string} - The CSS color function string in the format `oklch(lightness% chroma hue)`.
+ */
+
+export const colorToCSS = (
+  color: Vector3,
+  mode: colorToCSSxLCHMode = "oklch"
+): string => `${mode}(${colorModsCSS[mode](color).join(" ")})`;
+
 export const generateRandomColorRampParams = {
   curveMethod: {
     default: "lamé",
@@ -402,11 +427,11 @@ export const generateRandomColorRampParams = {
   },
   minSaturation: {
     default: 0,
-    props: { min: 0, max: 1, step: 0.001 },
+    props: { min: -0.25, max: 1, step: 0.001 },
   },
   minLight: {
     default: 0,
-    props: { min: 0, max: 1, step: 0.001 },
+    props: { min: -0.25, max: 1, step: 0.001 },
   },
   maxSaturation: {
     default: 1,
