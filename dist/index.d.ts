@@ -1,5 +1,5 @@
-export declare type FuncNumberReturn = (arg0: number) => Vector2;
-export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | FuncNumberReturn;
+export declare type FuncNumberReturn = (arg0: number, arg1?: number) => Vector2;
+export declare type CurveMethod = "lamé" | "arc" | "pow" | "powY" | "powX" | "linear" | "easeInSine" | "easeOutSine" | "easeInOutSine" | "easeInQuad" | "easeOutQuad" | "easeInOutQuad" | "easeInCubic" | "easeOutCubic" | "easeInOutCubic" | "easeInQuart" | "easeOutQuart" | "easeInOutQuart" | "easeInQuint" | "easeOutQuint" | "easeInOutQuint" | "easeInExpo" | "easeOutExpo" | "easeInOutExpo" | "easeInCirc" | "easeOutCirc" | "easeInOutCirc" | "random" | FuncNumberReturn;
 export declare type ColorModel = "hsl" | "hsv";
 export declare type Vector2 = [number, number];
 export declare type Vector3 = [number, number, number];
@@ -17,6 +17,34 @@ export declare type GenerateRandomColorRampArgument = {
     minSaturationLight?: Vector2;
     maxSaturationLight?: Vector2;
     colorModel?: ColorModel;
+};
+export declare type easingFunctionsType = {
+    CurveMethod: (x: number, accentuation?: number) => number;
+};
+export declare const easingFunctions: {
+    linear: (x: number) => number;
+    easeInSine: (x: number, accentuation?: number) => number;
+    easeOutSine: (x: number, accentuation?: number) => number;
+    easeInOutSine: (x: number, accentuation?: number) => number;
+    easeInQuad: (x: number, accentuation?: number) => number;
+    easeOutQuad: (x: number, accentuation?: number) => number;
+    easeInOutQuad: (x: number, accentuation?: number) => number;
+    easeInCubic: (x: number, accentuation?: number) => number;
+    easeOutCubic: (x: number, accentuation?: number) => number;
+    easeInOutCubic: (x: number, accentuation?: number) => number;
+    easeInQuart: (x: number, accentuation?: number) => number;
+    easeOutQuart: (x: number, accentuation?: number) => number;
+    easeInOutQuart: (x: number, accentuation?: number) => number;
+    easeInQuint: (x: number, accentuation?: number) => number;
+    easeOutQuint: (x: number, accentuation?: number) => number;
+    easeInOutQuint: (x: number, accentuation?: number) => number;
+    easeInExpo: (x: number, accentuation?: number) => number;
+    easeOutExpo: (x: number, accentuation?: number) => number;
+    easeInOutExpo: (x: number, accentuation?: number) => number;
+    easeInCirc: (x: number, accentuation?: number) => number;
+    easeOutCirc: (x: number, accentuation?: number) => number;
+    easeInOutCirc: (x: number, accentuation?: number) => number;
+    random: () => number;
 };
 /**
  * function hsv2hsl
@@ -54,7 +82,7 @@ export declare const pointOnCurve: (curveMethod: CurveMethod, i: number, total: 
  * @param offsetShade: float  0...1 > Shade curve difference
  * @param curveAccent: float  0...1 > How pronounced should the curve be, depends a lot on the curve method
  * @param tintShadeHueShift: float 0...1 > Shifts the colors for the shades and tints
- * @param curveMethod: string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve
+ * @param curveMethod: string 'lamé'|'arc'|'pow'|'powY'|'powX'|function > method used to generate the curve
  * @param offsetCurveModTint: float 0...1 > amplifies the curveAccent of for the tint colors
  * @param offsetCurveModShade: float 0...1 > amplifies the curveAccent of for the shade colors
  * @param minSaturationLight: array [0...1, 0...1] > minium saturation and light of the generated colors

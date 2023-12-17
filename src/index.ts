@@ -1,11 +1,35 @@
-export type FuncNumberReturn = (arg0: number) => Vector2;
+export type FuncNumberReturn = (arg0: number, arg1?: number) => Vector2;
 export type CurveMethod =
   | "lamé"
   | "arc"
   | "pow"
   | "powY"
   | "powX"
+  | "linear"
+  | "easeInSine"
+  | "easeOutSine"
+  | "easeInOutSine"
+  | "easeInQuad"
+  | "easeOutQuad"
+  | "easeInOutQuad"
+  | "easeInCubic"
+  | "easeOutCubic"
+  | "easeInOutCubic"
+  | "easeInQuart"
+  | "easeOutQuart"
+  | "easeInOutQuart"
+  | "easeInQuint"
+  | "easeOutQuint"
+  | "easeInOutQuint"
+  | "easeInExpo"
+  | "easeOutExpo"
+  | "easeInOutExpo"
+  | "easeInCirc"
+  | "easeOutCirc"
+  | "easeInOutCirc"
+  | "random"
   | FuncNumberReturn;
+
 export type ColorModel = "hsl" | "hsv";
 export type Vector2 = [number, number];
 export type Vector3 = [number, number, number];
@@ -24,6 +48,107 @@ export type GenerateRandomColorRampArgument = {
   maxSaturationLight?: Vector2;
   colorModel?: ColorModel;
 };
+
+export type easingFunctionsType = {
+  CurveMethod: (x: number, accentuation?: number) => number;
+};
+
+export const easingFunctions = {
+  linear: (x: number): number => x,
+  easeInSine: (x: number, accentuation = 0): number =>
+    1 - Math.cos((x * Math.PI) / 2 + (accentuation * Math.PI) / 2),
+  easeOutSine: (x: number, accentuation = 0): number =>
+    Math.sin((x * Math.PI) / 2 + (accentuation * Math.PI) / 2),
+  easeInOutSine: (x: number, accentuation = 0): number =>
+    -(Math.cos((Math.PI * (x + accentuation)) / (1 + 2 * accentuation)) - 1) /
+    2,
+  easeInQuad: (x: number, accentuation = 0): number =>
+    x * x + accentuation * x * (1 - x),
+  easeOutQuad: (x: number, accentuation = 0): number =>
+    1 - (1 - x) * (1 - x) - accentuation * x * (1 - x),
+  easeInOutQuad: (x: number, accentuation = 0): number =>
+    x < 0.5
+      ? 2 * x * x + accentuation * x * (1 - 2 * x)
+      : 1 -
+        Math.pow(-2 * x + 2, 2) / 2 -
+        accentuation * (2 * x - 1) * (1 - Math.pow(-2 * x + 2, 2) / 2),
+  easeInCubic: (x: number, accentuation = 0): number =>
+    x * x * x + accentuation * x * x * (1 - x),
+  easeOutCubic: (x: number, accentuation = 0): number =>
+    1 - Math.pow(1 - x, 3) - accentuation * Math.pow(1 - x, 2) * (1 - x),
+  easeInOutCubic: (x: number, accentuation = 0): number =>
+    x < 0.5
+      ? 4 * x * x * x + accentuation * x * x * (1 - 2 * x)
+      : 1 -
+        Math.pow(-2 * x + 2, 3) / 2 -
+        (accentuation * Math.pow(-2 * x + 2, 2) * (2 * x - 1)) / 2,
+  easeInQuart: (x: number, accentuation = 0): number =>
+    x * x * x * x + accentuation * x * x * x * (1 - x),
+  easeOutQuart: (x: number, accentuation = 0): number =>
+    1 - Math.pow(1 - x, 4) - accentuation * Math.pow(1 - x, 3) * (1 - x),
+  easeInOutQuart: (x: number, accentuation = 0): number =>
+    x < 0.5
+      ? 8 * x * x * x * x + accentuation * x * x * x * (1 - 2 * x)
+      : 1 -
+        Math.pow(-2 * x + 2, 4) / 2 -
+        (accentuation * Math.pow(-2 * x + 2, 3) * (2 * x - 1)) / 2,
+  easeInQuint: (x: number, accentuation = 0): number =>
+    x * x * x * x * x + accentuation * x * x * x * x * (1 - x),
+  easeOutQuint: (x: number, accentuation = 0): number =>
+    1 - Math.pow(1 - x, 5) - accentuation * Math.pow(1 - x, 4) * (1 - x),
+  easeInOutQuint: (x: number, accentuation = 0): number =>
+    x < 0.5
+      ? 16 * x * x * x * x * x + accentuation * x * x * x * x * (1 - 2 * x)
+      : 1 -
+        Math.pow(-2 * x + 2, 5) / 2 -
+        (accentuation * Math.pow(-2 * x + 2, 4) * (2 * x - 1)) / 2,
+  easeInExpo: (x: number, accentuation = 0): number =>
+    (x === 0 ? 0 : Math.pow(2, 10 * x - 10)) +
+    accentuation * Math.pow(2, 10 * (x - 1)),
+  easeOutExpo: (x: number, accentuation = 0): number =>
+    (x === 1 ? 1 : 1 - Math.pow(2, -10 * x)) -
+    accentuation * (1 - Math.pow(2, -10 * x)),
+  easeInOutExpo: (x: number, accentuation = 0): number => {
+    if (x === 0) {
+      return 0;
+    }
+    if (x === 1) {
+      return 1;
+    }
+    if (x < 0.5) {
+      return (
+        Math.pow(2, 20 * x - 10) / 2 +
+        (accentuation * Math.pow(2, 20 * x - 10)) / 2
+      );
+    }
+    return (
+      (2 - Math.pow(2, -20 * x + 10)) / 2 -
+      (accentuation * (2 - Math.pow(2, -20 * x + 10))) / 2
+    );
+  },
+  easeInCirc: (x: number, accentuation = 0): number =>
+    1 -
+    Math.sqrt(1 - Math.pow(x, 2)) +
+    accentuation * Math.sqrt(1 - Math.pow(x, 2)),
+  easeOutCirc: (x: number, accentuation = 0): number =>
+    Math.sqrt(1 - Math.pow(x - 1, 2)) -
+    accentuation * Math.sqrt(1 - Math.pow(x - 1, 2)),
+  easeInOutCirc: (x: number, accentuation = 0): number => {
+    if (x < 0.5) {
+      return (
+        (1 - Math.sqrt(1 - Math.pow(2 * x, 2))) / 2 +
+        (accentuation * (1 - Math.sqrt(1 - Math.pow(2 * x, 2)))) / 2
+      );
+    }
+    return (
+      (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1) / 2 -
+      (accentuation * (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1)) / 2
+    );
+  },
+  random: (): number => Math.random(),
+};
+
+const easingFunctionsKeys = Object.keys(easingFunctions);
 
 /**
  * function hsv2hsl
@@ -99,8 +224,12 @@ export const pointOnCurve = (
     x = Math.pow(percentile, curveAccent);
     y = Math.pow(percentile, 1 - curveAccent);
   } else if (typeof curveMethod === "function") {
-    x = curveMethod(percentile)[0];
-    y = curveMethod(percentile)[1];
+    const modifiedPositions = curveMethod(percentile, curveAccent);
+    x = modifiedPositions[0];
+    y = modifiedPositions[1];
+  } else if (easingFunctionsKeys.includes(curveMethod)) {
+    x = percentile;
+    y = 1 - easingFunctions[curveMethod](percentile, curveAccent * -1) || 0;
   } else {
     throw new Error(
       `pointOnCurve() curveAccent parameter is expected to be "lamé" | "arc" | "pow" | "powY" | "powX" or a function but \`${curveMethod}\` given.`
@@ -122,7 +251,7 @@ export const pointOnCurve = (
  * @param offsetShade: float  0...1 > Shade curve difference
  * @param curveAccent: float  0...1 > How pronounced should the curve be, depends a lot on the curve method
  * @param tintShadeHueShift: float 0...1 > Shifts the colors for the shades and tints 
- * @param curveMethod: string 'lamé'|'arc'|'pow'|'powY'|'powX' > method used to generate the curve 
+ * @param curveMethod: string 'lamé'|'arc'|'pow'|'powY'|'powX'|function > method used to generate the curve 
  * @param offsetCurveModTint: float 0...1 > amplifies the curveAccent of for the tint colors
  * @param offsetCurveModShade: float 0...1 > amplifies the curveAccent of for the shade colors
  * @param minSaturationLight: array [0...1, 0...1] > minium saturation and light of the generated colors
@@ -225,7 +354,9 @@ export function generateRandomColorRamp({
 export const generateRandomColorRampParams = {
   curveMethod: {
     default: "lamé",
-    props: { options: ["lamé", "arc", "pow", "powY", "powX"] },
+    props: {
+      options: ["lamé", "arc", "pow", "powY", "powX", ...easingFunctionsKeys],
+    },
   },
   curveAccent: {
     default: 0,

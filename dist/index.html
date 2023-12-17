@@ -671,7 +671,7 @@
         <div data-names></div>
       </aside>
     </article>
-    <script src="https://cdn.jsdelivr.net/npm/culori@1.2.0/bundled/culori.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/culori@2.0.3/bundled/culori.umd.js"></script>
 
     <script type="module">
       import {
@@ -772,7 +772,6 @@
           if (!$input) {
             return;
           }
-          console.log($input)
           if ( $input.matches('select') ) {
             Array.from($input.querySelectorAll('option')).forEach($input => 
               $input.selected = $input.value === (value || ref[key])
@@ -990,6 +989,7 @@
       }
 
       function bam() {
+
         colors = generateRandomColorRamp({
           total: PARAMS.total,
           centerHue: PARAMS.centerHue,
