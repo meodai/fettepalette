@@ -9,6 +9,8 @@
     <meta name="description" content="FettePalette is lightweight, dependency free and fast JavaScript function written in TypeScript. It generates color ramps based on a curve within the HSV color model. This page serves as preview for the variety of options the function takes.">
     <meta name="keywords" content="color, colour, generative, generative-art, generative-design, palette, colorpalette">
     
+    <link rel="icon" type="image/png" href="https://meodai.github.io/fettepalette/favicon.png" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://meodai.github.io/fettepalette/">
@@ -686,6 +688,43 @@
 
       console.clear();
 
+      const $can = document.createElement("canvas");
+      const favCTX = $can.getContext("2d");
+
+      function updateFavicon (cssCompatibleColors) {
+        const width = 100;
+        const height = 100;
+
+        $can.width = width;
+        $can.height = height;
+
+        const [c1, c2, c3, c4] = cssCompatibleColors;
+        
+        favCTX.fillStyle = c1;
+        favCTX.fillRect(0, 0, width, height);
+
+        favCTX.fillStyle = c2;
+        favCTX.fillRect(width / 4, height / 4, width / 2, height / 2);
+        
+        favCTX.fillStyle = c3;
+        favCTX.fillRect(width / 4 + width/4, height / 2, width / 4, height / 4);
+
+
+        favCTX.fillStyle = c4;
+        favCTX.fillRect(width / 4 + width / 4, height / 2 - height / 4, width / 4, height / 4);
+        
+        const link = document.querySelector("link[rel~='icon']");
+        
+        if (link) {
+          link.href = $can.toDataURL();
+        } else {
+          const link = document.createElement("link");
+          link.rel = "icon";
+          link.href = $can.toDataURL();
+          document.head.appendChild(link);
+        }
+      }
+
       let outputModel = 'hsl';
 
       const shuffleArray = (array) => {
@@ -977,6 +1016,8 @@
             )
             .join(",")})`
         );
+
+        requestAnimationFrame(() => updateFavicon(localcolors.map(c => c.css)))
       };
 
       function paletteDom(colorArr, x = 1) {
